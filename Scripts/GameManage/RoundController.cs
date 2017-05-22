@@ -9,6 +9,8 @@ public class RoundController : MonoBehaviour
 
     private bool isRoundEnd;
 
+    private int roundCount;
+
 
 
     private Character playChara;
@@ -45,6 +47,10 @@ public class RoundController : MonoBehaviour
         Player
     }
 
+    public int getRoundCount() {
+        return this.roundCount;
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -58,6 +64,7 @@ public class RoundController : MonoBehaviour
         playChara = this.getNextCharecter();
         playChara.setActionPointrolled(true);
         Debug.Log(playChara.getName() + " round this game");
+        roundCount = 1;
     }
 
     public Character getCurrentRoundChar() {
@@ -105,6 +112,7 @@ public class RoundController : MonoBehaviour
             {
             }
                 StartCoroutine("charaMove");
+            roundCount++;
         }
 
 
