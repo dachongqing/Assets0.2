@@ -12,7 +12,11 @@ public class RoomContraller : MonoBehaviour
 
     private Queue<String> downRoomType = new Queue<String>();
 
-    private Dictionary<int[], RoomInterface> roomList = new Dictionary<int[], RoomInterface>();
+    private Dictionary<int[], RoomInterface> groundRoomList = new Dictionary<int[], RoomInterface>();
+
+    private Dictionary<int[], RoomInterface> upRoomList = new Dictionary<int[], RoomInterface>();
+
+    private Dictionary<int[], RoomInterface> downRoomList = new Dictionary<int[], RoomInterface>();
 
     private System.Random random = new System.Random();
 
@@ -31,19 +35,19 @@ public class RoomContraller : MonoBehaviour
     {
         //这个队列的长度，限制了房间最大数量
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("BookRoom");
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("BookRoom");
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("BookRoom");
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("BookRoom");
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("BookRoom");
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("BookRoom");
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("BookRoom");
+        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("BookRoom");
     }
@@ -184,7 +188,16 @@ public class RoomContraller : MonoBehaviour
 
 				doorGo.GetComponent<DoorInterface> ().setNextRoomXYZ (nextRoomXYZ);
 			}
-			roomList.Add (ri.getXYZ (), ri);
+
+            if (xyz[2] == RoomConstant.ROOM_TYPE_GROUND)
+            {
+                groundRoomList.Add (ri.getXYZ (), ri);
+
+            } else if (xyz[2] == RoomConstant.ROOM_TYPE_UP) {
+                upRoomList.Add(ri.getXYZ(), ri);
+            } else {
+                downRoomList.Add(ri.getXYZ(), ri);
+            }
 		}
 
 		return room;
@@ -193,12 +206,89 @@ public class RoomContraller : MonoBehaviour
 
 	public RoomInterface findRoomByXYZ (int[] xyz)
 	{
+        if (xyz[2] == RoomConstant.ROOM_TYPE_GROUND)
+        {
+            
+            foreach (int[] key in groundRoomList.Keys) {
+			    if (key [0] == xyz [0] && key [1] == xyz [1] && key [2] == xyz [2]) {
+				    return groundRoomList[key];
+			    }
+		    }
 
-		foreach (int[] key in roomList.Keys) {
-			if (key [0] == xyz [0] && key [1] == xyz [1] && key [2] == xyz [2]) {
-				return roomList [key];
-			}
-		}
+        }
+        else if (xyz[2] == RoomConstant.ROOM_TYPE_UP)
+        {
+            foreach (int[] key in upRoomList.Keys)
+            {
+                if (key[0] == xyz[0] && key[1] == xyz[1] && key[2] == xyz[2])
+                {
+                    return upRoomList[key];
+                }
+            }
+        }
+        else
+        {
+            foreach (int[] key in downRoomList.Keys)
+            {
+                if (key[0] == xyz[0] && key[1] == xyz[1] && key[2] == xyz[2])
+                {
+                    return downRoomList[key];
+                }
+            }
+        }
 		return null;
 	}
+
+    public RoomInterface findRoomByRoomType(string roomType) {
+
+        foreach (int[] key in groundRoomList.Keys)
+        {
+            if (groundRoomList[key].getRoomType() == roomType)
+            {
+                return groundRoomList[key];
+            }
+        }
+
+        foreach (int[] key in upRoomList.Keys)
+        {
+            if (upRoomList[key].getRoomType() == roomType)
+            {
+                return upRoomList[key];
+            }
+        }
+
+        foreach (int[] key in downRoomList.Keys)
+        {
+            if (downRoomList[key].getRoomType() == roomType)
+            {
+                return downRoomList[key];
+            }
+        }
+
+        return null;
+    }
+
+    public Dictionary<int[], RoomInterface> getAllRoom(int z) {
+
+       
+
+        if (z == RoomConstant.ROOM_TYPE_GROUND)
+        {
+            
+           return groundRoomList;
+           
+        }
+        else if (z == RoomConstant.ROOM_TYPE_UP)
+        {
+           
+           return upRoomList;
+              
+        }
+        else
+        {
+           
+           return downRoomList;
+             
+        }
+    }
 }

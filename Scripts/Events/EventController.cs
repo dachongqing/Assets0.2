@@ -12,15 +12,23 @@ public class EventController : MonoBehaviour {
 
         EventInterface eventI = ri.getRoomEvent(EventConstant.LEAVE_EVENT);
 
-        if(eventI != null ) { 
-            //show ui 
-            string selectCode = showMessageUi(eventI.getEventBeginInfo(), eventI.getSelectItem());
+        if(eventI != null ) {
+            if (chara.isPlayer())
+            {
+                //show ui 
+                string selectCode = showMessageUi(eventI.getEventBeginInfo(), eventI.getSelectItem());
 
-            EventResult result = eventI.excute(chara, selectCode);
+                EventResult result = eventI.excute(chara, selectCode);
 
-            showMessageUi(eventI.getEventEndInfo(result.getResultCode()), null);
+                showMessageUi(eventI.getEventEndInfo(result.getResultCode()), null);
 
-            return result.getStatus();
+                return result.getStatus();
+            }
+            else {
+                EventResult result = eventI.excute(chara, null);
+                 
+                return result.getStatus();
+            }
 
          } else
         {

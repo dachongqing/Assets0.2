@@ -23,5 +23,6 @@ public interface DoorInterface
     //开门事件：扣除行动力 需要参数
     bool openDoor (Character chara);
 
+   
 
 }

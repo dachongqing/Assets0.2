@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, NPC {
+public class Player : MonoBehaviour,   NPC  {
 
 	[SerializeField]private int actionPoint;
 
@@ -16,6 +16,10 @@ public class Player : MonoBehaviour, NPC {
     private bool roundOver;
 
     private bool actionPointrolled;
+
+    private APathManager aPathManager  = new  APathManager();
+
+    private RoomContraller roomContraller;
 
     public int getActionPoint()
     {
@@ -70,6 +74,8 @@ public class Player : MonoBehaviour, NPC {
     {
         //可以roll点
         roundOver = false;
+      //  aPathManager.findPath(roomContraller.findRoomByXYZ(getCurrentRoom()), roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK_ROOM), roomContraller);
+
     }
 
     public void updateActionPoint(int actionPoint)
@@ -95,6 +101,7 @@ public class Player : MonoBehaviour, NPC {
         this.actionPointrolled = false;
         Debug.Log ("赵日天 玩家进入默认房间");
         playerName = "赵日天";
+        roomContraller = FindObjectOfType<RoomContraller>();
 
     }
 	
@@ -102,4 +109,9 @@ public class Player : MonoBehaviour, NPC {
 	void Update () {
 		
 	}
+
+    public void defaultAction()
+    {
+        
+    }
 }

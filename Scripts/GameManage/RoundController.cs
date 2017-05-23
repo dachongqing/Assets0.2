@@ -19,7 +19,7 @@ public class RoundController : MonoBehaviour
 
     private Player player;
 
-    //private Hazard ai;
+    private Nolan ai;
 
     public Character getNextCharecter()
     {
@@ -57,9 +57,9 @@ public class RoundController : MonoBehaviour
 
         //目前是写死。。后面需要改为程序控制添加 游戏人数
         player = FindObjectOfType<Player>();
-        //  ai = FindObjectOfType<Hazard>();
+          ai = FindObjectOfType<Nolan>();
         setEndRound(player);
-        //  setEndRound(ai);
+        setEndRound(ai);
         isRoundEnd = false;
         playChara = this.getNextCharecter();
         playChara.setActionPointrolled(true);

@@ -21,6 +21,8 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
 
     private String eventType;
 
+    private DiceRollCtrl diceRoll = new DiceRollCtrl();
+
     public SpeedLeveaRoomEvent() {
 
         minSpeedPoint = 3;
@@ -30,6 +32,7 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
         badSpeedPoint = 0;
 
         eventType = EventConstant.LEAVE_EVENT;
+                
     }
 
 
@@ -37,9 +40,17 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
     {
 
         EventResult er = new EventResult();
-        //调用丢骰子UI
-        //int dicePoint = callDiceController(character.getAbilityInfo[1]);
         int dicePoint = 0;
+        if (character.isPlayer())
+        {
+
+            //调用丢骰子UI
+            //int dicePoint = callDiceController(character.getAbilityInfo[1]);
+        }
+        else {
+            int speed = character.getAbilityInfo()[1];
+            dicePoint = diceRoll.calculateDice(speed);
+        }
         if (minSpeedPoint <= dicePoint)
         {
             er.setStatus(true);
