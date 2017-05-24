@@ -27,20 +27,22 @@ public class DiceRollCtrl : MonoBehaviour {
             Dice tem = new Dice3();
             tem.Roll();
             resD3Array[i]=tem.getDiceRes();
-            Debug.Log(tem.getDiceRes());
+//            Debug.Log(tem.getDiceRes());
             _RollD3resSUM += tem.getDiceRes();
         }
-		Debug.Log(dic3 + " 颗三面骰子的和 " + _RollD3resSUM);
+//		Debug.Log(dic3 + " 颗三面骰子的和 " + _RollD3resSUM);
 
 		for (int i = 0; i < dic6; i++) {
             Dice tem = new Dice6();
             tem.Roll();
             resD6Array[i] = tem.getDiceRes();
-            Debug.Log(tem.getDiceRes());
+//            Debug.Log(tem.getDiceRes());
             _RollD6resSUM += tem.getDiceRes();
 
         }
-		Debug.Log(dic6+ " 颗六面骰子的和 " + _RollD6resSUM);
+//		Debug.Log(dic6+ " 颗六面骰子的和 " + _RollD6resSUM);
+		int _sum=_RollD3resSUM+_RollD6resSUM;
+		Debug.Log(dic3+" 颗三面骰子和 "+dic6+" 颗六面骰子的结果为 "+_sum);
         return _RollD3resSUM + _RollD6resSUM;
 
     }
@@ -59,7 +61,7 @@ public class DiceRollCtrl : MonoBehaviour {
             Dice tem = new Dice3();
             tem.Roll();
             resD3Array[i] = tem.getDiceRes();
-            Debug.Log(tem.getDiceRes());
+//            Debug.Log(tem.getDiceRes());
             _RollD3resSUM += tem.getDiceRes();
         }
         Debug.Log(dic3 + " 颗三面骰子的和 " + _RollD3resSUM);

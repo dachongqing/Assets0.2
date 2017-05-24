@@ -156,9 +156,6 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 
 				bool result = eventController.excuteLeaveRoomEvent (getRoom (), roundController.getCurrentRoundChar ()); 
 
-				//非正式测试用，只考虑行动力足够
-				
-
 				if (result == true) {
 					//离开门成功
 					int[] te=getNextRoomXYZ();
