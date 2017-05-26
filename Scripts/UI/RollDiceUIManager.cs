@@ -30,9 +30,17 @@ public class RollDiceUIManager : MonoBehaviour {
 	/// </summary>
 	public void showRollPlaneCanClose()
     {
-		//弹出roll点界面
-		UIrollPlane.SetActive(true);
-		rollCloseGO.SetActive (true);
+
+        if (ply.ActionPointrolled())
+        {
+            //弹出roll点界面
+            UIrollPlane.SetActive(true);
+		    rollCloseGO.SetActive (true);
+        }
+        else
+        {
+            Debug.Log("你已经丢过行动力骰子");
+        }
     }
 
 	/// <summary>
@@ -59,20 +67,15 @@ public class RollDiceUIManager : MonoBehaviour {
 	/// </summary>
 	public void rollForActionPoint()
 	{
-		if (ply.ActionPointrolled())
-		{
+	
 			//int speed = ply.getAbilityInfo()[1] + ply.getEffectBuff();
 			int speed = ply.getAbilityInfo()[1];
-			int res = diceRoll.calculateDice(speed, speed, 0);
+			int res = diceRoll.calculateDice( speed, 0);
 			ply.updateActionPoint(res);
 			ply.setActionPointrolled(false);
 			//show ui message
 			//text.text = "行动力:" + res;
-		}
-		else 
-		{
-			Debug.Log("你已经丢过行动力骰子");
-		}
+		
 	}
 
 	/// <summary>

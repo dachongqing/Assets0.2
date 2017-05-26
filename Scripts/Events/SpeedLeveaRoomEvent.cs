@@ -40,7 +40,7 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
     {
 
         EventResult er = new EventResult();
-        int dicePoint = 0;
+        int dicePoint = 5;
         if (character.isPlayer())
         {
 

@@ -9,16 +9,10 @@ public class DiceRollCtrl : MonoBehaviour {
 
 
 
-    public int calculateDice(int totalDiceNum, int dic3, int dic6)
+    public int calculateDice(int dic3, int dic6)
     {
 
-        if ((dic3 + dic6) > totalDiceNum)
-        {
-			Debug.Log ("输入个数 和 实际个数 不一致");
-            return 0;
-        }
-
-
+       
 		int[] resD3Array = new int[dic3];
         int _RollD3resSUM = 0;
 		int[] resD6Array = new int[dic6];
@@ -42,7 +36,7 @@ public class DiceRollCtrl : MonoBehaviour {
         }
 //		Debug.Log(dic6+ " 颗六面骰子的和 " + _RollD6resSUM);
 		int _sum=_RollD3resSUM+_RollD6resSUM;
-		Debug.Log(dic3+" 颗三面骰子和 "+dic6+" 颗六面骰子的结果为 "+_sum);
+	//	Debug.Log(dic3+" 颗三面骰子和 "+dic6+" 颗六面骰子的结果为 "+_sum);
         return _RollD3resSUM + _RollD6resSUM;
 
     }
@@ -64,7 +58,7 @@ public class DiceRollCtrl : MonoBehaviour {
 //            Debug.Log(tem.getDiceRes());
             _RollD3resSUM += tem.getDiceRes();
         }
-        Debug.Log(dic3 + " 颗三面骰子的和 " + _RollD3resSUM);
+   //     Debug.Log(dic3 + " 颗三面骰子的和 " + _RollD3resSUM);
 
       
         return _RollD3resSUM ;

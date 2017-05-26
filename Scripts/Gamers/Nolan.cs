@@ -25,6 +25,10 @@ public class Nolan : MonoBehaviour,NPC {
 
     private EventController eventController;
 
+    private StoryScript ss;
+
+    private bool bossFlag;
+
 
     public bool ActionPointrolled()
     {
@@ -99,7 +103,7 @@ public class Nolan : MonoBehaviour,NPC {
         {
             //int speed = ply.getAbilityInfo()[1] + ply.getEffectBuff();
             int speed = getAbilityInfo()[1];
-            int res = diceRoll.calculateDice(speed, speed, 0);
+            int res = diceRoll.calculateDice(speed);
             updateActionPoint(res);
             setActionPointrolled(false);
             Stack<Node> path = null;
@@ -120,9 +124,9 @@ public class Nolan : MonoBehaviour,NPC {
                 {
                     path = aPathManager.findPath(currentRoom, targetRoom, roomContraller);
                 }
-                while (getActionPoint() > 0)
+                while (getActionPoint() > 0 && path.Count >0 )
                 {
-                    Node nextRoom = path.Pop();
+                    Node nextRoom = path.Peek();
                     bool opened = false;
                     //判断向什么方向的房间
                     if (getCurrentRoom()[0] == nextRoom.xy[0] && getCurrentRoom()[1] - nextRoom.xy[1] < 0) {
@@ -148,7 +152,6 @@ public class Nolan : MonoBehaviour,NPC {
 
                     //如果进入房间是目标房间 暂时回合结束
                     if (opened) {
-
                         bool result = eventController.excuteLeaveRoomEvent(currentRoom,this);
 
                         //非正式测试用，只考虑行动力足够
@@ -157,6 +160,7 @@ public class Nolan : MonoBehaviour,NPC {
                         if (result == true)
                         {
                             //离开门成功
+                            path.Pop();    
                           
 
                             //当前人物坐标移动到下一个房间
@@ -196,11 +200,13 @@ public class Nolan : MonoBehaviour,NPC {
         {
         }
         else {
-            defaultAction();
+            if (ss !=null ) {
+                ss.scriptAction(this, roomContraller, eventController, diceRoll, aPathManager);
+            } else {
+                defaultAction();
+            }
         }
-
-
-
+        
     }
 
     public void setActionPointrolled(bool actionPointrolled)
@@ -236,4 +242,28 @@ public class Nolan : MonoBehaviour,NPC {
 	void Update () {
 		
 	}
+
+    public void setScriptAction(StoryScript ss)
+    {
+        this.ss = ss; 
+    }
+
+    public bool isScriptWin()
+    {
+        return this.ss.getResult();
+    }
+
+    public StoryScript getScriptAciont()
+    {
+        return this.ss;
+    }
+
+    public bool isBoss() {
+        return bossFlag;
+    }
+
+    public void setBoss(bool bossFlag)
+    {
+        this.bossFlag = bossFlag;
+    }
 }

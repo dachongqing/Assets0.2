@@ -18,8 +18,8 @@ public class APathManager
          List<Node> openList = new List<Node>();
 
          List<Node> closeList = new List<Node>();
-        Debug.Log(" intiRoom Room is " + intiRoom.getXYZ()[0] + "," + intiRoom.getXYZ()[1]);
-        Debug.Log(" targetNode Room is " + targetNode.getXYZ()[0] + "," + targetNode.getXYZ()[1]);
+       // Debug.Log(" intiRoom Room is " + intiRoom.getXYZ()[0] + "," + intiRoom.getXYZ()[1]);
+       // Debug.Log(" targetNode Room is " + targetNode.getXYZ()[0] + "," + targetNode.getXYZ()[1]);
         bool finded = false;
         Node initNode = new Node(intiRoom.getXYZ()[0], intiRoom.getXYZ()[1], intiRoom.getXYZ()[2]);
         initNode.G = 10 ;
@@ -30,18 +30,18 @@ public class APathManager
         while (!finded) {
                 //计算起始位置周围的F值
                 currentNode = getLessestNode(openList);
-            Debug.Log(" currentNode Room is " + currentNode.xy[0] + "," + currentNode.xy[1]);
+          //  Debug.Log(" currentNode Room is " + currentNode.xy[0] + "," + currentNode.xy[1]);
             closeList.Add(currentNode);
             if (currentNode.xy[0] == targetNode.getXYZ()[0] && currentNode.xy[1] == targetNode.getXYZ()[1])
             {
-                Debug.Log("I got the targetRoom!!!!");
+           //     Debug.Log("I got the targetRoom!!!!");
                 finded = true;
                 break;
 
             }
          
             RoomInterface currentRoom = roundController.findRoomByXYZ(currentNode.xy);
-            Debug.Log(" currentRoom Room is " + currentRoom.getXYZ()[0] + "," + currentRoom.getXYZ()[1]);
+         //   Debug.Log(" currentRoom Room is " + currentRoom.getXYZ()[0] + "," + currentRoom.getXYZ()[1]);
             if (currentRoom.getNorthDoor().GetComponent<DoorInterface>().getShowFlag()) {
                 node = new Node(currentRoom.getXYZ()[0], currentRoom.getXYZ()[1] + 1, currentRoom.getXYZ()[2]);
                 if (!this.containClose(node, closeList)) {
@@ -90,7 +90,7 @@ public class APathManager
                 openList.Add(node);
                 }
             }
-            Debug.Log("openList.Count  " + openList.Count);
+          //  Debug.Log("openList.Count  " + openList.Count);
         }
 
 
@@ -122,11 +122,11 @@ public class APathManager
             openList.Sort();
             lessestNode = openList[0];
             openList.Remove(lessestNode);
-            Debug.Log("getLessestNode  " + lessestNode);
+         //   Debug.Log("getLessestNode  " + lessestNode);
             return lessestNode;
         }
         else {
-            Debug.Log(" cant getLessestNode" + lessestNode);
+          //  Debug.Log(" cant getLessestNode" + lessestNode);
             return lessestNode;
         }
     }

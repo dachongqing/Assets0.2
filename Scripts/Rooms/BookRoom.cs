@@ -17,6 +17,10 @@ public class BookRoom : MonoBehaviour, RoomInterface
 	public GameObject westDoor;
 	public GameObject eastDoor;
 
+    private List<Character> charas;
+
+    private StoryInterface si;
+
 
     private Dictionary<String, EventInterface> eventsList = new Dictionary<string, EventInterface>();
 
@@ -104,5 +108,35 @@ public class BookRoom : MonoBehaviour, RoomInterface
     {
         eventsList.Add(ei.getEventType(), ei);
 
+    }
+
+    public List<Character> getCharas()
+    {
+        return charas;
+    }
+
+    public void setChara(Character chara)
+    {
+         charas.Add(chara);
+
+    }
+
+    public void removeChara(Character chara)
+    {
+        charas.Remove(chara);
+    }
+
+    public bool checkRoomStoryStart(Character chara)
+    {
+        return si.checkStoryStart(chara, this);
+    }
+
+    public void setRoomStory(StoryInterface si)
+    {
+        this.si = si;
+    }
+
+    public StoryInterface getStartedStory() {
+        return this.si;
     }
 }
