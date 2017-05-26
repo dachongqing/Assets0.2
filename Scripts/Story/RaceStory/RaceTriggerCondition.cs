@@ -12,7 +12,7 @@ public class RaceTriggerCondition :  Condition{
 
     public bool getConditionStatus(Character chara, RoomInterface room)
     {
-        if (room.getRoomType() == RoomConstant.ROOM_TYPE_BOOK_ROOM && chara.getName() == "叶成亮")
+        if (room.getRoomType() == RoomConstant.ROOM_TYPE_BOOK_ROOM)
         {
             Debug.Log("检查剧情开启："  + room.getRoomType() +","+ chara.getName());
             return true;

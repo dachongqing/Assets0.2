@@ -72,7 +72,13 @@ public class StoryController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("UI 显示《《 吊炸天，胜利了：" + boss.getScriptAciont().getWinEndInfo());
+                        if (player.isBoss())
+                        {
+                            Debug.Log("UI 显示《《 日了狗了，输了啊：" + player.getScriptAciont().getFailureEndInfo());
+                        }
+                        else {
+                            Debug.Log("UI 显示《《 吊炸天，胜利了：" + boss.getScriptAciont().getWinEndInfo());
+                        }
                     }
 
 
