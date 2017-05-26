@@ -16,13 +16,12 @@ public class EventController : MonoBehaviour {
             if (chara.isPlayer())
             {
                 //show ui 
-                Debug.Log("显示UI《《 触发了离开房间事件");
                 string selectCode = showMessageUi(eventI.getEventBeginInfo(), eventI.getSelectItem());
 
                 EventResult result = eventI.excute(chara, selectCode);
 
                 showMessageUi(eventI.getEventEndInfo(result.getResultCode()), null);
-                Debug.Log("显示UI《《 离开房间事件最后的结果");
+
                 return result.getStatus();
             }
             else {

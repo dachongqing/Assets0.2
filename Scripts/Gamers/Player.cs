@@ -21,14 +21,6 @@ public class Player : MonoBehaviour,   NPC  {
 
     private RoomContraller roomContraller;
 
-    private EventController eventController;
-
-    private DiceRollCtrl diceRoll;
-
-    private StoryScript ss;
-
-    private bool bossFlag;
-
     public int getActionPoint()
     {
         return actionPoint;
@@ -80,22 +72,9 @@ public class Player : MonoBehaviour,   NPC  {
 
     public void roundStart()
     {
-      
+        //可以roll点
         roundOver = false;
-        if (this.isPlayer())
-        {
-        }
-        else
-        {
-            if (ss != null)
-            {
-                ss.scriptAction(this, roomContraller, eventController, diceRoll, aPathManager);
-            }
-            else
-            {
-                defaultAction();
-            }
-        }
+      //  aPathManager.findPath(roomContraller.findRoomByXYZ(getCurrentRoom()), roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK_ROOM), roomContraller);
 
     }
 
@@ -123,8 +102,7 @@ public class Player : MonoBehaviour,   NPC  {
         Debug.Log ("赵日天 玩家进入默认房间");
         playerName = "赵日天";
         roomContraller = FindObjectOfType<RoomContraller>();
-        diceRoll = FindObjectOfType<DiceRollCtrl>();
-        eventController = FindObjectOfType<EventController>();
+
     }
 	
 	// Update is called once per frame
@@ -135,29 +113,5 @@ public class Player : MonoBehaviour,   NPC  {
     public void defaultAction()
     {
         
-    }
-
-    public void setScriptAction(StoryScript ss)
-    {
-        this.ss = ss;
-    }
-
-    public bool isScriptWin() {
-        return this.ss.getResult();
-    }
-
-    public StoryScript getScriptAciont()
-    {
-        return this.ss;
-    }
-
-    public bool isBoss()
-    {
-        return bossFlag;
-    }
-
-    public void setBoss(bool bossFlag)
-    {
-        this.bossFlag = bossFlag;
     }
 }

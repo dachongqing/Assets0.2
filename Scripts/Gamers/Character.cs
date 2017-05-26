@@ -42,14 +42,4 @@ public interface Character  {
     bool ActionPointrolled();
 
     void setActionPointrolled(bool actionPointrolled);
-
-    void setScriptAction(StoryScript ss);
-
-    bool isScriptWin();
-
-    StoryScript  getScriptAciont();
-
-    bool isBoss();
-
-    void setBoss(bool bossFlag);
 }

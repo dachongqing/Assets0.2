@@ -100,12 +100,6 @@ public class RoomContraller : MonoBehaviour
 
     }
 
-    private void setRoomStory(RoomInterface room) {
-        if (room.getRoomType() == RoomConstant.ROOM_TYPE_BOOK_ROOM) {
-            StoryInterface storyScript = new RaceStory();
-            room.setRoomStory(storyScript);
-        }
-    }
 
     public GameObject genRoom (int[] xyz, int[] door)
 	{
@@ -125,8 +119,6 @@ public class RoomContraller : MonoBehaviour
             //随机生成事件
 
             setRoomEvents(ri);
-
-            setRoomStory(ri);
 
 
             //根据这房间门的数据，生成对应的门

@@ -64,7 +64,8 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 			chara.updateActionPoint (chara.getActionPoint () - OpenCost);
 			return true;
 		} else {
-			Debug.Log ("玩家行动点数不足");
+			MessageUI msgUI = FindObjectOfType<MessageUI> ();
+			msgUI.ShowMessge ("玩家行动点数不足");
 			return false;
 		}
 
@@ -80,6 +81,8 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 		roomContraller = FindObjectOfType<RoomContraller> ();
 
 		camCtrl = FindObjectOfType<CameraCtrl> ();
+
+
 	}
 
 	// Update is called once per frame
@@ -174,7 +177,8 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 
 				} else {
 					//离开失败
-					Debug.Log ("WoodDoor.cs OnMouseDown 离开房间失败");
+					Debug.Log("离开房间失败");
+					FindObjectOfType<MessageUI> ().ShowMessge ("离开房间失败 ");
 				}
 			}
 				 

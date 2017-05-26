@@ -10,14 +10,16 @@ public class RoundController : MonoBehaviour
     private bool isRoundEnd;
 
     private int roundCount;
-        
+
+
+
     private Character playChara;
-    
+
+
+
     private Player player;
 
-    private Nolan nolan;
-
-    private Character playerChara; // 玩家所控制的角色
+    private Nolan ai;
 
     public Character getNextCharecter()
     {
@@ -31,7 +33,6 @@ public class RoundController : MonoBehaviour
     }
 
     public void endRound() {
-        this.getCurrentRoundChar().updateActionPoint(0);
         this.getCurrentRoundChar().endRound();
     }
 
@@ -56,21 +57,14 @@ public class RoundController : MonoBehaviour
 
         //目前是写死。。后面需要改为程序控制添加 游戏人数
         player = FindObjectOfType<Player>();
-        nolan = FindObjectOfType<Nolan>();
+          ai = FindObjectOfType<Nolan>();
         setEndRound(player);
-        setEndRound(nolan);
+        setEndRound(ai);
         isRoundEnd = false;
         playChara = this.getNextCharecter();
         playChara.setActionPointrolled(true);
         Debug.Log(playChara.getName() + " round this game");
         roundCount = 1;
-        if (player.isPlayer())
-        {
-            this.playerChara = player;
-        }
-        else if(nolan.isPlayer()) {
-            this.playerChara = nolan;
-        }
     }
 
     public Character getCurrentRoundChar() {
@@ -110,7 +104,6 @@ public class RoundController : MonoBehaviour
             isRoundEnd = false;
             if (playChara.isPlayer())
             {
-              
                 mState = OperatorState.Player;
                 //解除黑屏
                 //解锁roll点
@@ -178,13 +171,5 @@ public class RoundController : MonoBehaviour
             }
 
         }
-    }
-
-    public Character[] getAllChara() {
-        return this.roundList.ToArray();
-    }
-
-    public Character getPlayerChara() {
-        return this.playerChara;
     }
 }
