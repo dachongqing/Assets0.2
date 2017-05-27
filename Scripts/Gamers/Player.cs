@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, NPC
 {
+	[Tooltip("房间宽度")]public float roomH=13.7f;
+	[Tooltip("房间高度")]public float roomV=11f;
 
     [SerializeField] private int actionPoint;
 
@@ -48,6 +50,10 @@ public class Player : MonoBehaviour, NPC
     public void setCurrentRoom(int[] xyz)
     {
         this.xyz = xyz;
+
+		Debug.Log ("玩家进入新房间: ");
+		Vector3 temPos = new Vector3(xyz [0] * roomH,xyz[1]*roomV,0);
+		this.transform.position = temPos;
     }
 
     public string getName()
@@ -135,7 +141,7 @@ public class Player : MonoBehaviour, NPC
     // Update is called once per frame
     void Update()
     {
-
+		
     }
 
     public void defaultAction()

@@ -91,7 +91,7 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 		//仅对启用的门有效
 		if (showFlag) {
 			//放大效果
-			this.transform.localScale = new Vector3 (1, 1, 1);
+			this.transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
 		}
 	}
 
@@ -165,7 +165,7 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 	void OnMouseExit ()
 	{
 		//缩小效果
-		this.transform.localScale = new Vector3 (0.8f, 0.8f, 0.8f);
+		this.transform.localScale = new Vector3 (1f, 1f, 1f);
 	}
 		
 }

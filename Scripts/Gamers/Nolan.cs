@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Nolan : MonoBehaviour, NPC
 {
+	[Tooltip("房间宽度")]public float roomH=13.7f;
+	[Tooltip("房间高度")]public float roomV=11f;
 
     [SerializeField] private int actionPoint;
 
@@ -29,7 +31,6 @@ public class Nolan : MonoBehaviour, NPC
     private StoryScript ss;
 
     private bool bossFlag;
-
 
     public bool ActionPointrolled()
     {
@@ -227,6 +228,12 @@ public class Nolan : MonoBehaviour, NPC
     public void setCurrentRoom(int[] nextRoomXYZ)
     {
         this.xyz = nextRoomXYZ;
+
+		Debug.Log ("叶成亮进入房间");
+
+		Vector3 temPos = new Vector3(xyz [0] * roomH+0.5f,xyz[1]*roomV+0.5f,0);
+		this.transform.position = temPos;
+
     }
 
     public void updateActionPoint(int actionPoint)
