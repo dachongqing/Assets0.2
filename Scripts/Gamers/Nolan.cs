@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Nolan : MonoBehaviour,NPC {
+public class Nolan : MonoBehaviour, NPC
+{
 
     [SerializeField] private int actionPoint;
 
@@ -24,6 +25,10 @@ public class Nolan : MonoBehaviour,NPC {
     private DiceRollCtrl diceRoll;
 
     private EventController eventController;
+
+    private StoryScript ss;
+
+    private bool bossFlag;
 
 
     public bool ActionPointrolled()
@@ -99,7 +104,7 @@ public class Nolan : MonoBehaviour,NPC {
         {
             //int speed = ply.getAbilityInfo()[1] + ply.getEffectBuff();
             int speed = getAbilityInfo()[1];
-            int res = diceRoll.calculateDice(speed, speed, 0);
+            int res = diceRoll.calculateDice(speed);
             updateActionPoint(res);
             setActionPointrolled(false);
             Stack<Node> path = null;
@@ -120,21 +125,25 @@ public class Nolan : MonoBehaviour,NPC {
                 {
                     path = aPathManager.findPath(currentRoom, targetRoom, roomContraller);
                 }
-                while (getActionPoint() > 0)
+                while (getActionPoint() > 0 && path.Count > 0)
                 {
-                    Node nextRoom = path.Pop();
+                    Node nextRoom = path.Peek();
                     bool opened = false;
                     //判断向什么方向的房间
-                    if (getCurrentRoom()[0] == nextRoom.xy[0] && getCurrentRoom()[1] - nextRoom.xy[1] < 0) {
+                    if (getCurrentRoom()[0] == nextRoom.xy[0] && getCurrentRoom()[1] - nextRoom.xy[1] < 0)
+                    {
                         //up room
                         //调用AI 专用方法
-                        opened =  currentRoom.getNorthDoor().GetComponent<WoodDoor>().openDoor(this);
-                            //开门成功
-                    
-                    } else if(getCurrentRoom()[0] == nextRoom.xy[0] && getCurrentRoom()[1] - nextRoom.xy[1] > 0) {
+                        opened = currentRoom.getNorthDoor().GetComponent<WoodDoor>().openDoor(this);
+                        //开门成功
+
+                    }
+                    else if (getCurrentRoom()[0] == nextRoom.xy[0] && getCurrentRoom()[1] - nextRoom.xy[1] > 0)
+                    {
                         //down room
                         opened = currentRoom.getSouthDoor().GetComponent<WoodDoor>().openDoor(this);
-                    } else if (getCurrentRoom()[1] == nextRoom.xy[1] && getCurrentRoom()[0] - nextRoom.xy[0] < 0)
+                    }
+                    else if (getCurrentRoom()[1] == nextRoom.xy[1] && getCurrentRoom()[0] - nextRoom.xy[0] < 0)
                     {
                         //east room
                         opened = currentRoom.getEastDoor().GetComponent<WoodDoor>().openDoor(this);
@@ -147,9 +156,9 @@ public class Nolan : MonoBehaviour,NPC {
 
 
                     //如果进入房间是目标房间 暂时回合结束
-                    if (opened) {
-
-                        bool result = eventController.excuteLeaveRoomEvent(currentRoom,this);
+                    if (opened)
+                    {
+                        bool result = eventController.excuteLeaveRoomEvent(currentRoom, this);
 
                         //非正式测试用，只考虑行动力足够
 
@@ -157,7 +166,8 @@ public class Nolan : MonoBehaviour,NPC {
                         if (result == true)
                         {
                             //离开门成功
-                          
+                            path.Pop();
+
 
                             //当前人物坐标移动到下一个房间
                             this.setCurrentRoom(nextRoom.xy);
@@ -178,7 +188,7 @@ public class Nolan : MonoBehaviour,NPC {
             else
             {
                 //找到房间后， 等待后续细节，：根据设定找下一个房间？ 开启剧本？ 目前直接结束回合
-                Debug.Log(this.playerName + "已经到达目标房间 (" + getCurrentRoom()[0]+","+ getCurrentRoom()[1] +")" );
+                Debug.Log(this.playerName + "已经到达目标房间 (" + getCurrentRoom()[0] + "," + getCurrentRoom()[1] + ")");
             }
         }
         else
@@ -195,12 +205,17 @@ public class Nolan : MonoBehaviour,NPC {
         if (this.isPlayer())
         {
         }
-        else {
-			
-            defaultAction();
+        else
+        {
+            if (ss != null)
+            {
+                ss.scriptAction(this, roomContraller, eventController, diceRoll, aPathManager);
+            }
+            else
+            {
+                defaultAction();
+            }
         }
-
-
 
     }
 
@@ -220,7 +235,8 @@ public class Nolan : MonoBehaviour,NPC {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         int[] roomXYZ = { 0, 0, 0 };
         setCurrentRoom(roomXYZ);
@@ -232,9 +248,35 @@ public class Nolan : MonoBehaviour,NPC {
         diceRoll = FindObjectOfType<DiceRollCtrl>();
         eventController = FindObjectOfType<EventController>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void setScriptAction(StoryScript ss)
+    {
+        this.ss = ss;
+    }
+
+    public bool isScriptWin()
+    {
+        return this.ss.getResult();
+    }
+
+    public StoryScript getScriptAciont()
+    {
+        return this.ss;
+    }
+
+    public bool isBoss()
+    {
+        return bossFlag;
+    }
+
+    public void setBoss(bool bossFlag)
+    {
+        this.bossFlag = bossFlag;
+    }
 }

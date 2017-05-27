@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Character  {
+public interface Character
+{
 
     //当前角色是否死亡
     bool isDead();
 
     //是否是玩家
     bool isPlayer();
-       
+
     //是否在等待玩家操作
     bool isWaitPlayer();
 
@@ -42,4 +43,14 @@ public interface Character  {
     bool ActionPointrolled();
 
     void setActionPointrolled(bool actionPointrolled);
+
+    void setScriptAction(StoryScript ss);
+
+    bool isScriptWin();
+
+    StoryScript getScriptAciont();
+
+    bool isBoss();
+
+    void setBoss(bool bossFlag);
 }

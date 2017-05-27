@@ -7,84 +7,87 @@ using UnityEngine;
 public class LobbyRoom : MonoBehaviour, RoomInterface
 {
 
-	private String roomName;
+    private String roomName;
 
-	[SerializeField]private int[] xyz;
+    [SerializeField] private int[] xyz;
 
 
 
-	public GameObject northDoor;
-	public GameObject southDoor;
-	public GameObject westDoor;
-	public GameObject eastDoor;
+    public GameObject northDoor;
+    public GameObject southDoor;
+    public GameObject westDoor;
+    public GameObject eastDoor;
+
+    private List<Character> charas;
+    private StoryInterface si;
 
     private Dictionary<String, EventInterface> eventsList = new Dictionary<string, EventInterface>();
 
 
-    string RoomInterface.getRoomName ()
-	{
-		return "大厅"; 
-	}
+    string RoomInterface.getRoomName()
+    {
+        return "大厅";
+    }
 
-	string RoomInterface.getRoomType ()
-	{
-		return RoomConstant.ROOM_TYPE_LOBBY;
-	}
+    string RoomInterface.getRoomType()
+    {
+        return RoomConstant.ROOM_TYPE_LOBBY;
+    }
 
 
 
-	int[] RoomInterface.getXYZ ()
-	{
-		return xyz;
-	}
+    int[] RoomInterface.getXYZ()
+    {
+        return xyz;
+    }
 
-	void RoomInterface.setXYZ (int[] xyz)
-	{
-		this.xyz = xyz;
-	}
-		
-	public void northDoorEnable ()
-	{
-		//		northDoor.GetComponent<DoorInterface>().enabled = true;
-		northDoor.GetComponent<DoorInterface> ().setShowFlag (true);//门的图片要替换
-	}
+    void RoomInterface.setXYZ(int[] xyz)
+    {
+        this.xyz = xyz;
+    }
 
-	public void southDoorEnable ()
-	{
-		//		southDoor.GetComponent<DoorInterface>().enabled = true;
-		southDoor.GetComponent<DoorInterface> ().setShowFlag (true);//门的图片要替换
+    public void northDoorEnable()
+    {
+        //		northDoor.GetComponent<DoorInterface>().enabled = true;
+        northDoor.GetComponent<DoorInterface>().setShowFlag(true);//门的图片要替换
+    }
 
-	}
+    public void southDoorEnable()
+    {
+        //		southDoor.GetComponent<DoorInterface>().enabled = true;
+        southDoor.GetComponent<DoorInterface>().setShowFlag(true);//门的图片要替换
 
-	public void westDoorEnable ()
-	{
-		//           westDoor.GetComponent<MonoBehaviour>().enabled = true;
+    }
 
-		westDoor.GetComponent<DoorInterface> ().setShowFlag (true);//门的图片要替换
-	}
+    public void westDoorEnable()
+    {
+        //           westDoor.GetComponent<MonoBehaviour>().enabled = true;
 
-	public void eastDoorEnable ()
-	{
-		//           eastDoor.GetComponent<MonoBehaviour>().enabled = true;
-		eastDoor.GetComponent<DoorInterface> ().setShowFlag (true);//门的图片要替换
-	}
-		
-	GameObject RoomInterface.getNorthDoor()
-	{
-		return northDoor;
-	}
-	GameObject RoomInterface.getSouthDoor()
-	{
-		return southDoor;
-	}
-	GameObject RoomInterface.getEastDoor()
-	{
-		return eastDoor;
-	}
-	GameObject RoomInterface.getWestDoor()
-	{
-		return westDoor;
-	}
+        westDoor.GetComponent<DoorInterface>().setShowFlag(true);//门的图片要替换
+    }
+
+    public void eastDoorEnable()
+    {
+        //           eastDoor.GetComponent<MonoBehaviour>().enabled = true;
+        eastDoor.GetComponent<DoorInterface>().setShowFlag(true);//门的图片要替换
+    }
+
+    GameObject RoomInterface.getNorthDoor()
+    {
+        return northDoor;
+    }
+    GameObject RoomInterface.getSouthDoor()
+    {
+        return southDoor;
+    }
+    GameObject RoomInterface.getEastDoor()
+    {
+        return eastDoor;
+    }
+    GameObject RoomInterface.getWestDoor()
+    {
+        return westDoor;
+    }
 
 
     public EventInterface getRoomEvent(string eventType)
@@ -95,16 +98,47 @@ public class LobbyRoom : MonoBehaviour, RoomInterface
             return eventsList[eventType];
 
         }
-        else {
+        else
+        {
             return null;
         }
     }
 
     public void setRoomEvent(EventInterface ei)
     {
-//        Debug.Log("set event " + ei);
+        Debug.Log("set event " + ei);
         eventsList.Add(ei.getEventType(), ei);
 
+    }
+
+    public List<Character> getCharas()
+    {
+        return charas;
+    }
+
+    public void setChara(Character chara)
+    {
+        charas.Add(chara);
+    }
+
+    public void removeChara(Character chara)
+    {
+        charas.Remove(chara);
+    }
+
+    public void setRoomStory(StoryInterface si)
+    {
+        this.si = si;
+    }
+
+    public StoryInterface getStartedStory()
+    {
+        return this.si;
+    }
+
+    public bool checkRoomStoryStart(Character chara)
+    {
+        return false;
     }
 }
 

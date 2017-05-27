@@ -59,161 +59,187 @@ public class RoomContraller : MonoBehaviour
 
     }
 
-    private EventInterface getRandomEvent(String banEventType) {
+    private EventInterface getRandomEvent(String banEventType)
+    {
 
         EventInterface et = events[random.Next(events.Count)];
         if (et.getEventType() == banEventType)
         {
             return getRandomEvent(banEventType);
         }
-        else {
+        else
+        {
             return et;
         }
 
-           
+
     }
 
     private void setRoomEvents(RoomInterface room)
     {
 
         //只有30%的概率房间会生成事件
-        if (1 == random.Next(0, 3)) {
+        if (1 == random.Next(0, 3))
+        {
 
-        //判定房间是处于什么位置 楼上 地面 楼下， 不能出现 有冲突的事件， 比如楼下不能出现掉落事件
-             if (room.getXYZ()[2] == RoomConstant.ROOM_TYPE_GROUND)
-              {
+            //判定房间是处于什么位置 楼上 地面 楼下， 不能出现 有冲突的事件， 比如楼下不能出现掉落事件
+            if (room.getXYZ()[2] == RoomConstant.ROOM_TYPE_GROUND)
+            {
                 //对于地面事件 所有事件都可以发生
-                 room.setRoomEvent(getRandomEvent(null));
+                room.setRoomEvent(getRandomEvent(null));
 
                 //  if () {
                 //  }
-             }
-           else if (room.getXYZ()[2] == RoomConstant.ROOM_TYPE_UP)
+            }
+            else if (room.getXYZ()[2] == RoomConstant.ROOM_TYPE_UP)
             {
                 //对于楼上事件 
-           }
-           else
-           {
+            }
+            else
+            {
                 //地下事件
             }
         }
 
     }
 
+    private void setRoomStory(RoomInterface room)
+    {
+        if (room.getRoomType() == RoomConstant.ROOM_TYPE_BOOK_ROOM)
+        {
+            StoryInterface storyScript = new RaceStory();
+            room.setRoomStory(storyScript);
+        }
+    }
 
-    public GameObject genRoom (int[] xyz, int[] door)
-	{
-		//房间Prefab所在文件夹路径
-		string roomType = groundRoomType.Dequeue ();
-		string url = "Prefabs/" + roomType;
+    public GameObject genRoom(int[] xyz, int[] door)
+    {
+        //房间Prefab所在文件夹路径
+        string roomType = groundRoomType.Dequeue();
+        string url = "Prefabs/" + roomType;
 
-		//仅用Resources.Load会永久修改原形Prefab。应该用Instatiate,操作修改原形的克隆体
-		GameObject room = Instantiate (Resources.Load (url)) as GameObject;
+        //仅用Resources.Load会永久修改原形Prefab。应该用Instatiate,操作修改原形的克隆体
+        GameObject room = Instantiate(Resources.Load(url)) as GameObject;
 
-		if (room == null) {
-			Debug.Log ("cant find room Prefab !!!");
-		} else {
-			RoomInterface ri = room.GetComponent (System.Type.GetType (roomType)) as RoomInterface;
-			ri.setXYZ (xyz);
+        if (room == null)
+        {
+            Debug.Log("cant find room Prefab !!!");
+        }
+        else
+        {
+            RoomInterface ri = room.GetComponent(System.Type.GetType(roomType)) as RoomInterface;
+            ri.setXYZ(xyz);
 
             //随机生成事件
 
             setRoomEvents(ri);
 
+            setRoomStory(ri);
+
 
             //根据这房间门的数据，生成对应的门
-            if (door [0] == 1) {
-				//门启用
-				ri.northDoorEnable ();
-				//门属于这个房间
-				GameObject doorGo = ri.getNorthDoor ();
-				doorGo.GetComponent<DoorInterface> ().setRoom (ri);
-				//门外有相邻房间的坐标为
-//				错误代码int[] nextRoomXYZ = xyz;
-//				错误代码nextRoomXYZ [2] += 1原因：一维数组是引用类型,+1会导致xyz[]的修改;
-//				体现为  房间的map坐标!=房间的getXYZ
+            if (door[0] == 1)
+            {
+                //门启用
+                ri.northDoorEnable();
+                //门属于这个房间
+                GameObject doorGo = ri.getNorthDoor();
+                doorGo.GetComponent<DoorInterface>().setRoom(ri);
+                //门外有相邻房间的坐标为
+                //				错误代码int[] nextRoomXYZ = xyz;
+                //				错误代码nextRoomXYZ [2] += 1原因：一维数组是引用类型,+1会导致xyz[]的修改;
+                //				体现为  房间的map坐标!=房间的getXYZ
 
-				//修正为
-				int[] nextRoomXYZ = new int[3];
-				nextRoomXYZ [0] = xyz [0];
-				nextRoomXYZ [1] = xyz [1];
-				nextRoomXYZ [2] = xyz [2];
-				nextRoomXYZ [1] += 1;
+                //修正为
+                int[] nextRoomXYZ = new int[3];
+                nextRoomXYZ[0] = xyz[0];
+                nextRoomXYZ[1] = xyz[1];
+                nextRoomXYZ[2] = xyz[2];
+                nextRoomXYZ[1] += 1;
 
-				doorGo.GetComponent<DoorInterface> ().setNextRoomXYZ (nextRoomXYZ);
+                doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
 
-			}
-			if (door [1] == 1) {
-				//门启用
-				ri.southDoorEnable ();
-				//门属于这个房间
-				GameObject doorGo = ri.getSouthDoor ();
-				doorGo.GetComponent<DoorInterface> ().setRoom (ri);
-				//门外有相邻房间的坐标为
-				int[] nextRoomXYZ = new int[3];
-				nextRoomXYZ [0] = xyz [0];
-				nextRoomXYZ [1] = xyz [1];
-				nextRoomXYZ [2] = xyz [2];
-				nextRoomXYZ [1] -= 1;
+            }
+            if (door[1] == 1)
+            {
+                //门启用
+                ri.southDoorEnable();
+                //门属于这个房间
+                GameObject doorGo = ri.getSouthDoor();
+                doorGo.GetComponent<DoorInterface>().setRoom(ri);
+                //门外有相邻房间的坐标为
+                int[] nextRoomXYZ = new int[3];
+                nextRoomXYZ[0] = xyz[0];
+                nextRoomXYZ[1] = xyz[1];
+                nextRoomXYZ[2] = xyz[2];
+                nextRoomXYZ[1] -= 1;
 
-				doorGo.GetComponent<DoorInterface> ().setNextRoomXYZ (nextRoomXYZ);
-			}
-			if (door [2] == 1) {
-				//门启用
-				ri.westDoorEnable ();
-				//门属于这个房间
-				GameObject doorGo = ri.getWestDoor ();
-				doorGo.GetComponent<DoorInterface> ().setRoom (ri);
-				//门外有相邻房间的坐标为
-				int[] nextRoomXYZ = new int[3];
-				nextRoomXYZ [0] = xyz [0];
-				nextRoomXYZ [1] = xyz [1];
-				nextRoomXYZ [2] = xyz [2];
-				nextRoomXYZ [0] -= 1;
+                doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
+            }
+            if (door[2] == 1)
+            {
+                //门启用
+                ri.westDoorEnable();
+                //门属于这个房间
+                GameObject doorGo = ri.getWestDoor();
+                doorGo.GetComponent<DoorInterface>().setRoom(ri);
+                //门外有相邻房间的坐标为
+                int[] nextRoomXYZ = new int[3];
+                nextRoomXYZ[0] = xyz[0];
+                nextRoomXYZ[1] = xyz[1];
+                nextRoomXYZ[2] = xyz[2];
+                nextRoomXYZ[0] -= 1;
 
-				doorGo.GetComponent<DoorInterface> ().setNextRoomXYZ (nextRoomXYZ);
-			}
-			if (door [3] == 1) {
-				//门启用
-				ri.eastDoorEnable ();
-				//门属于这个房间
-				GameObject doorGo = ri.getEastDoor ();
-				doorGo.GetComponent<DoorInterface> ().setRoom (ri);
-				//门外有相邻房间的坐标为
-				int[] nextRoomXYZ = new int[3];
-				nextRoomXYZ [0] = xyz [0];
-				nextRoomXYZ [1] = xyz [1];
-				nextRoomXYZ [2] = xyz [2];
-				nextRoomXYZ [0] += 1;
+                doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
+            }
+            if (door[3] == 1)
+            {
+                //门启用
+                ri.eastDoorEnable();
+                //门属于这个房间
+                GameObject doorGo = ri.getEastDoor();
+                doorGo.GetComponent<DoorInterface>().setRoom(ri);
+                //门外有相邻房间的坐标为
+                int[] nextRoomXYZ = new int[3];
+                nextRoomXYZ[0] = xyz[0];
+                nextRoomXYZ[1] = xyz[1];
+                nextRoomXYZ[2] = xyz[2];
+                nextRoomXYZ[0] += 1;
 
-				doorGo.GetComponent<DoorInterface> ().setNextRoomXYZ (nextRoomXYZ);
-			}
+                doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
+            }
 
             if (xyz[2] == RoomConstant.ROOM_TYPE_GROUND)
             {
-                groundRoomList.Add (ri.getXYZ (), ri);
+                groundRoomList.Add(ri.getXYZ(), ri);
 
-            } else if (xyz[2] == RoomConstant.ROOM_TYPE_UP) {
+            }
+            else if (xyz[2] == RoomConstant.ROOM_TYPE_UP)
+            {
                 upRoomList.Add(ri.getXYZ(), ri);
-            } else {
+            }
+            else
+            {
                 downRoomList.Add(ri.getXYZ(), ri);
             }
-		}
+        }
 
-		return room;
-	}
+        return room;
+    }
 
 
-	public RoomInterface findRoomByXYZ (int[] xyz)
-	{
+    public RoomInterface findRoomByXYZ(int[] xyz)
+    {
         if (xyz[2] == RoomConstant.ROOM_TYPE_GROUND)
         {
-            
-            foreach (int[] key in groundRoomList.Keys) {
-			    if (key [0] == xyz [0] && key [1] == xyz [1] && key [2] == xyz [2]) {
-				    return groundRoomList[key];
-			    }
-		    }
+
+            foreach (int[] key in groundRoomList.Keys)
+            {
+                if (key[0] == xyz[0] && key[1] == xyz[1] && key[2] == xyz[2])
+                {
+                    return groundRoomList[key];
+                }
+            }
 
         }
         else if (xyz[2] == RoomConstant.ROOM_TYPE_UP)
@@ -236,10 +262,11 @@ public class RoomContraller : MonoBehaviour
                 }
             }
         }
-		return null;
-	}
+        return null;
+    }
 
-    public RoomInterface findRoomByRoomType(string roomType) {
+    public RoomInterface findRoomByRoomType(string roomType)
+    {
 
         foreach (int[] key in groundRoomList.Keys)
         {
@@ -268,27 +295,28 @@ public class RoomContraller : MonoBehaviour
         return null;
     }
 
-    public Dictionary<int[], RoomInterface> getAllRoom(int z) {
+    public Dictionary<int[], RoomInterface> getAllRoom(int z)
+    {
 
-       
+
 
         if (z == RoomConstant.ROOM_TYPE_GROUND)
         {
-            
-           return groundRoomList;
-           
+
+            return groundRoomList;
+
         }
         else if (z == RoomConstant.ROOM_TYPE_UP)
         {
-           
-           return upRoomList;
-              
+
+            return upRoomList;
+
         }
         else
         {
-           
-           return downRoomList;
-             
+
+            return downRoomList;
+
         }
     }
 }

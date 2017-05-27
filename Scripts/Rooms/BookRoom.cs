@@ -6,85 +6,89 @@ using System;
 public class BookRoom : MonoBehaviour, RoomInterface
 {
 
-	private String roomName;
+    private String roomName;
 
-	[SerializeField]private int[] xyz;
+    [SerializeField] private int[] xyz;
 
-	
 
-	public GameObject northDoor;
-	public GameObject southDoor;
-	public GameObject westDoor;
-	public GameObject eastDoor;
+
+    public GameObject northDoor;
+    public GameObject southDoor;
+    public GameObject westDoor;
+    public GameObject eastDoor;
+
+    private List<Character> charas;
+
+    private StoryInterface si;
 
 
     private Dictionary<String, EventInterface> eventsList = new Dictionary<string, EventInterface>();
 
 
-	string RoomInterface.getRoomName ()
-	{
-		return "书房";
-	}
+    string RoomInterface.getRoomName()
+    {
+        return "书房";
+    }
 
-	string RoomInterface.getRoomType ()
-	{
-		return RoomConstant.ROOM_TYPE_BOOK_ROOM;
-	}
-        
-	int[] RoomInterface.getXYZ ()
-	{
-		return xyz;
-	}
+    string RoomInterface.getRoomType()
+    {
+        return RoomConstant.ROOM_TYPE_BOOK_ROOM;
+    }
 
-
-    void RoomInterface.setXYZ (int[] xyz)
-	{
-		this.xyz = xyz;
-	}
+    int[] RoomInterface.getXYZ()
+    {
+        return xyz;
+    }
 
 
-	public void northDoorEnable ()
-	{
-//		northDoor.GetComponent<DoorInterface>().enabled = true;
-		northDoor.GetComponent<DoorInterface> ().setShowFlag (true);//门的图片要替换
-	}
+    void RoomInterface.setXYZ(int[] xyz)
+    {
+        this.xyz = xyz;
+    }
 
-	public void southDoorEnable ()
-	{
-//		southDoor.GetComponent<DoorInterface>().enabled = true;
-		southDoor.GetComponent<DoorInterface> ().setShowFlag (true);//门的图片要替换
-		
-	}
 
-	public void westDoorEnable ()
-	{
-//           westDoor.GetComponent<MonoBehaviour>().enabled = true;
+    public void northDoorEnable()
+    {
+        //		northDoor.GetComponent<DoorInterface>().enabled = true;
+        northDoor.GetComponent<DoorInterface>().setShowFlag(true);//门的图片要替换
+    }
 
-		westDoor.GetComponent<DoorInterface> ().setShowFlag (true);//门的图片要替换
-	}
+    public void southDoorEnable()
+    {
+        //		southDoor.GetComponent<DoorInterface>().enabled = true;
+        southDoor.GetComponent<DoorInterface>().setShowFlag(true);//门的图片要替换
 
-	public void eastDoorEnable ()
-	{
-//           eastDoor.GetComponent<MonoBehaviour>().enabled = true;
-		eastDoor.GetComponent<DoorInterface> ().setShowFlag (true);//门的图片要替换
-	}
+    }
 
-	GameObject RoomInterface.getNorthDoor()
-	{
-		return northDoor;
-	}
-	GameObject RoomInterface.getSouthDoor()
-	{
-		return southDoor;
-	}
-	GameObject RoomInterface.getEastDoor()
-	{
-		return eastDoor;
-	}
-	GameObject RoomInterface.getWestDoor()
-	{
-		return westDoor;
-	}
+    public void westDoorEnable()
+    {
+        //           westDoor.GetComponent<MonoBehaviour>().enabled = true;
+
+        westDoor.GetComponent<DoorInterface>().setShowFlag(true);//门的图片要替换
+    }
+
+    public void eastDoorEnable()
+    {
+        //           eastDoor.GetComponent<MonoBehaviour>().enabled = true;
+        eastDoor.GetComponent<DoorInterface>().setShowFlag(true);//门的图片要替换
+    }
+
+    GameObject RoomInterface.getNorthDoor()
+    {
+        return northDoor;
+    }
+    GameObject RoomInterface.getSouthDoor()
+    {
+        return southDoor;
+    }
+    GameObject RoomInterface.getEastDoor()
+    {
+        return eastDoor;
+    }
+    GameObject RoomInterface.getWestDoor()
+    {
+        return westDoor;
+    }
 
 
     public EventInterface getRoomEvent(string eventType)
@@ -104,5 +108,36 @@ public class BookRoom : MonoBehaviour, RoomInterface
     {
         eventsList.Add(ei.getEventType(), ei);
 
+    }
+
+    public List<Character> getCharas()
+    {
+        return charas;
+    }
+
+    public void setChara(Character chara)
+    {
+        charas.Add(chara);
+
+    }
+
+    public void removeChara(Character chara)
+    {
+        charas.Remove(chara);
+    }
+
+    public bool checkRoomStoryStart(Character chara)
+    {
+        return si.checkStoryStart(chara, this);
+    }
+
+    public void setRoomStory(StoryInterface si)
+    {
+        this.si = si;
+    }
+
+    public StoryInterface getStartedStory()
+    {
+        return this.si;
     }
 }

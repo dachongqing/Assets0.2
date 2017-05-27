@@ -76,7 +76,8 @@ public class StoryController : MonoBehaviour
                         {
                             Debug.Log("UI 显示《《 日了狗了，输了啊：" + player.getScriptAciont().getFailureEndInfo());
                         }
-                        else {
+                        else
+                        {
                             Debug.Log("UI 显示《《 吊炸天，胜利了：" + boss.getScriptAciont().getWinEndInfo());
                         }
                     }
