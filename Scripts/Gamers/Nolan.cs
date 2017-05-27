@@ -196,6 +196,7 @@ public class Nolan : MonoBehaviour,NPC {
         {
         }
         else {
+			
             defaultAction();
         }
 
