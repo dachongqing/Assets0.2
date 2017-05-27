@@ -23,8 +23,8 @@ public class RollDiceUIManager : MonoBehaviour
 	[Tooltip ("两个骰子的间距")]public float DiceWise = 30f;
 	[Tooltip ("文件夹-Resources-Dice3")]public GameObject Dice3Prefab;
 	[Tooltip ("文件夹-Resources-Dice6")]public GameObject Dice6Prefab;
-	[Tooltip ("延时显示结果，请大于动画的1.5秒,默认2")]public float ShowResultDelay = 2f;
-	[Tooltip ("结果之后延时roll点界面自动关闭,默认3")]public float AutoCloseDelay = 3f;
+//	[Tooltip ("延时显示结果，请大于动画的1.5秒,默认2")]public float ShowResultDelay = 2f;
+//	[Tooltip ("结果之后延时roll点界面自动关闭,默认3")]public float AutoCloseDelay = 3f;
 	[Tooltip ("文件夹-Textures-Picture-6个骰子图片")]public Sprite[] DiceSprites;
 
 	public Vector3 showPos=new Vector3(0,0,0);
@@ -113,13 +113,16 @@ public class RollDiceUIManager : MonoBehaviour
 
 			//根据属性值，播放几颗骰子的动画
 			displayDices (speed, 0);
-
+			//稍后替换图片
+			StartCoroutine(ChangeDicePicture(2f));
 			//稍后出现信息提示
-			StartCoroutine (DelayResult (res));
+			StartCoroutine (DelayResult (res,2.5f));
+			//稍后自动关闭UI
+			StartCoroutine (DelayColseUI (5.5f));
 		} else {
-			msgUI.ShowMessge ("你已经丢过行动力骰子了");
+			msgUI.ShowMessge ("你已经丢过行动力骰子了",0);
 			//稍后关闭
-			StartCoroutine (DelayColseUI ());
+			StartCoroutine (DelayColseUI (3f));
 		}
 	}
 
@@ -128,40 +131,40 @@ public class RollDiceUIManager : MonoBehaviour
 	/// </summary>
 	public int rollForJugement (int num)
 	{
-		Debug.Log ("事件调用 呼出了rollUIMangaer，roll点判定？");
+		Debug.Log ("一个事件要求roll点判定");
+
 		int res = 0;
 
 		//显示UI
-//		showRollPlaneNoClose();
+		showRollPlaneNoClose();
 		//计算结果
 		res=diceRoll.calculateDice(num);
 		//播放动画
-//		displayDices(num,0);
-		//延时关闭
-		StartCoroutine(DelayColseUI());
+		displayDices(num,0);
+		//替换图片
+		StartCoroutine(ChangeDicePicture(2f));
+	
 		//显示信息
-		msgUI.ShowMessge ("roll点判定结果为: "+res);
+		msgUI.ShowMessge ("roll点结果为: "+res,2.5f);
+
+		//延时关闭
+		StartCoroutine(DelayColseUI(5f));
 
 		return res;
 	}
 
-	IEnumerator DelayResult (int res)
+	IEnumerator DelayResult (int res,float ti)
 	{
-		yield return new WaitForSeconds (ShowResultDelay);
-		//动画播放完毕后根据结果，替换骰子的图片
-		ChangeDicePicture ();
-
+		yield return new WaitForSeconds (ti);
 		//更新玩家的数据
 		ply.updateActionPoint (res);
 		//信息UI
-		msgUI.ShowMessge ("增加 " + res + " 点行动力");
-		//稍后自动关闭UI
-		StartCoroutine (DelayColseUI ());
+		msgUI.ShowMessge ("增加 " + res + " 点行动力",0);
 	}
 
-	IEnumerator DelayColseUI ()
+	IEnumerator DelayColseUI (float ti)
 	{
-		yield return new WaitForSeconds (AutoCloseDelay);
+		yield return new WaitForSeconds (ti);
 		//销毁骰子
 		foreach(GameObject go in D3Array){
 			Destroy (go);
@@ -181,7 +184,7 @@ public class RollDiceUIManager : MonoBehaviour
 	/// <param name="num6">Num6.</param>
 	void displayDices (int num3, int num6)
 	{
-		Debug.Log ("生成并播放骰子动画");
+//		Debug.Log ("生成并播放骰子动画");
 		
 		//声明控制数组
 		D3Array = new GameObject[num3];
@@ -216,9 +219,10 @@ public class RollDiceUIManager : MonoBehaviour
 		}
 	}
 
-	void ChangeDicePicture ()
+	IEnumerator ChangeDicePicture (float ti)
 	{
-		Debug.Log ("替换3面骰子图片");
+		yield return new WaitForSeconds (ti);
+//		Debug.Log ("替换3面骰子图片");
 		//取得3面结果数组
 		int[] d3ResArray = diceRoll.getD3sResult ();
 		//根据结果替换显示的图片
@@ -249,7 +253,7 @@ public class RollDiceUIManager : MonoBehaviour
 			}
 		}
 
-		Debug.Log ("替换6面骰子图片");
+//		Debug.Log ("替换6面骰子图片");
 		//取得3面结果数组
 		int[] d6ResArray = diceRoll.getD6sResult ();
 		//根据结果替换显示的图片

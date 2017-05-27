@@ -6,12 +6,11 @@ public class EventController : MonoBehaviour {
 
     private EventConstant constant;
 
-
-
     public bool excuteLeaveRoomEvent(RoomInterface ri, Character chara) {
-
+		//这个房间有没有离开事件
         EventInterface eventI = ri.getRoomEvent(EventConstant.LEAVE_EVENT);
 
+		//不为空有事件
         if(eventI != null ) {
             if (chara.isPlayer())
             {
@@ -32,6 +31,7 @@ public class EventController : MonoBehaviour {
 
          } else
         {
+			//为空没有事件
             return true;
         }
     }
@@ -43,22 +43,20 @@ public class EventController : MonoBehaviour {
     public bool excuteEnterRoomEvent(RoomInterface ri, Character chara) {
         return false;
     }
-
-
-   
-
+		
     public string showMessageUi(string message,Dictionary<string,string> selectItem) {
 
         return null;
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	public bool HasLeaveEvent(RoomInterface ri)
+	{
+		EventInterface eventI = ri.getRoomEvent(EventConstant.LEAVE_EVENT);
+
+		if (eventI != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -37,7 +37,7 @@ public class SpeedfallRoomEvent : MonoBehaviour , EventInterface
 
         EventResult er = new EventResult();
         //调用丢骰子UI
-		Debug.Log("事件要调用roll点界面，但是不知道触发条件是什么");
+		Debug.Log("事件-坠落要调用roll点界面");
 		rollDUIM = FindObjectOfType<RollDiceUIManager> ();
 		int dicePoint=rollDUIM.rollForJugement (character.getAbilityInfo()[1]);
 //        int dicePoint = 2;

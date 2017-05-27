@@ -102,7 +102,7 @@ public class LobbyRoom : MonoBehaviour, RoomInterface
 
     public void setRoomEvent(EventInterface ei)
     {
-        Debug.Log("set event " + ei);
+//        Debug.Log("set event " + ei);
         eventsList.Add(ei.getEventType(), ei);
 
     }

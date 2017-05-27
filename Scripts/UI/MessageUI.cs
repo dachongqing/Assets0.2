@@ -17,12 +17,21 @@ public class MessageUI : MonoBehaviour {
 		theText = GetComponentInChildren<Text> ();
 	}
 
-	public void ShowMessge(string msg)
+	/// <summary>
+	/// 显示信息UI框,内容,延时几秒显示
+	/// </summary>
+	/// <param name="msg">Message.</param>
+	/// <param name="time">Time.</param>
+	public void ShowMessge(string msg,float time)
 	{
+		StartCoroutine (ShowDelay(msg,time));
+	}
+		
+	IEnumerator ShowDelay(string msg,float time)
+	{
+		yield return new WaitForSeconds (time);
 		isShow = true;
-
 		theText.text = msg;
-
 		StartCoroutine (DelayHide());
 	}
 
