@@ -8,10 +8,6 @@ public class DiceRollCtrl : MonoBehaviour {
 
     public int calculateDice( int dic3, int dic6)
     {
-
-     
-
-
         resD3Array = new int[dic3];
         int _RollD3resSUM = 0;
         resD6Array = new int[dic6];
@@ -45,7 +41,6 @@ public class DiceRollCtrl : MonoBehaviour {
     //我只想丢dic3个骰子， 不关心是几面的
     public int calculateDice(int dic3)
     {
-
         int[] resD3Array = new int[dic3];
         int _RollD3resSUM = 0;
 
@@ -58,8 +53,6 @@ public class DiceRollCtrl : MonoBehaviour {
             _RollD3resSUM += tem.getDiceRes();
         }
       //  Debug.Log(dic3 + " 颗三面骰子的和 " + _RollD3resSUM);
-
-
         return _RollD3resSUM;
 
     }

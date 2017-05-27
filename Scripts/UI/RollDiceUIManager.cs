@@ -76,7 +76,7 @@ public class RollDiceUIManager : MonoBehaviour
         UIrollPlane.transform.localPosition = showPos;
         //关闭按钮禁用
         rollCloseGO.SetActive(false);
-        //roll点按钮启用
+        //roll点按钮禁用
         rollStartGO.SetActive(false);
     }
 
@@ -107,7 +107,7 @@ public class RollDiceUIManager : MonoBehaviour
             rollStartGO.SetActive(false);
 
             //马山根据属性值计算roll点的得到了结果
-            //int speed = ply.getAbilityInfo()[1] + ply.getEffectBuff();
+//            int speed = ply.getAbilityInfo()[1] + ply.getEffectBuff();
             int speed = ply.getAbilityInfo()[1];
             int res = diceRoll.calculateDice( speed, 0);
             Debug.Log("目前写只有speed参与计算，没有buff,只有3面，6面永为0，以后请修改");
@@ -135,6 +135,7 @@ public class RollDiceUIManager : MonoBehaviour
     public int rollForJugement(int num)
     {
         Debug.Log("一个事件要求roll点判定");
+		msgUI.ShowMessge ("一个事件要求roll点判定",0);
 
         int res = 0;
 
