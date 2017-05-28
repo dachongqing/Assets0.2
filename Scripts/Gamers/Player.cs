@@ -51,7 +51,7 @@ public class Player : MonoBehaviour, NPC
     {
         this.xyz = xyz;
 
-		Debug.Log ("玩家进入新房间: ");
+//		Debug.Log ("玩家进入新房间: ");
 		Vector3 temPos = new Vector3(xyz [0] * roomH,xyz[1]*roomV,0);
 		this.transform.position = temPos;
     }

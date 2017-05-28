@@ -107,16 +107,12 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 			//生成门时，门启用，但加锁；玩家进入房间，门解锁可点击；玩家离开房间，门加锁不可点击
 
 			if (opened) {
-				//如果有离开事件
-				if (eventController.HasLeaveEvent (getRoom ())) {
-					bool result = eventController.excuteLeaveRoomEvent (getRoom (), roundController.getCurrentRoundChar ()); 
-					StartCoroutine (LeaveRoomDelay (result));
+				
+				bool result = eventController.excuteLeaveRoomEvent (getRoom (), roundController.getCurrentRoundChar ()); 
 
-				} else {
-					//如果没有离开事件
+				if (result == true) {
 					//离开门成功
-					int[] te = getNextRoomXYZ ();
-					Debug.Log ("点门移动！无离开事件，目标房间 " + te [0] + "," + te [1] + "," + te [2]);
+					Debug.Log ("离开房间成功");
 					//进入下一个房间
 					RoomInterface nextRoom = roomContraller.findRoomByXYZ (getNextRoomXYZ ());
 
@@ -128,38 +124,17 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 
 					//触发进门事件
 					//eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
+
+				} else {
+					//离开失败
+					Debug.Log ("离开房间失败");
+					FindObjectOfType<MessageUI> ().ShowMessge ("离开房间失败 ",0);
 				}
+
 			}
 
 		}
 	}
-
-	IEnumerator LeaveRoomDelay (bool result)
-	{
-		yield return new WaitForSeconds (5f);
-		if (result == true) {
-			//离开门成功
-			int[] te = getNextRoomXYZ ();
-			Debug.Log ("点门移动！有离开事件，目标房间 " + te [0] + "," + te [1] + "," + te [2]);
-			//进入下一个房间
-			RoomInterface nextRoom = roomContraller.findRoomByXYZ (getNextRoomXYZ ());
-
-			//摄像机移动到下一个房间坐标
-			camCtrl.setTargetPos (getNextRoomXYZ ());
-
-			//当前人物坐标移动到下一个房间
-			roundController.getCurrentRoundChar ().setCurrentRoom (getNextRoomXYZ ());
-
-			//触发进门事件
-			//eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
-
-		} else {
-			//离开失败
-			Debug.Log ("因离开事件，离开房间失败");
-			FindObjectOfType<MessageUI> ().ShowMessge ("因离开事件，离开房间失败 ",0);
-		}
-	}
-
 
 	//鼠标离开门区域
 	void OnMouseExit ()

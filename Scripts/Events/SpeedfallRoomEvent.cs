@@ -29,18 +29,13 @@ public class SpeedfallRoomEvent : MonoBehaviour , EventInterface
         badSpeedPoint = 0;
 
         eventType= EventConstant.DOWN_EVENT;
-
-//		rollDUIM = FindObjectOfType<RollDiceUIManager> ();
     }
     public EventResult excute(Character character, String selectCode) {
 
 
         EventResult er = new EventResult();
         //调用丢骰子UI
-		Debug.Log("事件-坠落要调用roll点界面");
-		rollDUIM = FindObjectOfType<RollDiceUIManager> ();
-		int dicePoint=rollDUIM.rollForJugement (character.getAbilityInfo()[1]);
-//        int dicePoint = 2;
+        int dicePoint = 2;
         if (minSpeedPoint <= dicePoint)
         {
             er.setStatus(true);

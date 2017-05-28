@@ -247,7 +247,7 @@ public class Nolan : MonoBehaviour, NPC
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         int[] roomXYZ = { 0, 0, 0 };
         setCurrentRoom(roomXYZ);
-        abilityInfo = new int[] { 3, 1, 2, 6 };
+        abilityInfo = new int[] { 3, 3, 2, 6 };
         this.actionPointrolled = false;
         Debug.Log("叶成亮 进入默认房间");
         playerName = "叶成亮";

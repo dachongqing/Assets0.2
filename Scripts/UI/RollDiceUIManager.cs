@@ -67,20 +67,6 @@ public class RollDiceUIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 显示roll点界面，关闭按钮不启用
-    /// </summary>
-    public void showRollPlaneNoClose()
-    {
-        //弹出roll点界面
-        //		UIrollPlane.SetActive (true);
-        UIrollPlane.transform.localPosition = showPos;
-        //关闭按钮禁用
-        rollCloseGO.SetActive(false);
-        //roll点按钮禁用
-        rollStartGO.SetActive(false);
-    }
-
-    /// <summary>
     /// 关闭roll点界面
     /// </summary>
     public void closeRollPlane()
@@ -110,7 +96,6 @@ public class RollDiceUIManager : MonoBehaviour
 //            int speed = ply.getAbilityInfo()[1] + ply.getEffectBuff();
             int speed = ply.getAbilityInfo()[1];
             int res = diceRoll.calculateDice( speed, 0);
-            Debug.Log("目前写只有speed参与计算，没有buff,只有3面，6面永为0，以后请修改");
 
             //根据属性值，播放几颗骰子的动画
             displayDices(speed, 0);
@@ -128,35 +113,7 @@ public class RollDiceUIManager : MonoBehaviour
             StartCoroutine(DelayColseUI(3f));
         }
     }
-
-    /// <summary>
-    /// 为了事件判定,调用roll点UI
-    /// </summary>
-    public int rollForJugement(int num)
-    {
-        Debug.Log("一个事件要求roll点判定");
-		msgUI.ShowMessge ("一个事件要求roll点判定",0);
-
-        int res = 0;
-
-        //显示UI
-        showRollPlaneNoClose();
-        //计算结果
-        res = diceRoll.calculateDice(num);
-        //播放动画
-        displayDices(num, 0);
-        //替换图片
-        StartCoroutine(ChangeDicePicture(2f));
-
-        //显示信息
-        msgUI.ShowMessge("roll点结果为: " + res, 2.5f);
-
-        //延时关闭
-        StartCoroutine(DelayColseUI(5f));
-
-        return res;
-    }
-
+		
     IEnumerator DelayResult(int res, float ti)
     {
         yield return new WaitForSeconds(ti);
@@ -190,8 +147,6 @@ public class RollDiceUIManager : MonoBehaviour
     /// <param name="num6">Num6.</param>
     void displayDices(int num3, int num6)
     {
-        //		Debug.Log ("生成并播放骰子动画");
-
         //声明控制数组
         D3Array = new GameObject[num3];
         D6Array = new GameObject[num6];
@@ -262,8 +217,7 @@ public class RollDiceUIManager : MonoBehaviour
 
             }
         }
-
-        //		Debug.Log ("替换6面骰子图片");
+			
         //取得3面结果数组
         int[] d6ResArray = diceRoll.getD6sResult();
         //根据结果替换显示的图片

@@ -34,8 +34,6 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
         badSpeedPoint = 0;
 
         eventType = EventConstant.LEAVE_EVENT;
-                
-//		rollUIMag=FindObjectOfType<RollDiceUIManager>();会有脚本先后顺序上的bug
     }
 
 
@@ -46,9 +44,9 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
         int dicePoint = 0;
         if (character.isPlayer())
         {
-			rollUIMag=FindObjectOfType<RollDiceUIManager>();
-            //调用丢骰子UI
-			dicePoint = rollUIMag.rollForJugement(character.getAbilityInfo()[1]);
+			int speed=character.getAbilityInfo()[1];
+			dicePoint = diceRoll.calculateDice (speed);
+			Debug.Log ("事件判定 你的结果为 "+dicePoint);
 
         }
         else {
@@ -82,7 +80,6 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
 
     public string getEventBeginInfo()
     {
-        eventBeginInfo = "fsdfsdfsdfsdfsdfsdfsdf";
         return eventBeginInfo;
     }
 
