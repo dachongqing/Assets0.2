@@ -80,7 +80,7 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
 
     public string getEventBeginInfo()
     {
-        return eventBeginInfo;
+        return "sadadasdasdasdasdasddfgdfg";
     }
 
     public string getEventEndInfo(string resultCode)

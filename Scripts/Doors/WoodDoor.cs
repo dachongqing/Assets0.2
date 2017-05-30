@@ -65,7 +65,7 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 			return true;
 		} else {
 			MessageUI msgUI = FindObjectOfType<MessageUI> ();
-			msgUI.ShowMessge ("玩家行动点数不足",0);
+			msgUI.ShowMessge ("玩家行动点数不足",0,null);
 			return false;
 		}
 
@@ -108,31 +108,35 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 
 			if (opened) {
 				
-				bool result = eventController.excuteLeaveRoomEvent (getRoom (), roundController.getCurrentRoundChar ()); 
+				eventController.excuteLeaveRoomEvent (this,getRoom (), roundController.getCurrentRoundChar ()); 
 
-				if (result == true) {
-					//离开门成功
-					Debug.Log ("离开房间成功");
-					//进入下一个房间
-					RoomInterface nextRoom = roomContraller.findRoomByXYZ (getNextRoomXYZ ());
 
-					//摄像机移动到下一个房间坐标
-					camCtrl.setTargetPos (getNextRoomXYZ ());
-
-					//当前人物坐标移动到下一个房间
-					roundController.getCurrentRoundChar ().setCurrentRoom (getNextRoomXYZ ());
-
-					//触发进门事件
-					//eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
-
-				} else {
-					//离开失败
-					Debug.Log ("离开房间失败");
-					FindObjectOfType<MessageUI> ().ShowMessge ("离开房间失败 ",0);
-				}
 
 			}
 
+		}
+	}
+
+	public void callback(bool eventResult) {
+		if (eventResult == true) {
+			//离开门成功
+			Debug.Log ("离开房间成功");
+			//进入下一个房间
+			RoomInterface nextRoom = roomContraller.findRoomByXYZ (getNextRoomXYZ ());
+
+			//摄像机移动到下一个房间坐标
+			camCtrl.setTargetPos (getNextRoomXYZ ());
+
+			//当前人物坐标移动到下一个房间
+			roundController.getCurrentRoundChar ().setCurrentRoom (getNextRoomXYZ ());
+
+			//触发进门事件
+			//eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
+
+		} else {
+			//离开失败
+			Debug.Log ("离开房间失败");
+			FindObjectOfType<MessageUI> ().ShowMessge ("离开房间失败 ",0,null);
 		}
 	}
 

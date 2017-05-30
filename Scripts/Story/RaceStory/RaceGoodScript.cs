@@ -135,28 +135,28 @@ public class RaceGoodScript : StoryScript {
                     if (opened)
                     {
 
-                        bool result = eventController.excuteLeaveRoomEvent(currentRoom, chara);
+                   //     bool result = eventController.excuteLeaveRoomEvent(currentRoom, chara);
 
                         //非正式测试用，只考虑行动力足够
 
 
-                        if (result == true)
-                        {
+                     //   if (result == true)
+                       // {
                             //离开门成功
 
-                            path.Pop();
+                         //   path.Pop();
                             //当前人物坐标移动到下一个房间
-                            chara.setCurrentRoom(nextRoom.xy);
+                           // chara.setCurrentRoom(nextRoom.xy);
 
                             //触发进门事件
                             //	eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
 
-                        }
-                        else
-                        {
+                        //}
+                       // else
+                       // {
                             //离开失败
-                            Debug.Log("WoodDoor.cs OnMouseDown 离开房间失败");
-                        }
+                         //   Debug.Log("WoodDoor.cs OnMouseDown 离开房间失败");
+                        //}
                     }
 
                 }

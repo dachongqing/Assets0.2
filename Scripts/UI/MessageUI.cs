@@ -11,6 +11,7 @@ public class MessageUI : MonoBehaviour {
 
 	private bool isShow;
 	private Text theText;
+	private EventController eventCon;
 
 	// Use this for initialization
 	void Start () {
@@ -22,8 +23,9 @@ public class MessageUI : MonoBehaviour {
 	/// </summary>
 	/// <param name="msg">Message.</param>
 	/// <param name="time">Time.</param>
-	public void ShowMessge(string msg,float time)
+	public void ShowMessge(string msg,float time,EventController eventCon)
 	{
+		this.eventCon = eventCon;
 		StartCoroutine (ShowDelay(msg,time));
 	}
 		
@@ -39,6 +41,10 @@ public class MessageUI : MonoBehaviour {
 	{
 		yield return new WaitForSeconds (ShowTime);
 		isShow = false;
+		if(eventCon !=null) {
+			
+			eventCon.rollCallBack ();
+		}
 	}
 
 	void Update()

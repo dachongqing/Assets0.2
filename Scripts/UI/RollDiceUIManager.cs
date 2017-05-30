@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading;
 
 public class RollDiceUIManager : MonoBehaviour
 {
@@ -57,6 +58,8 @@ public class RollDiceUIManager : MonoBehaviour
     /// </summary>
     public void showRollPlaneCanClose()
     {
+		if (ply.ActionPointrolled())
+		{
         //弹出roll点界面
         //		UIrollPlane.SetActive (true);
         UIrollPlane.transform.localPosition = showPos;
@@ -64,7 +67,29 @@ public class RollDiceUIManager : MonoBehaviour
         rollCloseGO.SetActive(true);
         //roll点按钮启用
         rollStartGO.SetActive(true);
+		}
+		else
+		{
+			//msgUI.ShowMessge("你已经丢过行动力骰子了", 0);
+			//稍后关闭
+			//StartCoroutine(DelayColseUI(3f));
+			Debug.Log("你已经丢过行动力骰子了");
+		}
     }
+
+	private EventController eventCon;
+	public void showRollTest(EventController eventCon) {
+		this.eventCon = eventCon;
+		UIrollPlane.transform.localPosition = showPos;
+		//isEnd = true;
+		//this.gameObject.
+		//while(isEnd) {
+		rollCloseGO.SetActive(true);
+		//roll点按钮启用
+		rollStartGO.SetActive(true);
+		//}
+
+	}
 
     /// <summary>
     /// 关闭roll点界面
@@ -85,8 +110,7 @@ public class RollDiceUIManager : MonoBehaviour
     /// </summary>
     public void rollForActionPoint()
     {
-        if (ply.ActionPointrolled())
-        {
+        
             //不能再roll
             ply.setActionPointrolled(false);
 
@@ -105,13 +129,11 @@ public class RollDiceUIManager : MonoBehaviour
             StartCoroutine(DelayResult(res, 2.5f));
             //稍后自动关闭UI
             StartCoroutine(DelayColseUI(5.5f));
-        }
-        else
-        {
-            msgUI.ShowMessge("你已经丢过行动力骰子了", 0);
-            //稍后关闭
-            StartCoroutine(DelayColseUI(3f));
-        }
+		if(this.eventCon !=null) {
+			
+			this.eventCon.uiCallBack(res);
+		}
+       
     }
 		
     IEnumerator DelayResult(int res, float ti)
@@ -120,7 +142,7 @@ public class RollDiceUIManager : MonoBehaviour
         //更新玩家的数据
         ply.updateActionPoint(res);
         //信息UI
-        msgUI.ShowMessge("增加 " + res + " 点行动力", 0);
+        msgUI.ShowMessge("增加 " + res + " 点行动力", 0,null);
     }
 
     IEnumerator DelayColseUI(float ti)
