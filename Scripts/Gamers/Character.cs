@@ -37,8 +37,10 @@ public interface Character
     //更新行动力
     void updateActionPoint(int actionPoint);
 
-    //获取面板信息[力量，速度，知识，神志] 可以扩充
+    //获取面板信息[力量，速度，知识，神志，生命值] 可以扩充
     int[] getAbilityInfo();
+
+    int[] getMaxAbilityInfo(); //获取上限信息
 
     bool ActionPointrolled();
 

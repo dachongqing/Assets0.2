@@ -12,6 +12,8 @@ public class Nolan : MonoBehaviour, NPC
 
     private int[] abilityInfo;
 
+    private int[] maxAbilityInfo;
+
     [SerializeField] private int[] xyz;
 
     private String playerName;
@@ -31,6 +33,8 @@ public class Nolan : MonoBehaviour, NPC
     private StoryScript ss;
 
     private bool bossFlag;
+
+    private Bag bag;
 
     public bool ActionPointrolled()
     {
@@ -247,13 +251,16 @@ public class Nolan : MonoBehaviour, NPC
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         int[] roomXYZ = { 0, 0, 0 };
         setCurrentRoom(roomXYZ);
-        abilityInfo = new int[] { 3, 3, 2, 6 };
+        abilityInfo = new int[] { 3, 3, 2, 6,15 };
+
+        maxAbilityInfo = new int[] { 3, 3, 2, 6, 15 };
         this.actionPointrolled = false;
         Debug.Log("叶成亮 进入默认房间");
         playerName = "叶成亮";
         roomContraller = FindObjectOfType<RoomContraller>();
         diceRoll = FindObjectOfType<DiceRollCtrl>();
         eventController = FindObjectOfType<EventController>();
+        this.bag = new Bag();
     }
 
     // Update is called once per frame
@@ -285,5 +292,15 @@ public class Nolan : MonoBehaviour, NPC
     public void setBoss(bool bossFlag)
     {
         this.bossFlag = bossFlag;
+    }
+
+    public int[] getMaxAbilityInfo()
+    {
+        return maxAbilityInfo;
+    }
+
+    public Bag getBag()
+    {
+        return this.bag;
     }
 }

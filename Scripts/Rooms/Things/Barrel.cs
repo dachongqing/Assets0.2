@@ -1,0 +1,103 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class Barrel : MonoBehaviour
+{
+
+    private Item item;
+
+    private bool isEmpty;
+
+    private bool listenRoll;
+
+    private RoundController roundController;
+
+    private MessageUI messageUI;
+
+    private int phase;
+
+    private int maxValue;
+
+    private RollDiceUIManager uiManager;
+
+    public void invest()
+    {
+        Debug.Log("click a barrel");
+        if (this.isEmpty)
+        {
+            messageUI.ShowMessge("里面是空的", 1);
+        }
+        else {
+
+            NPC chara =  (NPC)roundController.getCurrentRoundChar();
+
+            if (chara.getAbilityInfo()[2] >= 7)
+            {
+                messageUI.ShowMessge("因为你的注意力高度集中，很容易就发现了药水道具", 1);
+                chara.getBag().insertItem(this.getItem());
+            }
+            else if (chara.getAbilityInfo()[2] >= 3)
+            {
+                messageUI.ShowMessge("你注意桶底有点黑色的物品，你需要对力量进行判断 大于10 才能取出那个物品", 1);
+                this.maxValue = 8;
+                this.phase = 1;
+                listenRoll = true;
+            }
+            else {
+                messageUI.ShowMessge("因为你的注意力低下的关系，没能找到任何道具", 1);
+            }
+        }
+    }
+
+    private void rollEvent(int rollValue) {
+        if (this.maxValue >= rollValue)
+        {
+            NPC chara = (NPC)roundController.getCurrentRoundChar();
+            chara.getBag().insertItem(this.getItem());
+            messageUI.ShowMessge("你的力气刚好，拔出了那个物品", 1);
+        }
+        else {
+            messageUI.ShowMessge("因为你的力气不够，没能拔出那个物品", 1);
+        }
+        this.listenRoll = false;
+    }
+
+    private Item getItem() {
+        this.isEmpty = true;
+        return this.item;
+    }
+
+	// Use this for initialization
+	void Start () {
+        roundController = FindObjectOfType<RoundController>();
+        messageUI = FindObjectOfType<MessageUI>();
+        this.isEmpty = false;
+        this.listenRoll = false;
+        this.phase = 1;
+        uiManager = FindObjectOfType<RollDiceUIManager>();
+        item = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001, ItemConstant.ITEM_TYPE_POTION,
+            1,"速度回复药水");
+
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        if (listenRoll)
+        {
+
+            if ( messageUI.getResult().getDone() && messageUI.isClosed())
+            {
+                uiManager.showRollDice();
+            }
+            else if ( uiManager.getResult().getDone() && uiManager.isClosedPlane())
+            {
+                this.rollEvent(uiManager.getResult().getResult());
+               
+            }         
+           
+        }
+    }
+}
