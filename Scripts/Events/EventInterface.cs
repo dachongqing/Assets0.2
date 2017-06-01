@@ -10,7 +10,7 @@ public interface EventInterface  {
 
     EventResult excute(List<Character> characters);
 
-    EventResult excute(Character character,string selectCode);
+    EventResult excute(Character character,string selectCode, int rollValue);
 
     Dictionary<string,string> getSelectItem();
 

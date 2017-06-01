@@ -23,29 +23,29 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
 
     private DiceRollCtrl diceRoll = new DiceRollCtrl();
 
-	private RollDiceUIManager rollUIMag;
+	
 
     public SpeedLeveaRoomEvent() {
 
-        minSpeedPoint = 3;
+        minSpeedPoint = 6;
 
-        maxSpeedPoint = 6;
+        maxSpeedPoint = 15;
 
-        badSpeedPoint = 0;
+        badSpeedPoint = 3;
 
         eventType = EventConstant.LEAVE_EVENT;
     }
 
 
-    public EventResult excute(Character character, String selectCode)
+    public EventResult excute(Character character, String selectCode, int rollValue)
     {
 
         EventResult er = new EventResult();
         int dicePoint = 0;
         if (character.isPlayer())
         {
-			int speed=character.getAbilityInfo()[1];
-			dicePoint = diceRoll.calculateDice (speed);
+			
+			dicePoint = rollValue;
 			Debug.Log ("事件判定 你的结果为 "+dicePoint);
 
         }
@@ -65,8 +65,11 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
         else {
             if (dicePoint <= badSpeedPoint)
             {
-                er.setResultCode(EventConstant.LEAVE_EVENT_BAD);
                 character.getAbilityInfo()[1] = character.getAbilityInfo()[1] - 2;
+                er.setResultCode(EventConstant.LEAVE_EVENT_SHIT);
+            }
+            else {
+                er.setResultCode(EventConstant.LEAVE_EVENT_BAD);
             }
             er.setStatus(false);
         }
@@ -79,18 +82,25 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
     }
 
     public string getEventBeginInfo()
+
     {
-        return "sadadasdasdasdasdasddfgdfg";
+        eventBeginInfo = "你约到了一个人要跟你谈心， 看看 你速度能否跟上他";
+        return eventBeginInfo;
     }
 
     public string getEventEndInfo(string resultCode)
     {
-
+        Debug.Log("resultCode " + resultCode);
         if (resultCode == EventConstant.LEAVE_EVENT_SAFE) {
             eventEndInfo = "太好了， 你安全的离开了房间。";
         }
 
         if (resultCode == EventConstant.LEAVE_EVENT_BAD) {
+            eventEndInfo = "很遗憾， 你没能离开房间。";
+
+        }
+        if (resultCode == EventConstant.LEAVE_EVENT_SHIT)
+        {
             eventEndInfo = "很遗憾， 你没能离开房间，而且受到了伤害。";
 
         }

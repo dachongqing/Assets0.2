@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading;
+using UnityEngine.EventSystems;
 
-public class RollDiceUIManager : MonoBehaviour
+public class RollDiceUIManager : MonoBehaviour ,IPointerClickHandler
 {
 
     //UI右下角的行动力UI文本
@@ -31,7 +31,7 @@ public class RollDiceUIManager : MonoBehaviour
     public Vector3 showPos = new Vector3(0, 0, 0);
     public Vector3 hidePos = new Vector3(0, 800, 0);
 
-    private Player ply;
+   // private Player ply;
     private DiceRollCtrl diceRoll;
     private MessageUI msgUI;
     private GameObject[] D3Array;
@@ -39,10 +39,18 @@ public class RollDiceUIManager : MonoBehaviour
     private GameObject[] D6Array;
     //6面控制数组，用结果替换骰子图片
 
+    private RollDiceResult rollDiceRs = new RollDiceResult();
+
+    private RollDiceParam para;
+
+    public void setRollDiceParam(RollDiceParam para) {
+        this.para = para;
+    }
+
     // Use this for initialization
     void Start()
     {
-        ply = FindObjectOfType<Player>();
+        //ply = FindObjectOfType<Player>();
         diceRoll = FindObjectOfType<DiceRollCtrl>();
         //		UIrollPlane.SetActive (false);
         msgUI = msgGO.GetComponent<MessageUI>();
@@ -50,101 +58,96 @@ public class RollDiceUIManager : MonoBehaviour
 
     void Update()
     {
-        text.text = "当前行动力:" + ply.getActionPoint();
+       // text.text = "当前行动力:" + ply.getActionPoint();
     }
 
     /// <summary>
     /// 显示roll点界面，关闭按钮启用
     /// </summary>
-    public void showRollPlaneCanClose()
+    public void showRollDice()
     {
-		if (ply.ActionPointrolled())
-		{
+       
+      
         //弹出roll点界面
-        //		UIrollPlane.SetActive (true);
+        UIrollPlane.SetActive (true);
         UIrollPlane.transform.localPosition = showPos;
         //关闭按钮启用
         rollCloseGO.SetActive(true);
         //roll点按钮启用
         rollStartGO.SetActive(true);
-		}
-		else
-		{
-			//msgUI.ShowMessge("你已经丢过行动力骰子了", 0);
-			//稍后关闭
-			//StartCoroutine(DelayColseUI(3f));
-			Debug.Log("你已经丢过行动力骰子了");
-		}
+       
     }
 
-	private EventController eventCon;
-	public void showRollTest(EventController eventCon) {
-		this.eventCon = eventCon;
-		UIrollPlane.transform.localPosition = showPos;
-		//isEnd = true;
-		//this.gameObject.
-		//while(isEnd) {
-		rollCloseGO.SetActive(true);
-		//roll点按钮启用
-		rollStartGO.SetActive(true);
-		//}
-
-	}
-
+  
     /// <summary>
     /// 关闭roll点界面
     /// </summary>
+    
     public void closeRollPlane()
     {
+        if (!rollStartGO.activeSelf) {
+            foreach (GameObject go in D3Array)
+            {
+                Destroy(go);
+            }
+
+            foreach (GameObject go in D6Array)
+            {
+                Destroy(go);
+            }
+        }
+       
         //roll点界面禁用
-        //		UIrollPlane.SetActive (false);
+        UIrollPlane.SetActive (false);
         UIrollPlane.transform.localPosition = hidePos;
         //关闭按钮禁用
         rollCloseGO.SetActive(false);
         //roll点按钮禁用
         rollStartGO.SetActive(false);
-    }
 
+    }
+    
     /// <summary>
     /// 为了增加行动力roll点
     /// </summary>
     public void rollForActionPoint()
     {
-        
+       
             //不能再roll
-            ply.setActionPointrolled(false);
+          //  ply.setActionPointrolled(false);
 
             rollStartGO.SetActive(false);
 
             //马山根据属性值计算roll点的得到了结果
 //            int speed = ply.getAbilityInfo()[1] + ply.getEffectBuff();
-            int speed = ply.getAbilityInfo()[1];
-            int res = diceRoll.calculateDice( speed, 0);
+            //int speed = ply.getAbilityInfo()[1];
+            int res = diceRoll.calculateDice(this.para.getDiceNum(), 0);
 
             //根据属性值，播放几颗骰子的动画
-            displayDices(speed, 0);
+            displayDices(this.para.getDiceNum(), 0);
             //稍后替换图片
             StartCoroutine(ChangeDicePicture(2f));
             //稍后出现信息提示
-            StartCoroutine(DelayResult(res, 2.5f));
-            //稍后自动关闭UI
-            StartCoroutine(DelayColseUI(5.5f));
-		if(this.eventCon !=null) {
-			
-			this.eventCon.uiCallBack(res);
-		}
-       
+         //   StartCoroutine(DelayResult(res, 2.5f));
+            this.rollDiceRs.setResult(res);
+            this.rollDiceRs.setDone(true);
+        //稍后自动关闭UI
+        // StartCoroutine(DelayColseUI(5.5f));
+
     }
 		
+    /*
     IEnumerator DelayResult(int res, float ti)
     {
         yield return new WaitForSeconds(ti);
         //更新玩家的数据
         ply.updateActionPoint(res);
         //信息UI
-        msgUI.ShowMessge("增加 " + res + " 点行动力", 0,null);
+        msgUI.ShowMessge("增加 " + res + " 点行动力", 0);
     }
+    */
 
+    /*
     IEnumerator DelayColseUI(float ti)
     {
         yield return new WaitForSeconds(ti);
@@ -160,6 +163,10 @@ public class RollDiceUIManager : MonoBehaviour
         }
 
         closeRollPlane();
+    }
+    */
+    public RollDiceResult getResult() {
+        return this.rollDiceRs;
     }
 
     /// <summary>
@@ -271,5 +278,17 @@ public class RollDiceUIManager : MonoBehaviour
 
             }
         }
+    }
+
+    public bool isClosedPlane() {
+        return UIrollPlane.activeSelf;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+
+       
+        closeRollPlane();
+
     }
 }   

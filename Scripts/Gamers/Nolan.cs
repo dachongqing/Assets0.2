@@ -159,29 +159,29 @@ public class Nolan : MonoBehaviour, NPC
                     //如果进入房间是目标房间 暂时回合结束
                     if (opened)
                     {
-                       // bool result = eventController.excuteLeaveRoomEvent(currentRoom, this);
+                        bool result = eventController.excuteLeaveRoomEvent(currentRoom, this);
 
                         //非正式测试用，只考虑行动力足够
 
 
-                        //if (result == true)
-                        //{
+                        if (result == true)
+                        {
                             //离开门成功
-                          //  path.Pop();
+                            path.Pop();
 
 
                             //当前人物坐标移动到下一个房间
-                            //this.setCurrentRoom(nextRoom.xy);
+                            this.setCurrentRoom(nextRoom.xy);
 
                             //触发进门事件
                             //	eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
 
-                        //}
-                        //else
-                        //{
+                        }
+                        else
+                        {
                             //离开失败
-                          //  Debug.Log("WoodDoor.cs OnMouseDown 离开房间失败");
-                        //}
+                            Debug.Log("WoodDoor.cs OnMouseDown 离开房间失败");
+                        }
                     }
 
                 }

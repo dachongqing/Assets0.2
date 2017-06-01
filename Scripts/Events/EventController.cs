@@ -2,68 +2,80 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading;
 
 public class EventController : MonoBehaviour
 {
 
 	private EventConstant constant;
 
-	private DoorInterface door;
+    private bool leaveExecuted;
 
-	private RoomInterface ri;
+    public MessageUI messageUI;
 
-	private Character chara;
+    public RollDiceUIManager uiManager;
 
-	private EventInterface eventI;
+    private EventInterface eventI;
 
-	public void excuteLeaveRoomEvent (DoorInterface door, RoomInterface ri, Character chara)
+    private Character chara;
+
+    private RoomInterface ri;
+       
+    private int phase;
+
+    private DoorInterface door;
+
+    private EventResult result;
+
+    public void excuteLeaveRoomEvent (DoorInterface door, RoomInterface ri, Character chara)
 	{
 		//这个房间有没有离开事件
-		this.door = door;
-		this.chara = chara;
-		this.ri = ri;
-
 		 eventI = ri.getRoomEvent (EventConstant.LEAVE_EVENT);
 
 		//不为空有事件
 		if (eventI != null) {
-			if (chara.isPlayer ()) {
+			
 				Debug.Log ("有离开事件");
-				//show ui 
-				 showMessageUi (eventI.getEventBeginInfo(), eventI.getSelectItem());
+                leaveExecuted = false;
+                this.ri = ri;
+                this.chara = chara;
+                this.door = door;
+                phase = 1;
+                messageUI.getResult().setDone(false);
 
 
-				Debug.Log("wait ui end");
-				//showMessageUi (eventI.getEventEndInfo (result.getResultCode ()), null);
 
-				//return result.getStatus ();
-			} else {
-				EventResult result = eventI.excute (chara, null);
-				this.door.callback(result.getStatus());
-				//return result.getStatus ();
-			}
-
-		} else {
+        } else {
 			//为空没有事件
 			Debug.Log ("没有离开事件");
-			//return true;
-			this.door.callback(true);
-		}
+            door.playerOpenDoorResult(true);
+
+            }
 	}
 
-	public void uiCallBack(int selectCode) {
-		EventResult result = eventI.excute(chara, "");
+    public bool excuteLeaveRoomEvent(RoomInterface ri, Character chara)
+    {
+        //这个房间有没有离开事件
+        eventI = ri.getRoomEvent(EventConstant.LEAVE_EVENT);
 
-		this.door.callback (result.getStatus());
+        //不为空有事件
+        if (eventI != null)
+        {
+           
+                EventResult result = eventI.excute(chara, null, 0);
 
-	}
+                return result.getStatus();
+          
 
-	public void rollCallBack() {
-		uiManager.showRollTest(this);
-	}
+        }
+        else
+        {
+            //为空没有事件
+            Debug.Log("没有离开事件");
+            return true;
+        }
+    }
 
-	public bool excuteStayRoomEvent (RoomInterface ri, Character chara)
+    public bool excuteStayRoomEvent (RoomInterface ri, Character chara)
 	{
 		return false;
 	}
@@ -73,28 +85,58 @@ public class EventController : MonoBehaviour
 		return false;
 	}
 
-	public RollDiceUIManager uiManager;
-
-	public MessageUI messageUI;
-
-
-	public string showMessageUi (string message, Dictionary<string,string> selectItem)
+	public void showMessageUi (string message, Dictionary<string,string> selectItem)
 	{
-		Debug.Log (message);
-		//弹出roll点界面
-		//		UIrollPlane.SetActive (true);
-		messageUI.ShowMessge(message,1,this);
+        messageUI.ShowMessge(message,1);
 
-		//eventNotice.WaitOne ();
-		//关闭按钮
-	//	rollCloseGO.SetActive(true);
-		//roll点按钮启用
-	//	rollStartGO.SetActive(true);
+    }
 
-		return null;
-	}
+    void Start()
+    {
+        leaveExecuted = true;
 
-	void Start() {
-		uiManager = FindObjectOfType<RollDiceUIManager>();
-	}
+      
+    }
+
+      private int rollVaue = 0;
+      void Update()
+    {
+        if (!leaveExecuted) {
+
+            if (phase == 1 && !messageUI.getResult().getDone())
+            {
+                Debug.Log("phase =1 and " + messageUI.getResult().getDone());
+              
+                showMessageUi(eventI.getEventBeginInfo(), eventI.getSelectItem());
+            } else if(phase == 1 && messageUI.getResult().getDone())
+            {
+                Debug.Log("phase =1 and " + messageUI.getResult().getDone());
+                phase = 2;
+               
+            }
+
+            if (phase == 2 && !uiManager.getResult().getDone() && messageUI.isClosed())
+            {
+                Debug.Log("wait mesui end");
+                uiManager.showRollDice();
+               
+            } else if (phase == 2 && uiManager.getResult().getDone()) {
+                rollVaue = uiManager.getResult().getResult();
+               // uiManager.closeRollPlane();
+                phase = 3;
+            }
+           
+            if (phase == 3 && !uiManager.isClosedPlane()) {
+                result = eventI.excute(chara, messageUI.getResult().getResult(), rollVaue);
+                showMessageUi(eventI.getEventEndInfo(result.getResultCode()), null);
+                phase = 4;
+            }
+            
+            else if (phase == 4 && messageUI.getResult().getDone())
+            {
+                this.door.playerOpenDoorResult(result.getStatus());
+                leaveExecuted = true;
+            }
+        }
+    }
 }

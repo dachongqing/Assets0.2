@@ -15,4 +15,6 @@ public class EventConstant  {
     public const string LEAVE_EVENT_SAFE = "Leave_10001";
 
     public const string LEAVE_EVENT_BAD = "Leave_10002";
+
+    public const string LEAVE_EVENT_SHIT = "Leave_10003";
 }

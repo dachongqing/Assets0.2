@@ -30,7 +30,7 @@ public class SpeedfallRoomEvent : MonoBehaviour , EventInterface
 
         eventType= EventConstant.DOWN_EVENT;
     }
-    public EventResult excute(Character character, String selectCode) {
+    public EventResult excute(Character character, String selectCode, int rollValue) {
 
 
         EventResult er = new EventResult();
