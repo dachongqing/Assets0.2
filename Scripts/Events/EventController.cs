@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class EventController : MonoBehaviour
 {
-
-	private EventConstant constant;
-
+    
     private bool leaveExecuted;
 
     public MessageUI messageUI;
