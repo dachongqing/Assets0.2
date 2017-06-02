@@ -23,8 +23,9 @@ public class Barrel : MonoBehaviour
 
     private RollDiceUIManager uiManager;
 
-    public void invest()
-    {
+    void OnMouseDown()
+    
+        {
         Debug.Log("click a barrel");
         if (this.isEmpty)
         {
@@ -41,8 +42,8 @@ public class Barrel : MonoBehaviour
             }
             else if (chara.getAbilityInfo()[2] >= 3)
             {
-                messageUI.ShowMessge("你注意桶底有点黑色的物品，你需要对力量进行判断 大于10 才能取出那个物品", 1);
-                this.maxValue = 8;
+                messageUI.ShowMessge("你注意桶底有点黑色的物品，你需要对力量进行判断 大于5 才能取出那个物品", 1);
+                this.maxValue = 5;
                 this.phase = 1;
                 listenRoll = true;
             }
@@ -52,8 +53,8 @@ public class Barrel : MonoBehaviour
         }
     }
 
-    private void rollEvent(int rollValue) {
-        if (this.maxValue >= rollValue)
+    private void openEvent(int rollValue) {
+        if (this.maxValue <= rollValue)
         {
             NPC chara = (NPC)roundController.getCurrentRoundChar();
             chara.getBag().insertItem(this.getItem());
@@ -82,21 +83,34 @@ public class Barrel : MonoBehaviour
             1,"速度回复药水");
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+    private int rollValue;
+    
+    // Update is called once per frame
+    void Update () {
         if (listenRoll)
         {
 
-            if ( messageUI.getResult().getDone() && messageUI.isClosed())
+            if (phase == 1 && messageUI.getResult().getDone())
             {
+                phase =  2;
+            }
+
+            if (phase == 2 && !uiManager.getResult().getDone() && messageUI.isClosed())
+            {
+                NPC chara = (NPC)roundController.getCurrentRoundChar();
+                RollDiceParam param = new RollDiceParam(chara.getAbilityInfo()[1]);
+                uiManager.setRollDiceParam(param);
                 uiManager.showRollDice();
             }
-            else if ( uiManager.getResult().getDone() && uiManager.isClosedPlane())
+            else if (phase == 2 && uiManager.getResult().getDone())
             {
-                this.rollEvent(uiManager.getResult().getResult());
-               
-            }         
+                rollValue = uiManager.getResult().getResult();
+                phase = 3;
+
+            } else if (phase == 3 &&  !uiManager.isClosedPlane()) {
+
+                this.openEvent(rollValue);
+            }       
            
         }
     }

@@ -43,7 +43,8 @@ public class ItemController : MonoBehaviour {
                 chara.getAbilityInfo()[0] = chara.getMaxAbilityInfo()[0];
             } else {
                 chara.getAbilityInfo()[0] = str + 2;
-            } 
+            }
+            Debug.Log("你使用了一个回复力量的物品");
         }
 
         if (item.getCode() == ItemConstant.ITEM_CODE_POTION_10001)
@@ -57,6 +58,7 @@ public class ItemController : MonoBehaviour {
             {
                 chara.getAbilityInfo()[1] = speed + 2;
             }
+            Debug.Log("你使用了一个回复速度的物品");
         }
         Debug.Log("从背包里移除用掉的药水道具 " + item.getName());
         chara.getBag().removeItem(item);

@@ -10,8 +10,8 @@ public class ItemConstant  {
 
     public const string ITEM_TYPE_SPEC = "spec"; //特殊
 
-    public const string ITEM_CODE_POTION_00001 = "00001"; //回复2点力量药水 
+    public const string ITEM_CODE_POTION_00001 = "potion_00001"; //回复2点力量药水 
 
-    public const string ITEM_CODE_POTION_10001 = "10001"; //回复2点速度药水 
+    public const string ITEM_CODE_POTION_10001 = "potion_10001"; //回复2点速度药水 
 
 }
