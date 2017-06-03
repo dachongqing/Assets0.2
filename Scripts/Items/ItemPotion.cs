@@ -14,10 +14,10 @@ public class ItemPotion : Item {
     private string name;
 
 
-    public ItemPotion(string code , string type, int durability, string name) {
+    public ItemPotion(string code , string name) {
         this.code = code;
-        this.type = type;
-        this.durability = durability;
+		this.type = ItemConstant.ITEM_TYPE_POTION;
+        this.durability = 1;
         this.name = name;
     }
 

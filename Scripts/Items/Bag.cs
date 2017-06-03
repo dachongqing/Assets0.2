@@ -37,6 +37,10 @@ public class Bag  {
        
     }
 
+	public List<Item> getTaskItems() {
+		return bag [ItemConstant.ITEM_TYPE_SPEC];
+	}
+
     public int getItemTotalCount() {
         return bag[ItemConstant.ITEM_TYPE_POTION].Count + bag[ItemConstant.ITEM_TYPE_TOOL].Count + bag[ItemConstant.ITEM_TYPE_SPEC].Count;
     }

@@ -14,4 +14,6 @@ public class ItemConstant  {
 
     public const string ITEM_CODE_POTION_10001 = "potion_10001"; //回复2点速度药水 
 
+	public const string ITEM_CODE_SPEC_00001 = "spec_00001"; //带血的黑书 
+
 }

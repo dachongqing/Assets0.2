@@ -17,6 +17,8 @@ public class BookRoom : MonoBehaviour, RoomInterface
     public GameObject westDoor;
     public GameObject eastDoor;
 
+	public GameObject box;
+
     private List<Character> charas;
 
     private StoryInterface si;
@@ -89,6 +91,10 @@ public class BookRoom : MonoBehaviour, RoomInterface
     {
         return westDoor;
     }
+
+	public GameObject getBox() {
+		return box;	
+	}
 
 
     public EventInterface getRoomEvent(string eventType)

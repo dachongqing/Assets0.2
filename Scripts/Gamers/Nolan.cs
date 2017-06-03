@@ -194,6 +194,17 @@ public class Nolan : MonoBehaviour, NPC
             {
                 //找到房间后， 等待后续细节，：根据设定找下一个房间？ 开启剧本？ 目前直接结束回合
                 Debug.Log(this.playerName + "已经到达目标房间 (" + getCurrentRoom()[0] + "," + getCurrentRoom()[1] + ")");
+				if(RoomConstant.ROOM_TYPE_BOOK_ROOM == currentRoom.getRoomType()) {
+					BookRoom bookRoom = (BookRoom)currentRoom;
+					Item item = bookRoom.getBox ().GetComponent<Box> ().getItem (this);
+					if(item == null) {
+						Debug.Log ("我的任务物品，已经没有了，已经是咸鱼了");
+					} else {
+						Debug.Log ("我的任务物品，拿到手了，我已经无敌了");
+						this.bag.insertItem (item);
+					}
+				}
+				//开始尝试寻找剧情道具
             }
         }
         else

@@ -79,8 +79,8 @@ public class Barrel : MonoBehaviour
         this.listenRoll = false;
         this.phase = 1;
         uiManager = FindObjectOfType<RollDiceUIManager>();
-        item = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001, ItemConstant.ITEM_TYPE_POTION,
-            1,"速度回复药水");
+        item = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001
+            ,"速度回复药水");
 
     }
     private int rollValue;
