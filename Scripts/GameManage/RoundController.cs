@@ -107,6 +107,8 @@ public class RoundController : MonoBehaviour
 
         if (isRoundEnd)
         {
+
+
             playChara = this.getNextCharecter();
             playChara.setActionPointrolled(true);
 
@@ -114,6 +116,9 @@ public class RoundController : MonoBehaviour
             isRoundEnd = false;
             if (playChara.isPlayer())
             {
+                if (this.roundList.Count == 0) {
+                 Debug.Log("世界安静了。。。你是唯一的幸存者。。游戏结束");
+                }
 
                 mState = OperatorState.Player;
                 //解除黑屏
@@ -161,7 +166,7 @@ public class RoundController : MonoBehaviour
                     }
                     if (playChara.isRoundOver())
                     {
-
+                        Debug.Log("NPC 行动完毕了，");
                         this.setEndRound(playChara);
                         isRoundEnd = true;
                         Debug.Log("ai done,wait next ai move");
@@ -175,9 +180,11 @@ public class RoundController : MonoBehaviour
             if (playChara.isPlayer())
             {
                 //game over 
+                Debug.Log("你已经死了， 不要怕这只是一个梦");
             }
             else
             {
+                Debug.Log("npc 死了");
                 isRoundEnd = true;
             }
 

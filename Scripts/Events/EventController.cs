@@ -116,6 +116,8 @@ public class EventController : MonoBehaviour
             if (phase == 2 && !uiManager.getResult().getDone() && messageUI.isClosed())
             {
                 Debug.Log("wait mesui end");
+                RollDiceParam param = new RollDiceParam(chara.getAbilityInfo()[1]);
+                uiManager.setRollDiceParam(param);
                 uiManager.showRollDice();
                
             } else if (phase == 2 && uiManager.getResult().getDone()) {

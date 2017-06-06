@@ -22,11 +22,17 @@ public class Player : MonoBehaviour, NPC
 
     private bool actionPointrolled;
 
+    private bool deadFlag;
+
     private APathManager aPathManager = new APathManager();
 
     private RoomContraller roomContraller;
 
     private EventController eventController;
+
+    private RoundController roundController;
+
+    private BattleController battleController;
 
     private DiceRollCtrl diceRoll;
 
@@ -67,7 +73,7 @@ public class Player : MonoBehaviour, NPC
 
     public bool isDead()
     {
-        return false;
+        return deadFlag;
     }
 
     public bool isPlayer()
@@ -87,7 +93,13 @@ public class Player : MonoBehaviour, NPC
 
     public bool isWaitPlayer()
     {
-        return true;
+        return waitFlag;
+    }
+
+    private bool waitFlag;
+    public void setWaitPlayer(bool waitFlag)
+    {
+        this.waitFlag = waitFlag;
     }
 
     public void roundStart()
@@ -101,7 +113,7 @@ public class Player : MonoBehaviour, NPC
         {
             if (ss != null)
             {
-                ss.scriptAction(this, roomContraller, eventController, diceRoll, aPathManager);
+                ss.scriptAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController,battleController);
             }
             else
             {
@@ -133,24 +145,28 @@ public class Player : MonoBehaviour, NPC
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         int[] roomXYZ = { 0, 0, 0 };
         setCurrentRoom(roomXYZ);
-        abilityInfo = new int[] { 5, 3, 6, 8, 20};
+        abilityInfo = new int[] { 5, 2, 6, 8, 20};
 
-        maxAbilityInfo = new int[] { 5, 3, 6, 8,20 };
-
+        maxAbilityInfo = new int[] { 5, 2, 6, 8,20 };
+        this.deadFlag = false;
         this.actionPointrolled = false;
+        this.waitFlag = true;
         Debug.Log("赵日天 玩家进入默认房间");
         playerName = "赵日天";
         roomContraller = FindObjectOfType<RoomContraller>();
         diceRoll = FindObjectOfType<DiceRollCtrl>();
         eventController = FindObjectOfType<EventController>();
-
+        battleController = FindObjectOfType<BattleController>();
+        roundController = FindObjectOfType<RoundController>();
         this.bag = new Bag();
     }
 
     // Update is called once per frame
     void Update()
     {
-		
+        if (getAbilityInfo()[4] <=0) {
+            this.deadFlag = true;
+        }
     }
 
     public void defaultAction()

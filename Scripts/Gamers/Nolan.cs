@@ -34,7 +34,15 @@ public class Nolan : MonoBehaviour, NPC
 
     private bool bossFlag;
 
+    private bool deadFlag;
+
+    private bool scriptEnd;
+
     private Bag bag;
+
+    private RoundController roundController;
+
+    private BattleController battleController;
 
     public bool ActionPointrolled()
     {
@@ -68,7 +76,7 @@ public class Nolan : MonoBehaviour, NPC
 
     public bool isDead()
     {
-        return false;
+        return this.deadFlag;
     }
 
     public bool isPlayer()
@@ -81,9 +89,15 @@ public class Nolan : MonoBehaviour, NPC
         return this.roundOver;
     }
 
+
+
     public bool isWaitPlayer()
     {
-        return false;
+        return this.waitFlag;
+    }
+    private bool waitFlag;
+    public void setWaitPlayer(bool waitFlag) {
+        this.waitFlag = waitFlag;
     }
 
 
@@ -218,6 +232,7 @@ public class Nolan : MonoBehaviour, NPC
     public void roundStart()
     {
         roundOver = false;
+        scriptEnd = false;
         if (this.isPlayer())
         {
         }
@@ -225,7 +240,9 @@ public class Nolan : MonoBehaviour, NPC
         {
             if (ss != null)
             {
-                ss.scriptAction(this, roomContraller, eventController, diceRoll, aPathManager);
+                ss.scriptAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
+                Debug.Log("npc 当前回合状态是: "+ roundOver);
+                scriptEnd = true;
             }
             else
             {
@@ -266,18 +283,30 @@ public class Nolan : MonoBehaviour, NPC
 
         maxAbilityInfo = new int[] { 3, 3, 2, 6, 15 };
         this.actionPointrolled = false;
+        this.deadFlag = false;
         Debug.Log("叶成亮 进入默认房间");
         playerName = "叶成亮";
         roomContraller = FindObjectOfType<RoomContraller>();
         diceRoll = FindObjectOfType<DiceRollCtrl>();
         eventController = FindObjectOfType<EventController>();
+        roundController = FindObjectOfType<RoundController>();
+        battleController = FindObjectOfType<BattleController>();
         this.bag = new Bag();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (getAbilityInfo()[4] <= 0)
+        {
+            this.deadFlag = true;
+        }
+        if (!roundOver) {
 
+            if (scriptEnd && !waitFlag) {
+                this.endRound();
+            }
+        }
     }
 
     public void setScriptAction(StoryScript ss)

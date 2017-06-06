@@ -62,19 +62,21 @@ public class RaceGoodScript : StoryScript {
         return "你跑赢了nolan， 知道了他是3级残疾人的身份";
     }
 
-    public void scriptAction(Character chara, RoomContraller roomContraller , EventController eventController , DiceRollCtrl diceRoll , APathManager aPathManager)
+    public void scriptAction(Character chara, RoomContraller roomContraller , EventController eventController , DiceRollCtrl diceRoll , APathManager aPathManager,
+        RoundController roundController,BattleController battleController)
     {
 
         if (chara.getName() == "叶成亮")
         {
-            NolanMove(chara, roomContraller, eventController, diceRoll, aPathManager);
+            NolanMove(chara, roomContraller, eventController, diceRoll, aPathManager, roundController,battleController);
         }
 
       
         chara.endRound();
     }
 
-    private void NolanMove(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager)
+    private void NolanMove(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager,
+        RoundController roundController, BattleController battleController)
     {
         if (chara.ActionPointrolled())
         {
@@ -165,6 +167,8 @@ public class RaceGoodScript : StoryScript {
             {
                 //找到房间后， 等待后续细节，：根据设定找下一个房间？ 开启剧本？ 目前直接结束回合
                 Debug.Log(chara.getName() + "已经到达目标房间 (" + chara.getCurrentRoom()[0] + "," + chara.getCurrentRoom()[1] + ")");
+                //
+              
                 if (typeof(NPC).IsAssignableFrom(chara.GetType()))
                 {
                     Debug.Log("该角色是属于NPC");

@@ -166,6 +166,7 @@ public class RollDiceUIManager : MonoBehaviour ,IPointerClickHandler
     }
     */
     public RollDiceResult getResult() {
+       
         return this.rollDiceRs;
     }
 

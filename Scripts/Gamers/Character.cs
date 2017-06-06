@@ -14,6 +14,8 @@ public interface Character
     //是否在等待玩家操作
     bool isWaitPlayer();
 
+    void setWaitPlayer(bool waitFlag);
+
     //回合开始， 玩家空实现
     void roundStart();
 

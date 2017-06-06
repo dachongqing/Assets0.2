@@ -64,16 +64,18 @@ public class RaceBadScript : StoryScript
         return "你跑赢了nolan， 知道了他是3级残疾人的身份";
     }
 
-    public void scriptAction(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager)
+    public void scriptAction(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager,
+        RoundController roundController, BattleController battleController)
     {
         
         if (chara.getName() == "叶成亮") {
-            NolanMove( chara,  roomContraller,  eventController,  diceRoll,  aPathManager);
+            NolanMove( chara,  roomContraller,  eventController,  diceRoll,  aPathManager, roundController, battleController);
         }
-        chara.endRound();
+       // chara.endRound();
     }
 
-    private void NolanMove(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager) {
+    private void NolanMove(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager,
+         RoundController roundController, BattleController battleController) {
         if (chara.ActionPointrolled())
         {
             //int speed = ply.getAbilityInfo()[1] + ply.getEffectBuff();
@@ -83,7 +85,8 @@ public class RaceBadScript : StoryScript
             chara.setActionPointrolled(false);
             Stack<Node> path = null;
 
-            RoomInterface targetRoom = roomContraller.findRoomByXYZ(new int[] { 0, 0, 0 });
+           Character player =  roundController.getPlayerChara();
+            RoomInterface targetRoom = roomContraller.findRoomByXYZ(player.getCurrentRoom());
 
             RoomInterface currentRoom = roomContraller.findRoomByXYZ(chara.getCurrentRoom());
             //如果当前房间不是目标房间
@@ -163,6 +166,9 @@ public class RaceBadScript : StoryScript
             {
                 //找到房间后， 等待后续细节，：根据设定找下一个房间？ 开启剧本？ 目前直接结束回合
                 Debug.Log(chara.getName() + "已经到达目标房间 (" + chara.getCurrentRoom()[0] + "," + chara.getCurrentRoom()[1] + ")");
+                Debug.Log("直接开打，开始疯狂攻击玩家");
+                battleController.fighte(chara, player);
+             
                 if (typeof(NPC).IsAssignableFrom(chara.GetType()))
                 {
                     Debug.Log("该角色是属于NPC");

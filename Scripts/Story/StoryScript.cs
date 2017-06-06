@@ -7,7 +7,8 @@ public interface StoryScript  {
 
     List<Condition> getWinCondition();
       
-    void scriptAction(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager);
+    void scriptAction(Character chara, RoomContraller roomContraller, EventController eventController,
+        DiceRollCtrl diceRoll, APathManager aPathManager, RoundController roundController, BattleController battleController);
 
     bool getResult();
 
