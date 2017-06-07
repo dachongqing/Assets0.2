@@ -8,7 +8,7 @@ using System;
 public class MessageUI : MonoBehaviour, IPointerClickHandler
 {
 	[Tooltip("显示时长，默认2")]public float ShowTime=4f;
-	[Tooltip("显示时的坐标,默认(0,-140,0)")]public Vector3 showPos=new Vector3(0,-140,0);
+	[Tooltip("显示时的坐标,默认(0,-140,0)")]public Vector3 showPos=new Vector3(69, -193, 0);
 	[Tooltip("隐藏时的坐标(0,-500,0)")]public Vector3 hidPos=new Vector3(0,-500,0);
 	[Tooltip("移动速度，默认1")]public float speed=1f;
 

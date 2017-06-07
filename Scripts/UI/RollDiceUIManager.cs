@@ -28,7 +28,7 @@ public class RollDiceUIManager : MonoBehaviour ,IPointerClickHandler
     //	[Tooltip ("结果之后延时roll点界面自动关闭,默认3")]public float AutoCloseDelay = 3f;
     [Tooltip("文件夹-Textures-Picture-6个骰子图片")] public Sprite[] DiceSprites;
 
-    public Vector3 showPos = new Vector3(0, 0, 0);
+    public Vector3 showPos = new Vector3(4, 0, 0);
     public Vector3 hidePos = new Vector3(0, 800, 0);
 
    // private Player ply;
