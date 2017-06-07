@@ -57,15 +57,14 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
         if (minSpeedPoint <= dicePoint)
         {
             er.setStatus(true);
-            if (dicePoint >= maxSpeedPoint) {
-            er.setResultCode(EventConstant.LEAVE_EVENT_SAFE);
-            }
+           
+			er.setResultCode(EventConstant.LEAVE_EVENT_SAFE);
           
         }
         else {
             if (dicePoint <= badSpeedPoint)
             {
-                character.getAbilityInfo()[1] = character.getAbilityInfo()[1] - 2;
+                character.getAbilityInfo()[1] = character.getAbilityInfo()[1] - 1;
                 er.setResultCode(EventConstant.LEAVE_EVENT_SHIT);
             }
             else {

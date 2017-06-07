@@ -297,10 +297,12 @@ public class Nolan : MonoBehaviour, NPC
     // Update is called once per frame
     void Update()
     {
-        if (getAbilityInfo()[4] <= 0)
-        {
-            this.deadFlag = true;
-        }
+		if (getAbilityInfo()[0] <=0 || getAbilityInfo()[1] <=0  ||
+			getAbilityInfo()[2] <=0 || getAbilityInfo()[3] <=0  ||
+			getAbilityInfo()[4] <=0
+		) {
+			this.deadFlag = true;
+		}
         if (!roundOver) {
 
             if (scriptEnd && !waitFlag) {

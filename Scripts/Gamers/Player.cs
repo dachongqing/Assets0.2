@@ -145,9 +145,9 @@ public class Player : MonoBehaviour, NPC
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         int[] roomXYZ = { 0, 0, 0 };
         setCurrentRoom(roomXYZ);
-        abilityInfo = new int[] { 5, 2, 6, 8, 20};
+        abilityInfo = new int[] { 5, 4, 6, 8, 20};
 
-        maxAbilityInfo = new int[] { 5, 2, 6, 8,20 };
+        maxAbilityInfo = new int[] { 5, 4, 6, 8,20 };
         this.deadFlag = false;
         this.actionPointrolled = false;
         this.waitFlag = true;
@@ -164,9 +164,13 @@ public class Player : MonoBehaviour, NPC
     // Update is called once per frame
     void Update()
     {
-        if (getAbilityInfo()[4] <=0) {
+		if (getAbilityInfo()[0] <=0 || getAbilityInfo()[1] <=0  ||
+			getAbilityInfo()[2] <=0 || getAbilityInfo()[3] <=0  ||
+			getAbilityInfo()[4] <=0
+		) {
             this.deadFlag = true;
         }
+
     }
 
     public void defaultAction()

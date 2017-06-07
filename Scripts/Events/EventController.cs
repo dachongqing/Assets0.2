@@ -128,6 +128,7 @@ public class EventController : MonoBehaviour
            
             if (phase == 3 && !uiManager.isClosedPlane()) {
                 result = eventI.excute(chara, messageUI.getResult().getResult(), rollVaue);
+				Debug.Log ("event result is " + result);
                 showMessageUi(eventI.getEventEndInfo(result.getResultCode()), null);
                 phase = 4;
             }
