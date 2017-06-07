@@ -41,6 +41,10 @@ public class ItemPotion : Item {
         return this.type;
     }
 
+	public void used(){
+		this.durability =	this.durability - 1;
+	}
+
     
     
 }

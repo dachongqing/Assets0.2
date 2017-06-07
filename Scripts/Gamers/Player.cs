@@ -42,6 +42,9 @@ public class Player : MonoBehaviour, NPC
 
     private Bag bag;
 
+	private DuiHuaUImanager duiHuaUImanager;
+
+
     public int getActionPoint()
     {
         return actionPoint;
@@ -158,6 +161,7 @@ public class Player : MonoBehaviour, NPC
         eventController = FindObjectOfType<EventController>();
         battleController = FindObjectOfType<BattleController>();
         roundController = FindObjectOfType<RoundController>();
+		duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
         this.bag = new Bag();
     }
 
@@ -212,4 +216,50 @@ public class Player : MonoBehaviour, NPC
     {
         return this.bag;
     }
+
+	private int diceNum;
+
+	public void setDiceNumberBuffer(int number){
+		this.diceNum = number;
+	}
+
+	public int getDiceNumberBuffer() {
+		int tmp = this.diceNum;
+		this.diceNum = 0;
+		return tmp;
+	}
+
+	private int diceValue;
+
+	public void setDiceValueBuffer(int value) {
+		this.diceValue = value;
+	}
+
+	public int getDiceValueBuffer(){
+
+		int tmp = this.diceValue;
+		this.diceValue = 0;
+		return tmp;
+	}
+
+	private int damge =1;
+
+	public void setDamgeBuffer (int damge) {
+	
+		this.damge = damge;
+	}
+
+	public int getDamgeBuffer () {
+
+		int tmp = this.damge;
+		this.damge = 1;
+		return tmp;
+	}
+
+	void OnMouseDown ()
+	{
+		string[] co = new string[] { "我是谁", "我从哪里来","我要到哪里去" };
+		duiHuaUImanager.showDuiHua("lihui/ren_wu_1",co);
+
+	}
 }

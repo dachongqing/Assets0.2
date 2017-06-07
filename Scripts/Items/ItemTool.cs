@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemTask : Item {
+public class ItemTool : Item {
 
 	private int durability;
 
@@ -13,10 +13,10 @@ public class ItemTask : Item {
 	private string name;
 
 
-	public ItemTask(string code , string name) {
+	public ItemTool(string code , string name, int durability) {
 		this.code = code;
-		this.type = ItemConstant.ITEM_TYPE_SPEC;
-		this.durability = 1;
+		this.type = ItemConstant.ITEM_TYPE_TOOL;
+		this.durability = durability;
 		this.name = name;
 	}
 

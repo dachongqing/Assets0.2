@@ -7,4 +7,6 @@ public interface NPC : Character {
      void defaultAction();
 
      Bag getBag();
+
+
 }

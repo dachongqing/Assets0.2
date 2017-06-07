@@ -18,7 +18,7 @@ public class ActionPointUIManager : MonoBehaviour, IPointerClickHandler
        
         if (ply.ActionPointrolled())
         {
-            RollDiceParam para = new RollDiceParam(this.ply.getAbilityInfo()[1]);
+			RollDiceParam para = new RollDiceParam(this.ply.getAbilityInfo()[1] + this.ply.getDiceNumberBuffer());
             rollUI.setRollDiceParam(para);
             rollUI.showRollDice();
             isRoll = true;
@@ -44,10 +44,10 @@ public class ActionPointUIManager : MonoBehaviour, IPointerClickHandler
             if (isRoll) {
                 if (rollUI.getResult().getDone())
                 {
-                    ply.updateActionPoint(rollUI.getResult().getResult());
+				ply.updateActionPoint(rollUI.getResult().getResult() + this.ply.getDiceValueBuffer());
                     ply.setActionPointrolled(false);
                 //信息UI
-                    msgUI.ShowMessge("增加 " + rollUI.getResult().getResult() + " 点行动力", 0);
+				msgUI.ShowMessge("增加 " + (rollUI.getResult().getResult() + this.ply.getDiceValueBuffer()) + " 点行动力", 0);
                     isRoll = false;
                    // rollUI.closeRollPlane();
                 }

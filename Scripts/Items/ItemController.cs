@@ -13,7 +13,7 @@ public class ItemController : MonoBehaviour {
         }
         else if(item.getType() == ItemConstant.ITEM_TYPE_TOOL)
         {
-            useItemTool(item);
+            useItemTool(item, chara);
         }
         else if (item.getType() == ItemConstant.ITEM_TYPE_SPEC)
         {
@@ -26,9 +26,15 @@ public class ItemController : MonoBehaviour {
       
     }
 
-    private void useItemTool(Item item)
+	private void useItemTool(Item item, NPC chara)
     {
-        throw new NotImplementedException();
+		if (item.getCode() == ItemConstant.ITEM_CODE_TOOL_10001)
+		{
+			Debug.Log("你使用了一个透明骰子的道具");
+			chara.setDiceNumberBuffer(1);
+			chara.getBag().updateItem (item);
+
+		}
     }
 
     private void destroyItemTool() {
@@ -61,6 +67,7 @@ public class ItemController : MonoBehaviour {
             Debug.Log("你使用了一个回复速度的物品");
         }
         Debug.Log("从背包里移除用掉的药水道具 " + item.getName());
+
         chara.getBag().removeItem(item);
     }
 

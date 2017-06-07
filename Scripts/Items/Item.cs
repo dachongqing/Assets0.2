@@ -7,6 +7,8 @@ public interface Item  {
    
     int getDurability();
 
+	void used();
+
     string getType();
 
     string getCode();

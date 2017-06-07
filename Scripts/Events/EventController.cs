@@ -101,6 +101,7 @@ public class EventController : MonoBehaviour
     {
         if (!leaveExecuted) {
 
+		
             if (phase == 1 && !messageUI.getResult().getDone())
             {
                 Debug.Log("phase =1 and " + messageUI.getResult().getDone());
@@ -116,12 +117,12 @@ public class EventController : MonoBehaviour
             if (phase == 2 && !uiManager.getResult().getDone() && messageUI.isClosed())
             {
                 Debug.Log("wait mesui end");
-                RollDiceParam param = new RollDiceParam(chara.getAbilityInfo()[1]);
+				RollDiceParam param = new RollDiceParam(chara.getAbilityInfo()[1] +chara.getDiceNumberBuffer());
                 uiManager.setRollDiceParam(param);
                 uiManager.showRollDice();
                
             } else if (phase == 2 && uiManager.getResult().getDone()) {
-                rollVaue = uiManager.getResult().getResult();
+				rollVaue = uiManager.getResult().getResult() +chara.getDiceValueBuffer();
                // uiManager.closeRollPlane();
                 phase = 3;
             }

@@ -57,4 +57,16 @@ public interface Character
     bool isBoss();
 
     void setBoss(bool bossFlag);
+
+	void setDiceNumberBuffer(int number);
+
+	int getDiceNumberBuffer();
+
+	void setDiceValueBuffer(int value);
+
+	int getDiceValueBuffer();
+
+	void setDamgeBuffer (int damge);
+
+	int getDamgeBuffer ();
 }

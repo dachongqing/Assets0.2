@@ -50,8 +50,14 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
 
         }
         else {
-            int speed = character.getAbilityInfo()[1];
-            dicePoint = diceRoll.calculateDice(speed);
+			
+				
+		
+			int speed = character.getAbilityInfo()[1] + character.getDiceNumberBuffer();
+
+				dicePoint = diceRoll.calculateDice(speed);
+			dicePoint = dicePoint + character.getDiceValueBuffer();
+
         }
 
         if (minSpeedPoint <= dicePoint)

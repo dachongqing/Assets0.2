@@ -37,6 +37,25 @@ public class Bag  {
        
     }
 
+	public void updateItem(Item item) {
+		List<Item> list;
+		if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_POTION))
+		{
+			list = bag[ItemConstant.ITEM_TYPE_POTION];
+		
+			list [list.IndexOf (item)].used ();
+
+		}
+		else if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_TOOL)) {
+			list = bag[ItemConstant.ITEM_TYPE_TOOL];
+			list [list.IndexOf (item)].used ();
+		}
+		else if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_SPEC)) {
+			list = bag[ItemConstant.ITEM_TYPE_SPEC];
+			list [list.IndexOf (item)].used ();
+		}
+	}
+
 	public List<Item> getTaskItems() {
 		return bag [ItemConstant.ITEM_TYPE_SPEC];
 	}

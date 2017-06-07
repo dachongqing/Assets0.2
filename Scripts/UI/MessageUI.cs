@@ -74,7 +74,7 @@ public class MessageUI : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-      
+		Debug.Log ("click!");
             isShow = false;
             this.messageResult.setDone(true);
             this.messageResult.setResult("你选择了1");
