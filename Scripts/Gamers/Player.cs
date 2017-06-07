@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour, NPC
 {
@@ -258,8 +259,31 @@ public class Player : MonoBehaviour, NPC
 
 	void OnMouseDown ()
 	{
-		string[] co = new string[] { "我是谁", "我从哪里来","我要到哪里去" };
-		duiHuaUImanager.showDuiHua("lihui/ren_wu_1",co);
+
+		if(!IsTouchedUI()) {
+
+			string[] co = new string[] { "我是谁", "我从哪里来","我要到哪里去" };
+			duiHuaUImanager.showDuiHua("lihui/ren_wu_1",co);
+
+		}
 
 	}
+
+	bool IsTouchedUI()  
+	{  
+		bool touchedUI = false;  
+		if (Application.isMobilePlatform)  
+		{  
+			if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))  
+			{  
+				touchedUI = true;  
+			}  
+		}  
+		else if (EventSystem.current.IsPointerOverGameObject())  
+		{  
+			touchedUI = true;  
+		}  
+		return touchedUI;  
+	}  
+
 }

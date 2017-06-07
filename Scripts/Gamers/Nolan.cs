@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 public class Nolan : MonoBehaviour, NPC
 {
 	[Tooltip("房间宽度")]public float roomH=13.7f;
@@ -389,8 +389,29 @@ public class Nolan : MonoBehaviour, NPC
 
 	void OnMouseDown ()
 	{
-		string[] co = new string[] { "你感觉到绝望了吗", "老实讲，我要带你飞了" };
-		duiHuaUImanager.showDuiHua("lihui/ren_wu_2",co);
+
+		if(!IsTouchedUI()) {
+			
+			string[] co = new string[] { "你感觉到绝望了吗", "老实讲，我要带你飞了" };
+			duiHuaUImanager.showDuiHua("lihui/ren_wu_2",co);
+		}
 
 	}
+
+	bool IsTouchedUI()  
+	{  
+		bool touchedUI = false;  
+		if (Application.isMobilePlatform)  
+		{  
+			if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))  
+			{  
+				touchedUI = true;  
+			}  
+		}  
+		else if (EventSystem.current.IsPointerOverGameObject())  
+		{  
+			touchedUI = true;  
+		}  
+		return touchedUI;  
+	}  
 }
