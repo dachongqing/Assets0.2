@@ -390,11 +390,15 @@ public class Nolan : MonoBehaviour, NPC
 	void OnMouseDown ()
 	{
 
-		if(!IsTouchedUI()) {
-			
-			string[] co = new string[] { "你感觉到绝望了吗", "老实讲，我要带你飞了" };
-			duiHuaUImanager.showDuiHua("lihui/ren_wu_2",co);
-		}
+        if (!IsTouchedUI())
+        {
+
+            string[] co = new string[] { "你感觉到绝望了吗", "老实讲，我要带你飞了" };
+            duiHuaUImanager.showDuiHua("lihui/ren_wu_2", co);
+        }
+        else {
+            Debug.Log("click ui");
+        }
 
 	}
 
