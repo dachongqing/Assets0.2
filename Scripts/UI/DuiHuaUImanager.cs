@@ -29,7 +29,7 @@ public class DuiHuaUImanager : MonoBehaviour
 		this.content = content;
         Debug.Log("content " + content.Length);
 		lihui.overrideSprite = s;
-		duihua.text = content[0];
+		//duihua.text = content[0];
         duihuaClickManager.startDuihua();
 
 
@@ -44,15 +44,17 @@ public class DuiHuaUImanager : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("this.content :" + this.name);
+       // Debug.Log("this.content :" + this.name);
 	}
 
     public void getNextContent(int clickCount) {
 		if (clickCount >= this.content.Length) {
 			UIduihua.SetActive (false);
 			UIduihua.transform.localPosition = hidePos;
+            duihua.text = "";
           //  return null;
-		} else {
+        } else {
+            Debug.Log("clickCount   " + clickCount);
 			duihua.text = content[clickCount];
 			clickCount++;
     	}

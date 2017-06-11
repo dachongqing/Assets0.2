@@ -7,7 +7,7 @@ public class DuihuaClickManager : MonoBehaviour, IPointerClickHandler
 {
 
     public DuiHuaUImanager duiHuaUImanager;
-    private int clickCount =1;
+    private int clickCount =0;
     // Use this for initialization
     void Start () {
         //  clickCount = 1;
@@ -28,7 +28,7 @@ public class DuihuaClickManager : MonoBehaviour, IPointerClickHandler
     }
 
     public void startDuihua() {
-        clickCount = 1;
+        clickCount = 0;
     }
 
 }
