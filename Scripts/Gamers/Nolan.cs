@@ -255,6 +255,39 @@ public class Nolan : MonoBehaviour, NPC
             }
             else
             {
+                /**
+                 * if(guangBoActionFlag) {
+                 *      GuangBoActionController.guangBoAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
+                 * } else {
+                 * 
+                 *           //判定 自己有没有发布广播行动
+                 *           如果有， 且有目标中标， 不再接受其他广播
+                 *                  
+                 *           如果没有 移除 自己发布的广播行动
+                 *           
+                         *  if(GuangBoActionController.checkGuangBoAction(this)) {
+                         *        //意志力检测 是否执行广播行为
+                         *        int san = getAbilityInfo()[3];
+                                  int res = diceRoll.calculateDice(san);
+                         *        if(san > GuangBoActionController.getAction().getSanCheck()) {
+                         *          //不受影响
+                         *          guangBoActionFlag = false;
+                         *          GuangBoActionController.getAction().setBlackList(this);
+                         *        } else {
+                         *          //打上标志，必须执行广播行为
+                         *           guangBoActionFlag = true;
+                         *           GuangBoActionController.getAction().setWhiteList(this);
+                         *           GuangBoActionController.guangBoAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
+                         *        }
+                         * 
+                         * } else {
+                         *      defaultAction();
+                         * }
+                 *  }
+                 * 
+                 * 
+                 * /
+                 **/
                 defaultAction();
             }
         }
