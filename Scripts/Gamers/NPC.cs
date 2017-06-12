@@ -8,5 +8,6 @@ public interface NPC : Character {
 
      Bag getBag();
 
+    void sendMessageToPlayer(string[] message);
 
 }

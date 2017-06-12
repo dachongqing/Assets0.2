@@ -133,7 +133,12 @@ public class Nolan : MonoBehaviour, NPC
             RoomInterface targetRoom = roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK_ROOM);
 
             RoomInterface currentRoom = roomContraller.findRoomByXYZ(getCurrentRoom());
-            findNews(currentRoom);
+            List<string> news = currentRoom.findSomethingNews(this.getName());
+            if (news != null && news.Count > 0)
+            {
+              this.sendMessageToPlayer(news.ToArray());
+            }
+
             //如果当前房间不是目标房间
             //开始找路 : 目前直接找书房
             if (getCurrentRoom()[0] != targetRoom.getXYZ()[0] || getCurrentRoom()[1] != targetRoom.getXYZ()[1] || getCurrentRoom()[2] != targetRoom.getXYZ()[2])
@@ -218,7 +223,8 @@ public class Nolan : MonoBehaviour, NPC
 						Debug.Log ("我的任务物品，已经没有了，已经是咸鱼了");
 					} else {
 						Debug.Log ("我的任务物品，拿到手了，我已经无敌了");
-						this.bag.insertItem (item);
+                        this.sendMessageToPlayer(new string[] { "哈哈。。我的任务物品，拿到手了，我已经无敌了！" ,"所有人都得死！"});
+                        this.bag.insertItem (item);
 					}
 				}
 				//开始尝试寻找剧情道具
@@ -410,21 +416,14 @@ public class Nolan : MonoBehaviour, NPC
     }
 
     private GuangBoListener listener;
-    public void findNews(RoomInterface room) {
 
-        List<string> news = room.findSomethingNews(this.getName());
-        if (news !=null && news.Count >0) {
-            this.roomInvestMessage = news.ToArray();
-            Debug.Log("this.roomInvestMessage.Length " + this.roomInvestMessage.Length);
-            listener.insert(this);
-        }
+
+    public void sendMessageToPlayer(string[] message) {
+        
+           
+            listener.insert(this, message);
        
     }
 
-    private string[] roomInvestMessage;
-
-    public string[] getMessage()
-    {
-        return roomInvestMessage;
-    }
+  
 }

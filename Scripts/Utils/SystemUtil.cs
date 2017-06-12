@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class SystemUtil  {
 
+   
 
     public static bool IsTouchedUI()
     {
@@ -22,4 +23,6 @@ public class SystemUtil  {
         }
         return touchedUI;
     }
+
+ 
 }

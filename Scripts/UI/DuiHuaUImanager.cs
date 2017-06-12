@@ -54,6 +54,11 @@ public class DuiHuaUImanager : MonoBehaviour
 
     private bool duiHuaEndFlag = true;
 
+    public void setDuiHuaEndFalse()
+    {
+        duiHuaEndFlag = false;
+    }
+
     public bool isDuiHuaEnd() {
         return duiHuaEndFlag;
     }

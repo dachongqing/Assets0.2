@@ -277,13 +277,14 @@ public class Player : MonoBehaviour, NPC
         return "lihui/ren_wu_1";
     }
 
-    private string[] roomInvestMessage;
+   
+    public void sendMessageToPlayer(string[] message)
+    {
 
-    public string[] getMessage() {
-        return roomInvestMessage;
+        
+        guangBoListener.insert(this, message);
+
     }
 
-
-
-
+    
 }

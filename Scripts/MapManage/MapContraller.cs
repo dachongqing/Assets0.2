@@ -177,14 +177,5 @@ public class MapContraller  {
         return hashMap;
     }
 
-    public List<int[]> orderList(List<int[]> ContentList)
-    {
-
-        List<int[]> newList = new List<int[]>();
-        foreach (int[] item in ContentList)
-        {
-            newList.Insert(random.Next(newList.Count), item);
-        }
-        return newList;
-    }
+    
 }

@@ -72,5 +72,5 @@ public interface Character
 
     string getLiHuiURL();
 
-    string[] getMessage();
+    
 }
