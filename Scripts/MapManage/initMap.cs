@@ -20,8 +20,35 @@ public class initMap : MonoBehaviour
 	//房间生成器，生成门生成相邻房间
 	private RoomContraller roomManager;
 
-	// Use this for initialization
-	void Start ()
+    //小地图
+    [Tooltip("小地图面板")] public GameObject MinPlane;
+    [Tooltip("小地图房间")] public GameObject minRoom;
+    //小地图房间起始点
+    [Tooltip("小地图房间起始点")] public Transform initMinRoom;
+
+    [Tooltip("水平调整偏移")] private float minRoomhorizonDis = 100;
+    [Tooltip("竖直调整偏移")] private float minRoomvertiDis = 100;
+
+    public Vector3 showPos = new Vector3(4, 0, 0);
+
+    private void genMinMap(Dictionary<int[], int[]> map)
+    {
+        MinPlane.SetActive(true);
+       // MinPlane.transform.localPosition = showPos;
+        foreach (int[] key in map.Keys)
+        {
+            Vector3 temPos = initMinRoom.localPosition;
+            temPos.x = key[0] * minRoomhorizonDis;
+            temPos.y = key[1] * minRoomvertiDis;
+            //生成一个骰子
+            GameObject newDi = Instantiate(minRoom) as GameObject;
+            newDi.GetComponent<RectTransform>().SetParent(MinPlane.transform);
+            newDi.GetComponent<RectTransform>().localPosition = temPos;
+        }
+    }
+
+    // Use this for initialization
+    void Start ()
 	{
 		mapManager = new MapContraller ();
 		roomManager = GetComponent<RoomContraller> ();
@@ -49,7 +76,9 @@ public class initMap : MonoBehaviour
 			//设置新房间在屏幕上的坐标
 			unitMap.transform.position = newMap;
 		}
-	}
+
+        genMinMap(map);
+    }
 	
 	// Update is called once per frame
 	void Update ()

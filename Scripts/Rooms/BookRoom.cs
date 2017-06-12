@@ -146,4 +146,22 @@ public class BookRoom : MonoBehaviour, RoomInterface
     {
         return this.si;
     }
+
+    List<string> guangboMessage = new List<string>();
+
+
+    public List<string> findSomethingNews(string charaName)
+    {
+        guangboMessage.Clear();
+        if (charaName == "叶成亮")
+        {
+            guangboMessage.Add("哟，这里还有个书店");
+            guangboMessage.Add("我要好好调查下这个书店");
+            guangboMessage.Add("一本黑色的新书成功引起了我的注意");
+            return guangboMessage;
+            
+        }
+
+        return null;
+    }
 }

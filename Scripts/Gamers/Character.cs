@@ -69,4 +69,8 @@ public interface Character
 	void setDamgeBuffer (int damge);
 
 	int getDamgeBuffer ();
+
+    string getLiHuiURL();
+
+    string[] getMessage();
 }

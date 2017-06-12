@@ -140,5 +140,20 @@ public class LobbyRoom : MonoBehaviour, RoomInterface
     {
         return false;
     }
+
+    List<string> guangboMessage = new List<string>();
+
+    public List<string> findSomethingNews(string charaName)
+    {
+        guangboMessage.Clear();
+        if (charaName == "叶成亮")
+        {
+            guangboMessage.Add("又是大厅。。");
+            return guangboMessage;
+            
+        }
+
+        return null;
+    }
 }
 

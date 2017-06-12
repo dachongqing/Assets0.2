@@ -27,8 +27,8 @@ public class DuihuaClickManager : MonoBehaviour, IPointerClickHandler
         clickCount++;
     }
 
-    public void startDuihua() {
-        clickCount = 0;
+    public void startDuihua(int i ) {
+        clickCount = i;
     }
 
 }

@@ -133,6 +133,7 @@ public class Nolan : MonoBehaviour, NPC
             RoomInterface targetRoom = roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK_ROOM);
 
             RoomInterface currentRoom = roomContraller.findRoomByXYZ(getCurrentRoom());
+            findNews(currentRoom);
             //如果当前房间不是目标房间
             //开始找路 : 目前直接找书房
             if (getCurrentRoom()[0] != targetRoom.getXYZ()[0] || getCurrentRoom()[1] != targetRoom.getXYZ()[1] || getCurrentRoom()[2] != targetRoom.getXYZ()[2])
@@ -294,6 +295,7 @@ public class Nolan : MonoBehaviour, NPC
         roundController = FindObjectOfType<RoundController>();
         battleController = FindObjectOfType<BattleController>();
 		duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        listener = FindObjectOfType<GuangBoListener>();
         this.bag = new Bag();
     }
 
@@ -390,11 +392,11 @@ public class Nolan : MonoBehaviour, NPC
 	void OnMouseDown ()
 	{
 
-        if (!IsTouchedUI())
+        if (!SystemUtil.IsTouchedUI())
         {
 
             string[] co = new string[] { "你感觉到绝望了吗", "老实讲，我要带你飞了" };
-            duiHuaUImanager.showDuiHua("lihui/ren_wu_2", co);
+            duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
         }
         else {
             Debug.Log("click ui");
@@ -402,20 +404,27 @@ public class Nolan : MonoBehaviour, NPC
 
 	}
 
-	bool IsTouchedUI()  
-	{  
-		bool touchedUI = false;  
-		if (Application.isMobilePlatform)  
-		{  
-			if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))  
-			{  
-				touchedUI = true;  
-			}  
-		}  
-		else if (EventSystem.current.IsPointerOverGameObject())  
-		{  
-			touchedUI = true;  
-		}  
-		return touchedUI;  
-	}  
+    public string getLiHuiURL()
+    {
+        return "lihui/ren_wu_2";
+    }
+
+    private GuangBoListener listener;
+    public void findNews(RoomInterface room) {
+
+        List<string> news = room.findSomethingNews(this.getName());
+        if (news !=null && news.Count >0) {
+            this.roomInvestMessage = news.ToArray();
+            Debug.Log("this.roomInvestMessage.Length " + this.roomInvestMessage.Length);
+            listener.insert(this);
+        }
+       
+    }
+
+    private string[] roomInvestMessage;
+
+    public string[] getMessage()
+    {
+        return roomInvestMessage;
+    }
 }

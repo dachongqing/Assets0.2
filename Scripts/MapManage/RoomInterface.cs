@@ -48,7 +48,7 @@ public interface RoomInterface
     StoryInterface getStartedStory();
 
     //触发房间事件
-
+    List<string> findSomethingNews(string charaName);
     //
 
 

@@ -45,6 +45,8 @@ public class Player : MonoBehaviour, NPC
 
 	private DuiHuaUImanager duiHuaUImanager;
 
+    private GuangBoListener guangBoListener;
+
 
     public int getActionPoint()
     {
@@ -93,6 +95,7 @@ public class Player : MonoBehaviour, NPC
     public void endRound()
     {
         this.roundOver = true;
+        guangBoListener.cleanQuere();
     }
 
     public bool isWaitPlayer()
@@ -163,6 +166,7 @@ public class Player : MonoBehaviour, NPC
         battleController = FindObjectOfType<BattleController>();
         roundController = FindObjectOfType<RoundController>();
 		duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        guangBoListener = FindObjectOfType<GuangBoListener>();
         this.bag = new Bag();
     }
 
@@ -260,30 +264,26 @@ public class Player : MonoBehaviour, NPC
 	void OnMouseDown ()
 	{
 
-		if(!IsTouchedUI()) {
+		if(!SystemUtil.IsTouchedUI()) {
 
 			string[] co = new string[] { "我是谁", "我从哪里来","我要到哪里去" };
-			duiHuaUImanager.showDuiHua("lihui/ren_wu_1",co);
+            duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
 
 		}
 
 	}
 
-	bool IsTouchedUI()  
-	{  
-		bool touchedUI = false;  
-		if (Application.isMobilePlatform)  
-		{  
-			if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))  
-			{  
-				touchedUI = true;  
-			}  
-		}  
-		else if (EventSystem.current.IsPointerOverGameObject())  
-		{  
-			touchedUI = true;  
-		}  
-		return touchedUI;  
-	}  
+    public string getLiHuiURL() {
+        return "lihui/ren_wu_1";
+    }
+
+    private string[] roomInvestMessage;
+
+    public string[] getMessage() {
+        return roomInvestMessage;
+    }
+
+
+
 
 }

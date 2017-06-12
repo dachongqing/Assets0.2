@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class WoodDoor : MonoBehaviour, DoorInterface
 {
@@ -91,56 +92,76 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 		//仅对启用的门有效
 		if (showFlag) {
 			//放大效果
-			this.transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
+			//this.transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
 		}
 	}
 
-	void OnMouseDown ()
-	{
-		if (showFlag) {
+    private void doClickDoor() {
+        if (showFlag)
+        {
 
-//			Debug.Log ("WoodDoor.cs OnMouseDown");
-			//检查玩家的行动力
-			bool opened = openDoor (roundController.getCurrentRoundChar ());
+            //			Debug.Log ("WoodDoor.cs OnMouseDown");
+            //检查玩家的行动力
+            bool opened = openDoor(roundController.getCurrentRoundChar());
 
-			//这里有bug，玩家应该是只能点击 所在房间的几个门，其余房间的门都是不能点击的.
-			//生成门时，门启用，但加锁；玩家进入房间，门解锁可点击；玩家离开房间，门加锁不可点击
+            //这里有bug，玩家应该是只能点击 所在房间的几个门，其余房间的门都是不能点击的.
+            //生成门时，门启用，但加锁；玩家进入房间，门解锁可点击；玩家离开房间，门加锁不可点击
 
-			if (opened) {
+            if (opened)
+            {
 
                 if (roundController.getCurrentRoundChar().isPlayer())
                 {
                     eventController.excuteLeaveRoomEvent(this, getRoom(), roundController.getCurrentRoundChar());
                 }
-                else {
-				    bool result = eventController.excuteLeaveRoomEvent (getRoom (), roundController.getCurrentRoundChar ()); 
+                else
+                {
+                    bool result = eventController.excuteLeaveRoomEvent(getRoom(), roundController.getCurrentRoundChar());
 
-				    if (result == true) {
-					    //离开门成功
-					    Debug.Log ("离开房间成功");
-					    //进入下一个房间
-					    RoomInterface nextRoom = roomContraller.findRoomByXYZ (getNextRoomXYZ ());
+                    if (result == true)
+                    {
+                        //离开门成功
+                        Debug.Log("离开房间成功");
+                        //进入下一个房间
+                        RoomInterface nextRoom = roomContraller.findRoomByXYZ(getNextRoomXYZ());
 
-					    //摄像机移动到下一个房间坐标
-					    camCtrl.setTargetPos (getNextRoomXYZ ());
+                        //摄像机移动到下一个房间坐标
+                        camCtrl.setTargetPos(getNextRoomXYZ());
 
-					    //当前人物坐标移动到下一个房间
-					    roundController.getCurrentRoundChar ().setCurrentRoom (getNextRoomXYZ ());
+                        //当前人物坐标移动到下一个房间
+                        roundController.getCurrentRoundChar().setCurrentRoom(getNextRoomXYZ());
 
-					    //触发进门事件
-					    //eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
+                        //触发进门事件
+                        //eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
 
-				    } else {
-					    //离开失败
-					    Debug.Log ("离开房间失败");
-					  //  FindObjectOfType<MessageUI> ().ShowMessge ("离开房间失败 ",0);
-				    }
+                    }
+                    else
+                    {
+                        //离开失败
+                        Debug.Log("离开房间失败");
+                        //  FindObjectOfType<MessageUI> ().ShowMessge ("离开房间失败 ",0);
+                    }
                 }
 
-			}
+            }
 
-		}
-	}
+        }
+    }
+
+    
+
+    void OnMouseDown ()
+	{
+        if (!SystemUtil.IsTouchedUI())
+        {
+
+            doClickDoor();
+        }
+        else
+        {
+            Debug.Log("click ui");
+        }
+    }
 
     public void playerOpenDoorResult(bool result) {
         if (result == true)
@@ -172,7 +193,7 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 	void OnMouseExit ()
 	{
 		//缩小效果
-		this.transform.localScale = new Vector3 (1f, 1f, 1f);
+		//this.transform.localScale = new Vector3 (1f, 1f, 1f);
 	}
 		
 }

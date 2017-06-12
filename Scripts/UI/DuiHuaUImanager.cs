@@ -30,9 +30,32 @@ public class DuiHuaUImanager : MonoBehaviour
         Debug.Log("content " + content.Length);
 		lihui.overrideSprite = s;
 		//duihua.text = content[0];
-        duihuaClickManager.startDuihua();
+        duihuaClickManager.startDuihua(0);
+        duiHuaEndFlag = false;
 
 
+    }
+
+    public void showGuangBoDuiHua(string url, string[] content)
+    {
+        UIduihua.SetActive(true);
+        UIduihua.transform.localPosition = showPos;
+
+        Sprite s = Resources.Load(url, typeof(Sprite)) as Sprite;
+        this.content = content;
+        Debug.Log("content " + content.Length);
+        lihui.overrideSprite = s;
+        duihua.text = content[0];
+        duihuaClickManager.startDuihua(1);
+        duiHuaEndFlag = false;
+
+
+    }
+
+    private bool duiHuaEndFlag = true;
+
+    public bool isDuiHuaEnd() {
+        return duiHuaEndFlag;
     }
 
 	// Use this for initialization
@@ -52,6 +75,7 @@ public class DuiHuaUImanager : MonoBehaviour
 			UIduihua.SetActive (false);
 			UIduihua.transform.localPosition = hidePos;
             duihua.text = "";
+            duiHuaEndFlag = true;
           //  return null;
         } else {
             Debug.Log("clickCount   " + clickCount);

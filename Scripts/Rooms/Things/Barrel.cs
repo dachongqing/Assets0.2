@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Barrel : MonoBehaviour
+public class Barrel : MonoBehaviour, Thing
 {
 
     private Item item;
@@ -23,37 +23,50 @@ public class Barrel : MonoBehaviour
 
     private RollDiceUIManager uiManager;
 
-    void OnMouseDown()
-    
-        {
+    public void doClick() {
         Debug.Log("click a barrel");
         if (this.isEmpty)
         {
             messageUI.ShowMessge("里面是空的", 1);
         }
-        else {
+        else
+        {
 
-            NPC chara =  (NPC)roundController.getCurrentRoundChar();
-			if (chara.getActionPoint () >= 2) {
-				if (chara.getAbilityInfo()[2] >= 7)
-				{
-					messageUI.ShowMessge("因为你的注意力高度集中，很容易就发现了药水道具", 1);
-					chara.getBag().insertItem(this.getItem());
-				}
-				else if (chara.getAbilityInfo()[2] >= 3)
-				{
-					messageUI.ShowMessge("你注意桶底有点黑色的物品，你需要对力量进行判断 大于5 才能取出那个物品", 1);
-					this.maxValue = 5;
-					this.phase = 1;
-					listenRoll = true;
-				}
-				else {
-					messageUI.ShowMessge("因为你的注意力低下的关系，没能找到任何道具", 1);
-				}
-				chara.updateActionPoint (chara.getActionPoint () - 2);
-			} else {
-				messageUI.ShowMessge("行动力不足，不能进行调查.", 1);
-			}
+            NPC chara = (NPC)roundController.getCurrentRoundChar();
+            if (chara.getActionPoint() >= 2)
+            {
+                if (chara.getAbilityInfo()[2] >= 7)
+                {
+                    messageUI.ShowMessge("因为你的注意力高度集中，很容易就发现了药水道具", 1);
+                    chara.getBag().insertItem(this.getItem());
+                }
+                else if (chara.getAbilityInfo()[2] >= 3)
+                {
+                    messageUI.ShowMessge("你注意桶底有点黑色的物品，你需要对力量进行判断 大于5 才能取出那个物品", 1);
+                    this.maxValue = 5;
+                    this.phase = 1;
+                    listenRoll = true;
+                }
+                else
+                {
+                    messageUI.ShowMessge("因为你的注意力低下的关系，没能找到任何道具", 1);
+                }
+                chara.updateActionPoint(chara.getActionPoint() - 2);
+            }
+            else
+            {
+                messageUI.ShowMessge("行动力不足，不能进行调查.", 1);
+            }
+        }
+    }
+
+    void OnMouseDown()
+    {
+        if (!SystemUtil.IsTouchedUI())
+        {
+
+            doClick();
+
         }
     }
 
