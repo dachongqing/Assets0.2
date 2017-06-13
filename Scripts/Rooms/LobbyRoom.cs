@@ -18,7 +18,7 @@ public class LobbyRoom : MonoBehaviour, RoomInterface
     public GameObject westDoor;
     public GameObject eastDoor;
 
-    private List<Character> charas;
+    private List<Character> charas = new List<Character>();
     private StoryInterface si;
 
     private Dictionary<String, EventInterface> eventsList = new Dictionary<string, EventInterface>();

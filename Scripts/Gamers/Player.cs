@@ -47,6 +47,7 @@ public class Player : MonoBehaviour, NPC
 
     private GuangBoListener guangBoListener;
 
+    List<string> targetChara;
 
     public int getActionPoint()
     {
@@ -124,7 +125,15 @@ public class Player : MonoBehaviour, NPC
             }
             else
             {
-                defaultAction();
+                if (this.isFollowGuangBoAction())
+                {
+                    this.guangBoAction.guangBoAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
+                }
+                else
+                {
+                    defaultAction();
+
+                }
             }
         }
 
@@ -149,9 +158,17 @@ public class Player : MonoBehaviour, NPC
     // Use this for initialization
     void Start()
     {
+        roomContraller = FindObjectOfType<RoomContraller>();
+        diceRoll = FindObjectOfType<DiceRollCtrl>();
+        eventController = FindObjectOfType<EventController>();
+        battleController = FindObjectOfType<BattleController>();
+        roundController = FindObjectOfType<RoundController>();
+		duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        guangBoListener = FindObjectOfType<GuangBoListener>();
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         int[] roomXYZ = { 0, 0, 0 };
         setCurrentRoom(roomXYZ);
+        this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         abilityInfo = new int[] { 5, 4, 6, 8, 20};
 
         maxAbilityInfo = new int[] { 5, 4, 6, 8,20 };
@@ -160,13 +177,6 @@ public class Player : MonoBehaviour, NPC
         this.waitFlag = true;
         Debug.Log("赵日天 玩家进入默认房间");
         playerName = "赵日天";
-        roomContraller = FindObjectOfType<RoomContraller>();
-        diceRoll = FindObjectOfType<DiceRollCtrl>();
-        eventController = FindObjectOfType<EventController>();
-        battleController = FindObjectOfType<BattleController>();
-        roundController = FindObjectOfType<RoundController>();
-		duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
-        guangBoListener = FindObjectOfType<GuangBoListener>();
         this.bag = new Bag();
     }
 
@@ -286,5 +296,32 @@ public class Player : MonoBehaviour, NPC
 
     }
 
-    
+    private bool isFollowGuangBoActionFlag;
+
+    public bool isFollowGuangBoAction()
+    {
+        return isFollowGuangBoActionFlag;
+    }
+
+    public void setFollowGuangBoAction(bool flag)
+    {
+        this.isFollowGuangBoActionFlag = flag;
+    }
+
+    private GuangBoAction guangBoAction;
+
+    public void setGuangBoAction(GuangBoAction gb)
+    {
+        this.guangBoAction = gb;
+    }
+
+    public List<string> getTargetChara()
+    {
+        return this.targetChara;
+    }
+
+    public bool checkItem(string itemCode)
+    {
+       return this.bag.checkTaskItem(itemCode);
+    }
 }

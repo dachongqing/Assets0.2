@@ -89,5 +89,14 @@ public class Bag  {
             Debug.Log("你放入了一个人物物品");
         }
     }
+
+    public bool checkTaskItem(string code ) {
+        foreach (Item item in bag[ItemConstant.ITEM_TYPE_SPEC]) {
+            if (item.getCode() == code) {
+                return true;
+            }
+        }
+        return false;
+    }
     
 }

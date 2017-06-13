@@ -56,7 +56,7 @@ public class GuangBoListener : MonoBehaviour {
                 if (quere[key].Count > 0)
                 {
                     string[] ms = quere[key].Dequeue();
-                    Debug.Log("guangbo msg " + ms[0]);
+                    Debug.Log(key.getName() + " guangbo msg " + ms[0]);
                     duiHuaUImanager.setDuiHuaEndFalse();
                     StartCoroutine(showMessageToPlay(key, ms, random.Next(2, 5)));
                     Debug.Log("guangbo quere[key].Count " + quere[key].Count);

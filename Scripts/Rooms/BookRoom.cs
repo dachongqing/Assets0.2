@@ -19,7 +19,7 @@ public class BookRoom : MonoBehaviour, RoomInterface
 
 	public GameObject box;
 
-    private List<Character> charas;
+    private List<Character> charas = new List<Character>();
 
     private StoryInterface si;
 
@@ -118,18 +118,18 @@ public class BookRoom : MonoBehaviour, RoomInterface
 
     public List<Character> getCharas()
     {
-        return charas;
+        return this.charas;
     }
 
     public void setChara(Character chara)
     {
-        charas.Add(chara);
+        this.charas.Add(chara);
 
     }
 
     public void removeChara(Character chara)
     {
-        charas.Remove(chara);
+        this.charas.Remove(chara);
     }
 
     public bool checkRoomStoryStart(Character chara)

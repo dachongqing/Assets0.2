@@ -8,6 +8,16 @@ public interface NPC : Character {
 
      Bag getBag();
 
+    bool checkItem(string itemCode);
+
     void sendMessageToPlayer(string[] message);
+
+    bool isFollowGuangBoAction();
+
+    void setFollowGuangBoAction(bool flag);
+
+    void setGuangBoAction(GuangBoAction gb);
+
+    List<string> getTargetChara();
 
 }

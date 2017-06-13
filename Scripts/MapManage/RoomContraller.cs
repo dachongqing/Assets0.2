@@ -18,6 +18,10 @@ public class RoomContraller : MonoBehaviour
 
     private Dictionary<int[], RoomInterface> downRoomList = new Dictionary<int[], RoomInterface>();
 
+    private Dictionary<int[], RoomInterface> allRoomList = new Dictionary<int[], RoomInterface>();
+
+    List<int[]> keys = new List<int[]>();
+
     private System.Random random = new System.Random();
 
     private List<EventInterface> events = new List<EventInterface>();
@@ -222,6 +226,9 @@ public class RoomContraller : MonoBehaviour
             {
                 downRoomList.Add(ri.getXYZ(), ri);
             }
+            allRoomList.Add(ri.getXYZ(), ri);
+            keys.Add(ri.getXYZ());
+           
         }
 
         return room;
@@ -318,5 +325,15 @@ public class RoomContraller : MonoBehaviour
             return downRoomList;
 
         }
+    }
+
+    public Dictionary<int[], RoomInterface> getAllRoom() {
+        return this.allRoomList;
+    }
+
+    public RoomInterface getRandomRoom() {
+
+        keys = FunctionUnity<int[]>.orderList(keys);
+        return this.allRoomList[keys[0]];
     }
 }

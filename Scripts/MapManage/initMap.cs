@@ -50,6 +50,7 @@ public class initMap : MonoBehaviour
     // Use this for initialization
     void Start ()
 	{
+        Debug.Log("init map begin");
 		mapManager = new MapContraller ();
 		roomManager = GetComponent<RoomContraller> ();
 

@@ -17,6 +17,8 @@ public class RoundController : MonoBehaviour
 
     private Nolan nolan;
 
+    private Ben ben;
+
     private Character playerChara; // 玩家所控制的角色
 
     public Character getNextCharecter()
@@ -52,6 +54,8 @@ public class RoundController : MonoBehaviour
         return this.roundCount;
     }
 
+   
+
     // Use this for initialization
     void Start()
     {
@@ -59,8 +63,10 @@ public class RoundController : MonoBehaviour
         //目前是写死。。后面需要改为程序控制添加 游戏人数
         player = FindObjectOfType<Player>();
         nolan = FindObjectOfType<Nolan>();
+        ben = FindObjectOfType<Ben>();
         setEndRound(player);
         setEndRound(nolan);
+        setEndRound(ben);
         isRoundEnd = false;
         playChara = this.getNextCharecter();
         playChara.setActionPointrolled(true);
@@ -73,6 +79,10 @@ public class RoundController : MonoBehaviour
         else if (nolan.isPlayer())
         {
             this.playerChara = nolan;
+        }
+        else if (ben.isPlayer())
+        {
+            this.playerChara = ben;
         }
     }
 

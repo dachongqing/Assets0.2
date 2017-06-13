@@ -16,6 +16,6 @@ public class ItemConstant  {
 
 	public const string ITEM_CODE_SPEC_00001 = "spec_00001"; //带血的黑书 
 
-	public const string ITEM_CODE_TOOL_10001 = "tool_10001"; //下一次丢骰子个数+1 
+	public const string ITEM_CODE_TOOL_10001 = "tool_10001"; //透明的骰子，下一次丢骰子个数+1 
 
 }

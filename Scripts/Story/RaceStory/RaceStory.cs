@@ -15,8 +15,10 @@ public class RaceStory :  StoryInterface {
         triggerConditions = new List<Condition>();
         Condition trigger = new RaceTriggerCondition();
 		Condition trigger1 = new RaceTriggerConditionItem();
+        Condition trigger2 = new RaceTriggerConditionNPC();
         triggerConditions.Add(trigger);
 		triggerConditions.Add (trigger1);
+        triggerConditions.Add(trigger2);
         goodStoryScript = new RaceGoodScript();
         badStoryScript = new RaceBadScript();
     }
