@@ -20,6 +20,7 @@ public class BookRoom : MonoBehaviour, RoomInterface
 	public GameObject box;
 
     private List<Character> charas = new List<Character>();
+  
 
     private StoryInterface si;
 
@@ -27,9 +28,16 @@ public class BookRoom : MonoBehaviour, RoomInterface
     private Dictionary<String, EventInterface> eventsList = new Dictionary<string, EventInterface>();
 
 
+
+
     string RoomInterface.getRoomName()
     {
-        return "书房";
+        return roomName;
+    }
+
+    public void setRoomName(string name)
+    {
+        this.roomName = name;
     }
 
     string RoomInterface.getRoomType()
@@ -124,12 +132,14 @@ public class BookRoom : MonoBehaviour, RoomInterface
     public void setChara(Character chara)
     {
         this.charas.Add(chara);
+       
 
     }
 
     public void removeChara(Character chara)
     {
         this.charas.Remove(chara);
+       
     }
 
     public bool checkRoomStoryStart(Character chara)

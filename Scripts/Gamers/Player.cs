@@ -166,17 +166,18 @@ public class Player : MonoBehaviour, NPC
 		duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
         guangBoListener = FindObjectOfType<GuangBoListener>();
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, 0 };
+        playerName = SystemConstant.P6_NAME;
+        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
+        this.roomContraller.findMiniRoomByXYZ(this.xyz).setPenable(this.getName(), true);
         abilityInfo = new int[] { 5, 4, 6, 8, 20};
 
         maxAbilityInfo = new int[] { 5, 4, 6, 8,20 };
         this.deadFlag = false;
         this.actionPointrolled = false;
         this.waitFlag = true;
-        Debug.Log("赵日天 玩家进入默认房间");
-        playerName = "赵日天";
+       
         this.bag = new Bag();
     }
 

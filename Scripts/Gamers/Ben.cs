@@ -208,17 +208,18 @@ public class Ben : MonoBehaviour, NPC
         guangBoController = FindObjectOfType<GuangBoController>();
         listener = FindObjectOfType<GuangBoListener>();
 
+        playerName = SystemConstant.P2_NAME;
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, 0 };
+        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_UP };
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
+        this.roomContraller.findMiniRoomByXYZ(this.xyz).setPenable(this.getName(), true);
         abilityInfo = new int[] { 3, 3, 2, 6, 15 };
         
         maxAbilityInfo = new int[] { 3, 3, 2, 6, 15 };
         this.actionPointrolled = false;
         this.deadFlag = false;
-        Debug.Log("本尼 进入默认房间");
-        playerName = "本尼";
+       
         this.bag = new Bag();
         TargetRoomList.Enqueue(roomContraller.getRandomRoom());
       

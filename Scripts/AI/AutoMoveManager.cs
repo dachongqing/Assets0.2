@@ -86,10 +86,12 @@ public class AutoMoveManager  {
                             //离开门成功
 
                             path.Pop();
+                            currentRoom.removeChara(chara);
+                            roomContraller.findMiniRoomByXYZ(chara.getCurrentRoom()).setPenable(chara.getName(), false);
                             //当前人物坐标移动到下一个房间
                             chara.setCurrentRoom(nextRoom.xy);
                             roomContraller.findRoomByXYZ(nextRoom.xy).setChara(chara);
-                            currentRoom.removeChara(chara);
+                            roomContraller.findMiniRoomByXYZ(nextRoom.xy).setPenable(chara.getName(), true);
                             //触发进门事件
                             //	eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
                         }

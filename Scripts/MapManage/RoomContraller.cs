@@ -20,6 +20,8 @@ public class RoomContraller : MonoBehaviour
 
     private Dictionary<int[], RoomInterface> allRoomList = new Dictionary<int[], RoomInterface>();
 
+    private Dictionary<int[], MinMapRoom> miniRoomList = new Dictionary<int[], MinMapRoom>();
+
     List<int[]> keys = new List<int[]>();
 
     private System.Random random = new System.Random();
@@ -53,7 +55,58 @@ public class RoomContraller : MonoBehaviour
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("BookRoom");
+
+        //这个队列的长度，限制了房间最大数量
+        upRoomType.Enqueue("BookRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue("BookRoom");
+
+        //这个队列的长度，限制了房间最大数量
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("BookRoom");
     }
 
     private void genRoomEvent()
@@ -116,10 +169,20 @@ public class RoomContraller : MonoBehaviour
         }
     }
 
+    private string roomType;
     public GameObject genRoom(int[] xyz, int[] door)
     {
         //房间Prefab所在文件夹路径
-        string roomType = groundRoomType.Dequeue();
+        if (xyz[2] == RoomConstant.ROOM_Z_GROUND) {
+            roomType = groundRoomType.Dequeue();
+
+        } else if (xyz[2] == RoomConstant.ROOM_Z_DOWN) {
+            roomType = this.downRoomType.Dequeue();
+        }
+        else if (xyz[2] == RoomConstant.ROOM_Z_UP)
+        {
+            roomType = this.upRoomType.Dequeue();
+        }
         string url = "Prefabs/" + roomType;
 
         //仅用Resources.Load会永久修改原形Prefab。应该用Instatiate,操作修改原形的克隆体
@@ -133,6 +196,22 @@ public class RoomContraller : MonoBehaviour
         {
             RoomInterface ri = room.GetComponent(System.Type.GetType(roomType)) as RoomInterface;
             ri.setXYZ(xyz);
+
+            //for test
+            if (xyz[2] == RoomConstant.ROOM_Z_GROUND)
+            {
+                ri.setRoomName("地面");
+
+            }
+            else if (xyz[2] == RoomConstant.ROOM_Z_DOWN)
+            {
+                ri.setRoomName("地下");
+            }
+            else if (xyz[2] == RoomConstant.ROOM_Z_UP)
+            {
+                ri.setRoomName("楼上");
+            }
+           
 
             //随机生成事件
 
@@ -335,5 +414,22 @@ public class RoomContraller : MonoBehaviour
 
         keys = FunctionUnity<int[]>.orderList(keys);
         return this.allRoomList[keys[0]];
+    }
+
+    public void addMiniRoomList(int[] xyz,MinMapRoom minR) {
+        this.miniRoomList.Add(xyz,minR);
+    }
+
+    public MinMapRoom findMiniRoomByXYZ(int[] xyz) {
+        foreach (int[] key in miniRoomList.Keys)
+        {
+            if (key[0] == xyz[0] && key[1] == xyz[1] && key[2] == xyz[2])
+            {
+                Debug.Log("找到小房间");
+                return miniRoomList[key];
+            }
+        }
+        Debug.Log("没有找到小房间");
+        return null;
     }
 }

@@ -23,10 +23,15 @@ public class LobbyRoom : MonoBehaviour, RoomInterface
 
     private Dictionary<String, EventInterface> eventsList = new Dictionary<string, EventInterface>();
 
-
+   
     string RoomInterface.getRoomName()
     {
-        return "大厅";
+        return roomName;
+    }
+
+    public void setRoomName(string name)
+    {
+         this.roomName = name;
     }
 
     string RoomInterface.getRoomType()
@@ -118,12 +123,14 @@ public class LobbyRoom : MonoBehaviour, RoomInterface
 
     public void setChara(Character chara)
     {
+       
         charas.Add(chara);
     }
 
     public void removeChara(Character chara)
     {
         charas.Remove(chara);
+       
     }
 
     public void setRoomStory(StoryInterface si)

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CameraCtrl : MonoBehaviour {
 
+
+    //摄像机是从下往上看  z -2 看楼上 1， -3 能看 地面 -2  -5 能看楼下 -4
+    //有一个问题 是 从上往下 看 是能把人 正确显示 但是往上看， 把人都全显示了
+
 	[Range(0.5f,5f)]public float lerpSpeed=1.5f;
 	[SerializeField]Vector3 targetPos=new Vector3(0f,0f,-10f);
 	public float roomH = 13.7f;

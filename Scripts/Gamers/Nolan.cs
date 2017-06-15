@@ -155,7 +155,7 @@ public class Nolan : MonoBehaviour, NPC
                         this.gba = new EveryoneGoTargetRoom(this.getName(), RoomConstant.ROOM_TYPE_BOOK_ROOM, targetChara, 60);
                         guangBoController.insertGuangBo(gba);
                         waitPlan = true;
-                        this.sendMessageToPlayer(new string[] { "书房有一个好东西，大家都来看看啊","本尼， 你一定要来啊"});
+                        this.sendMessageToPlayer(new string[] { "书房有一个好东西，大家都来看看啊"," 你一定要来啊"});
 
                     }
                 }
@@ -208,8 +208,7 @@ public class Nolan : MonoBehaviour, NPC
     public void setCurrentRoom(int[] nextRoomXYZ)
     {
         this.xyz = nextRoomXYZ;
-
-		Debug.Log ("叶成亮进入房间");
+        
 
 		Vector3 temPos = new Vector3(xyz [0] * roomH+0.5f,xyz[1]*roomV+0.5f,0);
 		this.transform.position = temPos;
@@ -232,23 +231,31 @@ public class Nolan : MonoBehaviour, NPC
 		duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
         listener = FindObjectOfType<GuangBoListener>();
         guangBoController = FindObjectOfType<GuangBoController>();
+        playerName = SystemConstant.P1_NAME;
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, 0 };
+        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_DOWN };
         setCurrentRoom(roomXYZ);
+        if (roomContraller == null ) {
+        }
+            Debug.Log("@@@@@@@@@@@@@@@@ roomContraller " + roomContraller);
+        if (this.roomContraller.findRoomByXYZ(roomXYZ) == null)
+        {
+            Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
+        this.roomContraller.findMiniRoomByXYZ(this.xyz).setPenable(this.getName(), true);
         abilityInfo = new int[] { 3, 3, 2, 6,15 };
 
         maxAbilityInfo = new int[] { 3, 3, 2, 6, 15 };
         this.actionPointrolled = false;
         this.deadFlag = false;
-        Debug.Log("叶成亮 进入默认房间");
-        playerName = "叶成亮";
+      
         this.bag = new Bag();
         TargetRoomList.Enqueue(roomContraller.getRandomRoom());
         TargetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK_ROOM));
         this.waitPlan = false;
         targetChara = new List<string>();
-        targetChara.Add("本尼");
+        targetChara.Add(SystemConstant.P2_NAME);
         
     }
 

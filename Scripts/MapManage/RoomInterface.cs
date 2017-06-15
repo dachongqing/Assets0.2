@@ -9,6 +9,10 @@ public interface RoomInterface
     //获取当前房名
     string getRoomName();
 
+
+    //获取当前房名
+    void setRoomName(string name);
+
     //获取当前房间坐标
     int[] getXYZ();
 
