@@ -25,9 +25,17 @@ public class CameraCtrl : MonoBehaviour {
 		targetPos.z = pos [2]-10;
 
 	}
-	
-	// Update is called once per frame
-	void LateUpdate () {
+
+    public void setTargetPos(int[] pos,int y)
+    {
+        targetPos.x = pos[0] * roomH;
+        targetPos.y = y + pos[1] * roomV;
+        targetPos.z = pos[2] - 10;
+
+    }
+
+    // Update is called once per frame
+    void LateUpdate () {
 		transform.position = Vector3.Lerp (transform.position,targetPos,lerpSpeed * Time.smoothDeltaTime);
 	}
 }

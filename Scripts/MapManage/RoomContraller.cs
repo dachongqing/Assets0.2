@@ -354,30 +354,14 @@ public class RoomContraller : MonoBehaviour
     public RoomInterface findRoomByRoomType(string roomType)
     {
 
-        foreach (int[] key in groundRoomList.Keys)
+        foreach (int[] key in allRoomList.Keys)
         {
-            if (groundRoomList[key].getRoomType() == roomType)
+            if (allRoomList[key].getRoomType() == roomType)
             {
-                return groundRoomList[key];
+                return allRoomList[key];
             }
         }
-
-        foreach (int[] key in upRoomList.Keys)
-        {
-            if (upRoomList[key].getRoomType() == roomType)
-            {
-                return upRoomList[key];
-            }
-        }
-
-        foreach (int[] key in downRoomList.Keys)
-        {
-            if (downRoomList[key].getRoomType() == roomType)
-            {
-                return downRoomList[key];
-            }
-        }
-
+        
         return null;
     }
 
