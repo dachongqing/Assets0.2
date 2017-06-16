@@ -20,7 +20,7 @@ public class RoomContraller : MonoBehaviour
 
     private Dictionary<int[], RoomInterface> allRoomList = new Dictionary<int[], RoomInterface>();
 
-    private Dictionary<int[], MinMapRoom> miniRoomList = new Dictionary<int[], MinMapRoom>();
+    public Dictionary<int[], MinMapRoom> miniRoomList = new Dictionary<int[], MinMapRoom>();
 
     List<int[]> keys = new List<int[]>();
 
@@ -136,7 +136,7 @@ public class RoomContraller : MonoBehaviour
     {
 
         //只有30%的概率房间会生成事件
-        if (1 == random.Next(0, 3))
+        if (6 == random.Next(0, 3))
         {
 
             //判定房间是处于什么位置 楼上 地面 楼下， 不能出现 有冲突的事件， 比如楼下不能出现掉落事件
@@ -425,11 +425,11 @@ public class RoomContraller : MonoBehaviour
         {
             if (key[0] == xyz[0] && key[1] == xyz[1] && key[2] == xyz[2])
             {
-                Debug.Log("找到小房间");
+           //     Debug.Log("找到小房间:" + xyz[0] + "," + xyz[1] + "," + xyz[2]);
                 return miniRoomList[key];
             }
         }
-        Debug.Log("没有找到小房间");
+       // Debug.Log("没有找到小房间:" + xyz[0] + "," + xyz[1] + "," + xyz[2]);
         return null;
     }
 }

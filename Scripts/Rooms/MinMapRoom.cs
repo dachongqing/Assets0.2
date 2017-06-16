@@ -19,12 +19,11 @@ public class MinMapRoom : MonoBehaviour {
 
     public int[] xyz;
 
+
+   
     public void setXYZ(int[] xyz) {
         this.xyz = xyz;
     }
-
-   // private RoomContraller roomContraller;
-
 
 
     public void setNorthDoorenable() {
@@ -83,37 +82,120 @@ public class MinMapRoom : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        //Debug.Log("mini init");
-        // northDoor.GetComponent<SpriteRenderer>().enabled = true;
-        //  southDoor.GetComponent<SpriteRenderer>().enabled = true;
-        //  p1.GetComponent<SpriteRenderer>().enabled = true;
-        //p2.GetComponent<SpriteRenderer>().gameObject.SetActive(false);
-       // roomContraller = FindObjectOfType<RoomContraller>();
+       
     
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 
-        /**
-         * 
-        RoomInterface ri = roomContraller.findRoomByXYZ(this.xyz);
-        List<Character> list = ri.getCharas();
-        if (list != null && list.Count > 0) {
-            foreach (string c in ps) {
-                if (ri.getCharas()) {
-                    this.setP1enable(true);
-                } else if (c.getName() == SystemConstant.P2_NAME) {
-                    this.setP2enable(true);
-                }
-                else if (c.getName() == SystemConstant.P6_NAME)
-                {
-                    this.setP6enable(true);
-                }
-            }
-        } else if () {
-
-        }
-    **/
+       
     }
+
+    public bool getP1Status()
+    {
+        return p1.GetComponent<Image>().IsActive();
+    }
+
+    public bool getP2Status()
+    {
+        return p2.GetComponent<Image>().IsActive();
+    }
+
+    public bool getP3Status()
+    {
+        return p3.GetComponent<Image>().IsActive();
+    }
+
+    public bool getP4Status()
+    {
+        return p4.GetComponent<Image>().IsActive();
+    }
+
+    public bool getP5Status()
+    {
+        return p5.GetComponent<Image>().IsActive();
+    }
+
+    public bool getP6Status()
+    {
+        return p6.GetComponent<Image>().IsActive();
+    }
+
+    public bool getNorthDoorStatus()
+    {
+        // northDoor.GetComponent<SpriteRenderer>().enabled = true;
+        return northDoor.GetComponent<Image>().IsActive();
+    }
+
+    public bool getSouthDoorStatus()
+    {
+        // northDoor.GetComponent<SpriteRenderer>().enabled = true;
+        return southDoor.GetComponent<Image>().IsActive();
+    }
+
+    public bool getWestDoorStatus()
+    {
+        // northDoor.GetComponent<SpriteRenderer>().enabled = true;
+        return westDoor.GetComponent<Image>().IsActive();
+    }
+
+    public bool getEastDoorStatus()
+    {
+        // northDoor.GetComponent<SpriteRenderer>().enabled = true;
+        return eastDoor.GetComponent<Image>().IsActive();
+    }
+
+
+    public void setNorthDoorDisable()
+    {
+        // northDoor.GetComponent<SpriteRenderer>().enabled = true;
+        northDoor.GetComponent<Image>().enabled = false;
+    }
+
+    public void setSouthDoorDisable()
+    {
+        southDoor.GetComponent<Image>().enabled = false;
+    }
+
+    public void setWestDoorDisable()
+    {
+        westDoor.GetComponent<Image>().enabled = false;
+    }
+
+    public void setEastDoorDisable()
+    {
+        eastDoor.GetComponent<Image>().enabled = false;
+    }
+
+    public void setP1enable( bool showFlag)
+    {
+            p1.GetComponent<Image>().enabled = showFlag;
+    }
+
+    public void setP2enable(bool showFlag)
+    {
+        p2.GetComponent<Image>().enabled = showFlag;
+    }
+
+    public void setP3enable(bool showFlag)
+    {
+        p3.GetComponent<Image>().enabled = showFlag;
+    }
+
+    public void setP4enable(bool showFlag)
+    {
+        p4.GetComponent<Image>().enabled = showFlag;
+    }
+
+    public void setP5enable(bool showFlag)
+    {
+        p5.GetComponent<Image>().enabled = showFlag;
+    }
+
+    public void setP6enable(bool showFlag)
+    {
+        p6.GetComponent<Image>().enabled = showFlag;
+    }
+
 }

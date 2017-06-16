@@ -210,7 +210,7 @@ public class Ben : MonoBehaviour, NPC
 
         playerName = SystemConstant.P2_NAME;
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_UP };
+        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.findMiniRoomByXYZ(this.xyz).setPenable(this.getName(), true);

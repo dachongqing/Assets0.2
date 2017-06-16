@@ -233,7 +233,7 @@ public class Nolan : MonoBehaviour, NPC
         guangBoController = FindObjectOfType<GuangBoController>();
         playerName = SystemConstant.P1_NAME;
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_DOWN };
+        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
         setCurrentRoom(roomXYZ);
         if (roomContraller == null ) {
         }

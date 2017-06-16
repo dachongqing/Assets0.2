@@ -170,7 +170,7 @@ public class Player : MonoBehaviour, NPC
         int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(this.xyz).setPenable(this.getName(), true);
+        this.roomContraller.findMiniRoomByXYZ(roomXYZ).setPenable(this.getName(), true);
         abilityInfo = new int[] { 5, 4, 6, 8, 20};
 
         maxAbilityInfo = new int[] { 5, 4, 6, 8,20 };

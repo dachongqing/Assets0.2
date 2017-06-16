@@ -15,8 +15,12 @@ public class initMap : MonoBehaviour
 
 	//房间生成的起点坐标
 	private Transform mapSpawnPoint;
-	//地图生成器，产生房间坐标
-	private MapContraller mapManager;
+
+    private Transform mapSpawnUpPoint;
+
+    private Transform mapSpawnDownPoint;
+    //地图生成器，产生房间坐标
+    private MapContraller mapManager;
 	//房间生成器，生成门生成相邻房间
 	private RoomContraller roomManager;
 
@@ -83,7 +87,7 @@ public class initMap : MonoBehaviour
         roomManager = GetComponent<RoomContraller>();
 
         //在场景中搜索房间起点
-        mapSpawnPoint = GameObject.Find("MapSpawnPoint").GetComponent<Transform>();
+        mapSpawnUpPoint = GameObject.Find("MapSpawnUpPoint").GetComponent<Transform>();
         //生成好的地图数据<房间坐标xy,门的信息>
         Dictionary<int[], int[]> map = mapManager.genMap(RoomConstant.ROOM_Z_UP, roomAmount);
         Debug.Log("map count: " + map.Count);
@@ -96,11 +100,11 @@ public class initMap : MonoBehaviour
             unitMap = roomManager.genRoom(rXYZ, map[key]);
 
             //预备给新房间的坐标
-            Vector3 newMap = mapSpawnPoint.position;
+            Vector3 newMap = mapSpawnUpPoint.position;
             //根据房间的宽度，水平偏移
             newMap.x = key[0] * horizonDis;
             //根据房间的高度，竖直偏移
-            newMap.y = key[1] * vertiDis;
+            newMap.y = RoomConstant.ROOM_Y_UP + key[1] * vertiDis;
             //根据房间的楼层，设定z坐标值
             newMap.z = key[2];
             //设置新房间在屏幕上的坐标
@@ -148,7 +152,7 @@ public class initMap : MonoBehaviour
         roomManager = GetComponent<RoomContraller>();
 
         //在场景中搜索房间起点
-        mapSpawnPoint = GameObject.Find("MapSpawnPoint").GetComponent<Transform>();
+        mapSpawnDownPoint = GameObject.Find("MapSpawnDownPoint").GetComponent<Transform>();
         //生成好的地图数据<房间坐标xy,门的信息>
         Dictionary<int[], int[]> map = mapManager.genMap(RoomConstant.ROOM_Z_DOWN, roomAmount);
         Debug.Log("map count: " + map.Count);
@@ -161,11 +165,11 @@ public class initMap : MonoBehaviour
             unitMap = roomManager.genRoom(rXYZ, map[key]);
 
             //预备给新房间的坐标
-            Vector3 newMap = mapSpawnPoint.position;
+            Vector3 newMap = mapSpawnDownPoint.position;
             //根据房间的宽度，水平偏移
             newMap.x = key[0] * horizonDis;
             //根据房间的高度，竖直偏移
-            newMap.y = key[1] * vertiDis;
+            newMap.y = RoomConstant.ROOM_Y_DOWN + key[1] * vertiDis;
             //根据房间的楼层，设定z坐标值
             newMap.z = key[2];
             //设置新房间在屏幕上的坐标
