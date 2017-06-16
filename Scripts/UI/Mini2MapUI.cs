@@ -97,6 +97,7 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
          
        }
        else {
+            
            mmr.setEastDoorDisable();
            newDi5.SetActive(false);
        }
@@ -221,7 +222,9 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
 
 	// Update is called once per frame
 	void FixedUpdate () {
+
         Character chara = roundController.getPlayerChara();
+        
         MinMapRoom mRoom = roomContraller.findMiniRoomByXYZ(chara.getCurrentRoom());     ;
         MinMapRoom mmr = newDi1.GetComponent<MinMapRoom>();
         mmr.setP6enable(true);

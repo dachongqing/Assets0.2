@@ -19,9 +19,9 @@ public class MiniMapUI : MonoBehaviour {
     
 
     public void closeMinMap() {
-        MiniMapUpPlane.SetActive(false);
-        MiniMapGroPlane.SetActive(false);
-        MiniMapDowPlane.SetActive(false);
+       // MiniMapUpPlane.SetActive(false);
+       // MiniMapGroPlane.SetActive(false);
+      //  MiniMapDowPlane.SetActive(false);
         MiniMapUpPlane.transform.localPosition = hideUpPos;
         MiniMapGroPlane.transform.localPosition = hideGroPos;
         MiniMapDowPlane.transform.localPosition = hideDowPos;
@@ -29,38 +29,38 @@ public class MiniMapUI : MonoBehaviour {
 
 
     public void clickUpMap() {
-        MiniMapUpPlane.SetActive(true);
+       // MiniMapUpPlane.SetActive(true);
         MiniMapUpPlane.transform.localPosition = showPos;
 
-        MiniMapGroPlane.SetActive(false);
+      //  MiniMapGroPlane.SetActive(false);
         MiniMapGroPlane.transform.localPosition = hideGroPos;
 
-        MiniMapDowPlane.SetActive(false);
+      //  MiniMapDowPlane.SetActive(false);
         MiniMapDowPlane.transform.localPosition = hideDowPos;
 
     }
 
     public void clickGroundMap()
     {
-        MiniMapUpPlane.SetActive(false);
+      //  MiniMapUpPlane.SetActive(false);
         MiniMapUpPlane.transform.localPosition = hideUpPos;
 
-        MiniMapGroPlane.SetActive(true);
+     //   MiniMapGroPlane.SetActive(true);
         MiniMapGroPlane.transform.localPosition = showPos;
 
-        MiniMapDowPlane.SetActive(false);
+      //  MiniMapDowPlane.SetActive(false);
         MiniMapDowPlane.transform.localPosition = hideDowPos;
     }
 
     public void clickDownMap()
     {
-        MiniMapUpPlane.SetActive(false);
+      //  MiniMapUpPlane.SetActive(false);
         MiniMapUpPlane.transform.localPosition = hideUpPos;
 
-        MiniMapGroPlane.SetActive(false);
+        //MiniMapGroPlane.SetActive(false);
         MiniMapGroPlane.transform.localPosition = hideGroPos;
 
-        MiniMapDowPlane.SetActive(true);
+        //MiniMapDowPlane.SetActive(true);
         MiniMapDowPlane.transform.localPosition = showPos;
     }
 
