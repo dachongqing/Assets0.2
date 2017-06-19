@@ -66,10 +66,23 @@ public class Player : MonoBehaviour, NPC
 
     public void setCurrentRoom(int[] xyz)
     {
+        Vector3 temPos;
         this.xyz = xyz;
+        //		Debug.Log ("玩家进入新房间: ");
 
-//		Debug.Log ("玩家进入新房间: ");
-		Vector3 temPos = new Vector3(xyz [0] * roomH,xyz[1]*roomV,0);
+        if (xyz[2] == RoomConstant.ROOM_Z_UP)
+        {
+            temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_UP + (xyz[1] * roomV), 0);
+        }
+        else if(xyz[2] == RoomConstant.ROOM_Z_GROUND)
+        {
+             temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_GROUND + (xyz[1] * roomV), 0);
+        } else 
+        {
+            temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_DOWN + (xyz[1] * roomV), 0);
+        }
+		
+
 		this.transform.position = temPos;
     }
 

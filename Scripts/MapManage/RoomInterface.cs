@@ -21,6 +21,8 @@ public interface RoomInterface
     //获取当前房间类型
     string getRoomType();
 
+    void setRoomType(string roomType);
+
     void northDoorEnable();
 
     void southDoorEnable();

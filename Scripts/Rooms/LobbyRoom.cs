@@ -23,7 +23,14 @@ public class LobbyRoom : MonoBehaviour, RoomInterface
 
     private Dictionary<String, EventInterface> eventsList = new Dictionary<string, EventInterface>();
 
-   
+    private string roomType;
+
+    public void setRoomType(string roomType)
+    {
+
+        this.roomType = roomType;
+    }
+
     string RoomInterface.getRoomName()
     {
         return roomName;
@@ -36,7 +43,7 @@ public class LobbyRoom : MonoBehaviour, RoomInterface
 
     string RoomInterface.getRoomType()
     {
-        return RoomConstant.ROOM_TYPE_LOBBY;
+        return this.roomType;
     }
 
 

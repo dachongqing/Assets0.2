@@ -172,6 +172,7 @@ public class WoodDoor : MonoBehaviour, DoorInterface
             RoomInterface nextRoom = roomContraller.findRoomByXYZ(getNextRoomXYZ());
 
             //摄像机移动到下一个房间坐标
+          
             camCtrl.setTargetPos(getNextRoomXYZ());
 
             //当前人物坐标移动到下一个房间

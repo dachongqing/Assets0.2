@@ -134,7 +134,7 @@ public class Nolan : MonoBehaviour, NPC
             if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, target.getXYZ()))
             {
                 this.TargetRoomList.Dequeue();
-                if (target.getRoomType() == RoomConstant.ROOM_TYPE_BOOK_ROOM)
+                if (target.getRoomType() == RoomConstant.ROOM_TYPE_BOOK)
                 {
                     BookRoom bookRoom = (BookRoom)roomContraller.findRoomByXYZ(this.getCurrentRoom()); ;
                     Item item = bookRoom.getBox().GetComponent<Box>().getItem(this);
@@ -152,7 +152,7 @@ public class Nolan : MonoBehaviour, NPC
                     }
 
                     if (this.checkItem(ItemConstant.ITEM_CODE_SPEC_00001)) {
-                        this.gba = new EveryoneGoTargetRoom(this.getName(), RoomConstant.ROOM_TYPE_BOOK_ROOM, targetChara, 60);
+                        this.gba = new EveryoneGoTargetRoom(this.getName(), RoomConstant.ROOM_TYPE_BOOK, targetChara, 60);
                         guangBoController.insertGuangBo(gba);
                         waitPlan = true;
                         this.sendMessageToPlayer(new string[] { "书房有一个好东西，大家都来看看啊"," 你一定要来啊"});
@@ -207,11 +207,25 @@ public class Nolan : MonoBehaviour, NPC
 
     public void setCurrentRoom(int[] nextRoomXYZ)
     {
+        Vector3 temPos;
         this.xyz = nextRoomXYZ;
-        
+        //		Debug.Log ("玩家进入新房间: ");
 
-		Vector3 temPos = new Vector3(xyz [0] * roomH+0.5f,xyz[1]*roomV+0.5f,0);
-		this.transform.position = temPos;
+        if (xyz[2] == RoomConstant.ROOM_Z_UP)
+        {
+            temPos = new Vector3(xyz[0] * roomH + 0.5f , RoomConstant.ROOM_Y_UP + (xyz[1] * roomV), 0);
+        }
+        else if (xyz[2] == RoomConstant.ROOM_Z_GROUND)
+        {
+            temPos = new Vector3(xyz[0] * roomH + 0.5f, RoomConstant.ROOM_Y_GROUND + (xyz[1] * roomV), 0);
+        }
+        else
+        {
+            temPos = new Vector3(xyz[0] * roomH + 0.5f, RoomConstant.ROOM_Y_DOWN + (xyz[1] * roomV), 0);
+        }
+
+
+        this.transform.position = temPos;
 
     }
 
@@ -252,7 +266,7 @@ public class Nolan : MonoBehaviour, NPC
       
         this.bag = new Bag();
         TargetRoomList.Enqueue(roomContraller.getRandomRoom());
-        TargetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK_ROOM));
+        TargetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
         this.waitPlan = false;
         targetChara = new List<string>();
         targetChara.Add(SystemConstant.P2_NAME);

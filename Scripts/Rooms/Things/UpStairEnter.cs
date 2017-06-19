@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UpStairEnter : MonoBehaviour, IPointerClickHandler
+public class UpStairEnter : MonoBehaviour, Thing
 
 
 {
@@ -15,18 +15,33 @@ public class UpStairEnter : MonoBehaviour, IPointerClickHandler
 
     private CameraCtrl camCtrl;
 
-    public void OnPointerClick(PointerEventData eventData)
+    void OnMouseDown()
+
+    {
+
+        if (!SystemUtil.IsTouchedUI())
+        {
+
+            doClick();
+
+        }
+
+
+    }
+
+    public void doClick()
     {
 
 
 
         // 载入上楼图片...
-        RoomInterface upStairRoom = roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_UPSTAIR_ROOM);
+        RoomInterface upStairRoom = roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_UPSTAIR_BACK);
         Character chara =  roundController.getCurrentRoundChar();
         roomContraller.findRoomByXYZ(chara.getCurrentRoom()).removeChara(chara);
         upStairRoom.setChara(chara);
+        Debug.Log("upStairRoom.getXYZ() " + upStairRoom.getXYZ()[0]);
         chara.setCurrentRoom(upStairRoom.getXYZ());
-        camCtrl.setTargetPos(upStairRoom.getXYZ(), RoomConstant.ROOM_Y_UP);
+        camCtrl.setTargetPos(upStairRoom.getXYZ(), RoomConstant.ROOM_Y_UP,true);
         // 载入上楼图片结束。。。
     }
 

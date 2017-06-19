@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public class BookRoom : MonoBehaviour, RoomInterface
+
+public class CommonRoom : MonoBehaviour, RoomInterface
 {
 
     private String roomName;
@@ -17,13 +18,8 @@ public class BookRoom : MonoBehaviour, RoomInterface
     public GameObject westDoor;
     public GameObject eastDoor;
 
-	public GameObject box;
-
     private List<Character> charas = new List<Character>();
-  
-
     private StoryInterface si;
-
 
     private Dictionary<String, EventInterface> eventsList = new Dictionary<string, EventInterface>();
 
@@ -35,7 +31,6 @@ public class BookRoom : MonoBehaviour, RoomInterface
         this.roomType = roomType;
     }
 
-
     string RoomInterface.getRoomName()
     {
         return roomName;
@@ -43,7 +38,7 @@ public class BookRoom : MonoBehaviour, RoomInterface
 
     public void setRoomName(string name)
     {
-        this.roomName = name;
+         this.roomName = name;
     }
 
     string RoomInterface.getRoomType()
@@ -51,17 +46,17 @@ public class BookRoom : MonoBehaviour, RoomInterface
         return this.roomType;
     }
 
+
+
     int[] RoomInterface.getXYZ()
     {
         return xyz;
     }
 
-
     void RoomInterface.setXYZ(int[] xyz)
     {
         this.xyz = xyz;
     }
-
 
     public void northDoorEnable()
     {
@@ -106,13 +101,10 @@ public class BookRoom : MonoBehaviour, RoomInterface
         return westDoor;
     }
 
-	public GameObject getBox() {
-		return box;	
-	}
-
 
     public EventInterface getRoomEvent(string eventType)
     {
+
         if (eventsList.Count != 0)
         {
             return eventsList[eventType];
@@ -126,31 +118,26 @@ public class BookRoom : MonoBehaviour, RoomInterface
 
     public void setRoomEvent(EventInterface ei)
     {
+        Debug.Log("set event " + ei);
         eventsList.Add(ei.getEventType(), ei);
 
     }
 
     public List<Character> getCharas()
     {
-        return this.charas;
+        return charas;
     }
 
     public void setChara(Character chara)
     {
-        this.charas.Add(chara);
        
-
+        charas.Add(chara);
     }
 
     public void removeChara(Character chara)
     {
-        this.charas.Remove(chara);
+        charas.Remove(chara);
        
-    }
-
-    public bool checkRoomStoryStart(Character chara)
-    {
-        return si.checkStoryStart(chara, this);
     }
 
     public void setRoomStory(StoryInterface si)
@@ -163,21 +150,18 @@ public class BookRoom : MonoBehaviour, RoomInterface
         return this.si;
     }
 
-    List<string> guangboMessage = new List<string>();
+    public bool checkRoomStoryStart(Character chara)
+    {
+        return false;
+    }
 
+    List<string> guangboMessage = new List<string>();
 
     public List<string> findSomethingNews(string charaName)
     {
-        guangboMessage.Clear();
-        if (charaName == "叶成亮")
-        {
-            guangboMessage.Add("哟，这里还有个书店");
-            guangboMessage.Add("我要好好调查下这个书店");
-            guangboMessage.Add("一本黑色的新书成功引起了我的注意");
-            return guangboMessage;
-            
-        }
+     
 
         return null;
     }
 }
+

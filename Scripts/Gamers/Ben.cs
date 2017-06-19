@@ -182,11 +182,10 @@ public class Ben : MonoBehaviour, NPC
 
     public void setCurrentRoom(int[] nextRoomXYZ)
     {
+        Vector3 temPos;
         this.xyz = nextRoomXYZ;
 
-        Debug.Log("本尼进入房间");
 
-        Vector3 temPos = new Vector3(xyz[0] * roomH + 1.5f, xyz[1] * roomV + 1.5f, 0);
         this.transform.position = temPos;
 
     }

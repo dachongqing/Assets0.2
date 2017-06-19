@@ -41,7 +41,7 @@ public class RoomContraller : MonoBehaviour
     {
         //这个队列的长度，限制了房间最大数量
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("UpStairEnterRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
@@ -63,7 +63,7 @@ public class RoomContraller : MonoBehaviour
         groundRoomType.Enqueue("BookRoom");
 
         //这个队列的长度，限制了房间最大数量
-        upRoomType.Enqueue("BookRoom");
+        upRoomType.Enqueue("UpStairOuterRoom");
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
@@ -140,7 +140,7 @@ public class RoomContraller : MonoBehaviour
         {
 
             //判定房间是处于什么位置 楼上 地面 楼下， 不能出现 有冲突的事件， 比如楼下不能出现掉落事件
-            if (room.getXYZ()[2] == RoomConstant.ROOM_TYPE_GROUND)
+            if (room.getXYZ()[2] == RoomConstant.ROOM_Z_GROUND)
             {
                 //对于地面事件 所有事件都可以发生
                 room.setRoomEvent(getRandomEvent(null));
@@ -148,7 +148,7 @@ public class RoomContraller : MonoBehaviour
                 //  if () {
                 //  }
             }
-            else if (room.getXYZ()[2] == RoomConstant.ROOM_TYPE_UP)
+            else if (room.getXYZ()[2] == RoomConstant.ROOM_Z_UP)
             {
                 //对于楼上事件 
             }
@@ -162,7 +162,7 @@ public class RoomContraller : MonoBehaviour
 
     private void setRoomStory(RoomInterface room)
     {
-        if (room.getRoomType() == RoomConstant.ROOM_TYPE_BOOK_ROOM)
+        if (room.getRoomType() == RoomConstant.ROOM_TYPE_BOOK)
         {
             StoryInterface storyScript = new RaceStory();
             room.setRoomStory(storyScript);
@@ -194,7 +194,16 @@ public class RoomContraller : MonoBehaviour
         }
         else
         {
-            RoomInterface ri = room.GetComponent(System.Type.GetType(roomType)) as RoomInterface;
+            RoomInterface ri;
+
+            if (roomType == RoomConstant.ROOM_TYPE_BOOK || roomType == RoomConstant.ROOM_TYPE_LOBBY)
+            {
+                ri = room.GetComponent(System.Type.GetType(roomType)) as RoomInterface;
+            }
+            else {
+                ri = room.GetComponent(System.Type.GetType(RoomConstant.ROOM_TYPE_COMMON)) as RoomInterface;
+            }
+            ri.setRoomType(roomType);
             ri.setXYZ(xyz);
 
             //for test
@@ -292,12 +301,12 @@ public class RoomContraller : MonoBehaviour
                 doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
             }
 
-            if (xyz[2] == RoomConstant.ROOM_TYPE_GROUND)
+            if (xyz[2] == RoomConstant.ROOM_Z_GROUND)
             {
                 groundRoomList.Add(ri.getXYZ(), ri);
 
             }
-            else if (xyz[2] == RoomConstant.ROOM_TYPE_UP)
+            else if (xyz[2] == RoomConstant.ROOM_Z_UP)
             {
                 upRoomList.Add(ri.getXYZ(), ri);
             }
@@ -316,7 +325,7 @@ public class RoomContraller : MonoBehaviour
 
     public RoomInterface findRoomByXYZ(int[] xyz)
     {
-        if (xyz[2] == RoomConstant.ROOM_TYPE_GROUND)
+        if (xyz[2] == RoomConstant.ROOM_Z_GROUND)
         {
 
             foreach (int[] key in groundRoomList.Keys)
@@ -328,7 +337,7 @@ public class RoomContraller : MonoBehaviour
             }
 
         }
-        else if (xyz[2] == RoomConstant.ROOM_TYPE_UP)
+        else if (xyz[2] == RoomConstant.ROOM_Z_UP)
         {
             foreach (int[] key in upRoomList.Keys)
             {
@@ -370,13 +379,13 @@ public class RoomContraller : MonoBehaviour
 
 
 
-        if (z == RoomConstant.ROOM_TYPE_GROUND)
+        if (z == RoomConstant.ROOM_Z_GROUND)
         {
 
             return groundRoomList;
 
         }
-        else if (z == RoomConstant.ROOM_TYPE_UP)
+        else if (z == RoomConstant.ROOM_Z_UP)
         {
 
             return upRoomList;
