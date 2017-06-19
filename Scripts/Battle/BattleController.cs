@@ -106,13 +106,13 @@ public class BattleController : MonoBehaviour {
             if (fighteEnd && victimEnd) {
 				int trueDamge;
                 if (attackValue > defendValue) {
-					trueDamge = (this.victim.getAbilityInfo () [4] - (attackValue - defendValue)) * this.fighter.getDamgeBuffer();
-					this.victim.getAbilityInfo()[4] = trueDamge;
-					Debug.Log("打斗结算：被攻击者受到了 " + trueDamge  + " 点伤害， 还剩下 " + this.fighter.getAbilityInfo()[4]);
+					trueDamge = (attackValue - defendValue) * this.fighter.getDamgeBuffer();
+					this.victim.getAbilityInfo()[0] = this.victim.getAbilityInfo()[0] - trueDamge;
+					Debug.Log("打斗结算：被攻击者受到了 " + trueDamge  + " 点伤害， 还剩下 " + this.victim.getAbilityInfo()[0]);
                 } else if (attackValue < defendValue) {
-					trueDamge = (this.fighter.getAbilityInfo()[4] - (defendValue - attackValue)) * this.victim.getDamgeBuffer();
-					this.fighter.getAbilityInfo()[4] = trueDamge;
-					Debug.Log("打斗结算：攻击者受到了 " + trueDamge+ " 点伤害， 还剩下 " + this.fighter.getAbilityInfo()[4]);
+					trueDamge = (defendValue - attackValue) * this.victim.getDamgeBuffer();
+					this.fighter.getAbilityInfo()[0] = this.fighter.getAbilityInfo()[0] - trueDamge;
+					Debug.Log("打斗结算：攻击者受到了 " + trueDamge+ " 点伤害， 还剩下 " + this.fighter.getAbilityInfo()[0]);
                 }
                 this.fighter.setWaitPlayer(false);
                 isBattle = false;

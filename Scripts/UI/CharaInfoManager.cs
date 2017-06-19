@@ -1,8 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharaInfoManager : MonoBehaviour {
+
+
+
+    public Slider NPCStrSlider;
+
+    public Slider NPCSpeSlider;
+
+    public Slider NPCIntSlider;
+
+    public Slider NPCSanSlider;
+
+    public Text NPCName;
+
+    public Text NPCDesc;
+
+
+
+    private BattleController battleController;
+
+    private RoundController roundController;
 
     private DuiHuaUImanager duiHuaUImanager;
 
@@ -10,17 +31,34 @@ public class CharaInfoManager : MonoBehaviour {
 
     private string[] content;
 
-    private Vector3 showPos = new Vector3(69, -193, 0);
-    private Vector3 hidePos = new Vector3(69, 1198, 0);
+    private Vector3 showPos = new Vector3(4, 0, 0);
+    private Vector3 hidePos = new Vector3(-10, 0, 0);
 
     //对话界面
     public GameObject UIInfoMenu;
 
     public void showCharaInfoMenu(Character chara, string[] content) {
-        this.chara = chara;
-        this.content = content;
-        UIInfoMenu.SetActive(true);
-        UIInfoMenu.transform.localPosition = showPos;
+        if (chara.isPlayer()) {
+            duiHuaUImanager.showDuiHua(chara.getLiHuiURL(), content);
+        } else {
+
+            this.chara = chara;
+            this.content = content;
+            UIInfoMenu.SetActive(true);
+            UIInfoMenu.transform.localPosition = showPos;
+
+            NPCStrSlider.value = this.chara.getAbilityInfo()[0];
+
+            NPCSpeSlider.value = this.chara.getAbilityInfo()[1];
+
+            NPCIntSlider.value = this.chara.getAbilityInfo()[2];
+
+            NPCSanSlider.value = this.chara.getAbilityInfo()[3];
+
+            NPCName.text = this.chara.getName();
+
+            NPCDesc.text = this.chara.getDesc();
+        }
     }
 
 
@@ -33,12 +71,20 @@ public class CharaInfoManager : MonoBehaviour {
     public void clickBattle() {
         UIInfoMenu.SetActive(false);
         UIInfoMenu.transform.localPosition = hidePos;
+        battleController.fighte(roundController.getPlayerChara(), chara);
     }
 
-	// Use this for initialization
-	void Start () {
-        duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+    public void close()
+    {
+        UIInfoMenu.SetActive(false);
+        UIInfoMenu.transform.localPosition = hidePos;
+    }
 
+    // Use this for initialization
+    void Start () {
+        duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        roundController = FindObjectOfType<RoundController>();
+        battleController = FindObjectOfType<BattleController>();
     }
 	
 	// Update is called once per frame

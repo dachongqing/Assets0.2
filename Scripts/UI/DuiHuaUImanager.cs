@@ -24,13 +24,11 @@ public class DuiHuaUImanager : MonoBehaviour
     public void showDuiHua(string url,string[] content) {
 		UIduihua.SetActive (true);
 		UIduihua.transform.localPosition = showPos;
-
 		Sprite s = 	Resources.Load (url, typeof(Sprite)) as Sprite;
 		this.content = content;
-        Debug.Log("content " + content.Length);
-		lihui.overrideSprite = s;
-		//duihua.text = content[0];
-        duihuaClickManager.startDuihua(0);
+        lihui.overrideSprite = s;
+        duihua.text = content[0];
+        duihuaClickManager.startDuihua(1);
         duiHuaEndFlag = false;
 
 
@@ -40,10 +38,8 @@ public class DuiHuaUImanager : MonoBehaviour
     {
         UIduihua.SetActive(true);
         UIduihua.transform.localPosition = showPos;
-
         Sprite s = Resources.Load(url, typeof(Sprite)) as Sprite;
-        this.content = content;
-        Debug.Log("content " + content.Length);
+        this.content = content;    
         lihui.overrideSprite = s;
         duihua.text = content[0];
         duihuaClickManager.startDuihua(1);

@@ -44,7 +44,9 @@ public class Nolan : MonoBehaviour, NPC
 
     private BattleController battleController;
 
-	private DuiHuaUImanager duiHuaUImanager;
+    //private DuiHuaUImanager duiHuaUImanager;
+
+    private CharaInfoManager charaInfoManager;
 
     private Queue<RoomInterface> TargetRoomList = new Queue<RoomInterface>();
 
@@ -242,7 +244,8 @@ public class Nolan : MonoBehaviour, NPC
         eventController = FindObjectOfType<EventController>();
         roundController = FindObjectOfType<RoundController>();
         battleController = FindObjectOfType<BattleController>();
-		duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        //duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        charaInfoManager = FindObjectOfType<CharaInfoManager>();
         listener = FindObjectOfType<GuangBoListener>();
         guangBoController = FindObjectOfType<GuangBoController>();
         playerName = SystemConstant.P1_NAME;
@@ -270,6 +273,7 @@ public class Nolan : MonoBehaviour, NPC
         this.waitPlan = false;
         targetChara = new List<string>();
         targetChara.Add(SystemConstant.P2_NAME);
+        this.setDesc("这个人看起来好像一条狗");
         
     }
 
@@ -280,6 +284,7 @@ public class Nolan : MonoBehaviour, NPC
 			getAbilityInfo()[2] <=0 || getAbilityInfo()[3] <=0  ||
 			getAbilityInfo()[4] <=0
 		) {
+            Debug.Log(this.getName() + " 已经死亡。。。");
 			this.deadFlag = true;
 		}
         if (!roundOver) {
@@ -370,7 +375,8 @@ public class Nolan : MonoBehaviour, NPC
         {
 
             string[] co = new string[] { "你感觉到绝望了吗", "老实讲，我要带你飞了" };
-            duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
+           // duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
+            charaInfoManager.showCharaInfoMenu(this, co);
         }
         else {
             Debug.Log("click ui");
@@ -420,5 +426,15 @@ public class Nolan : MonoBehaviour, NPC
         return this.targetChara;
     }
 
+    private string desc;
 
+    public void setDesc(string desc)
+    {
+        this.desc = desc;
+    }
+
+    public string getDesc()
+    {
+        return this.desc;
+    }
 }

@@ -72,5 +72,9 @@ public interface Character
 
     string getLiHuiURL();
 
-    
+    void setDesc(string desc);
+
+    string getDesc();
+
+
 }

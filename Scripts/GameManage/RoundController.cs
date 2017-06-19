@@ -137,8 +137,18 @@ public class RoundController : MonoBehaviour
             }
             else
             {
+                if (playChara.isDead())
+                {
+                    Debug.Log("npc 死了");
+                    isRoundEnd = true;
+
+                }
+                else {
+                     StartCoroutine("charaMove");
+
+                }
+               
             }
-            StartCoroutine("charaMove");
         }
 
 

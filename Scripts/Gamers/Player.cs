@@ -43,7 +43,8 @@ public class Player : MonoBehaviour, NPC
 
     private Bag bag;
 
-	private DuiHuaUImanager duiHuaUImanager;
+    //private DuiHuaUImanager duiHuaUImanager;
+    private CharaInfoManager charaInfoManager;
 
     private GuangBoListener guangBoListener;
 
@@ -176,8 +177,9 @@ public class Player : MonoBehaviour, NPC
         eventController = FindObjectOfType<EventController>();
         battleController = FindObjectOfType<BattleController>();
         roundController = FindObjectOfType<RoundController>();
-		duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
-        guangBoListener = FindObjectOfType<GuangBoListener>();
+        //	duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        charaInfoManager = FindObjectOfType<CharaInfoManager>();
+            guangBoListener = FindObjectOfType<GuangBoListener>();
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         playerName = SystemConstant.P6_NAME;
         int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
@@ -291,9 +293,10 @@ public class Player : MonoBehaviour, NPC
 		if(!SystemUtil.IsTouchedUI()) {
 
 			string[] co = new string[] { "我是谁", "我从哪里来","我要到哪里去" };
-            duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
+            // duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
+            charaInfoManager.showCharaInfoMenu(this, co);
 
-		}
+        }
 
 	}
 
@@ -337,5 +340,17 @@ public class Player : MonoBehaviour, NPC
     public bool checkItem(string itemCode)
     {
        return this.bag.checkTaskItem(itemCode);
+    }
+
+    private string desc;
+
+    public void setDesc(string desc)
+    {
+        this.desc = desc;
+    }
+
+    public string getDesc()
+    {
+        return this.desc;
     }
 }

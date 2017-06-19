@@ -44,7 +44,9 @@ public class Ben : MonoBehaviour, NPC
 
     private BattleController battleController;
 
-    private DuiHuaUImanager duiHuaUImanager;
+    //private DuiHuaUImanager duiHuaUImanager;
+
+    private CharaInfoManager charaInfoManager;
 
     private Queue<RoomInterface> TargetRoomList = new Queue<RoomInterface>();
 
@@ -188,15 +190,15 @@ public class Ben : MonoBehaviour, NPC
 
         if (xyz[2] == RoomConstant.ROOM_Z_UP)
         {
-            temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_UP + (xyz[1] * roomV + 0.5f), 0);
+            temPos = new Vector3(xyz[0] * roomH - 0.5f, RoomConstant.ROOM_Y_UP + (xyz[1] * roomV + 0.5f), 0);
         }
         else if (xyz[2] == RoomConstant.ROOM_Z_GROUND)
         {
-            temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_GROUND + (xyz[1] * roomV + 0.5f), 0);
+            temPos = new Vector3(xyz[0] * roomH - 0.5f, RoomConstant.ROOM_Y_GROUND + (xyz[1] * roomV + 0.5f), 0);
         }
         else
         {
-            temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_DOWN + (xyz[1] * roomV), 0);
+            temPos = new Vector3(xyz[0] * roomH - 0.5f, RoomConstant.ROOM_Y_DOWN + (xyz[1] * roomV + 0.5f), 0);
         }
 
 
@@ -217,8 +219,9 @@ public class Ben : MonoBehaviour, NPC
         eventController = FindObjectOfType<EventController>();
         roundController = FindObjectOfType<RoundController>();
         battleController = FindObjectOfType<BattleController>();
-        duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
-        guangBoController = FindObjectOfType<GuangBoController>();
+        // duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        charaInfoManager = FindObjectOfType<CharaInfoManager>();
+         guangBoController = FindObjectOfType<GuangBoController>();
         listener = FindObjectOfType<GuangBoListener>();
 
         playerName = SystemConstant.P2_NAME;
@@ -347,8 +350,9 @@ public class Ben : MonoBehaviour, NPC
         {
 
             string[] co = new string[] { "导演让我干什么就干什么", "盒饭什么时候发？" };
-            duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
-        }
+            //duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
+            charaInfoManager.showCharaInfoMenu(this,co);
+}
         else
         {
             Debug.Log("click ui");
@@ -399,5 +403,16 @@ public class Ben : MonoBehaviour, NPC
     public List<string> getTargetChara()
     {
         return this.targetChara;
+    }
+
+    private string desc;
+
+    public void setDesc(string desc)
+    {
+        this.desc = desc;
+    }
+
+    public string getDesc() {
+        return this.desc;
     }
 }

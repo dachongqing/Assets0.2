@@ -38,6 +38,11 @@ public class AutoMoveManager  {
                 if (chara.getCurrentRoom()[2] != targetRoom.getXYZ()[2])
                 {
                     // 如果目标房间是楼下， 先定位到下楼梯口房间， 如果目标是楼上，先定位到上楼梯口房间
+                    if (targetRoom.getXYZ()[2] == RoomConstant.ROOM_Z_UP ) {
+                       // targetRoom = roomContraller.findRoomByType(RoomConstant.);
+                    } else {
+
+                    }
                 }
                 else
                 {
