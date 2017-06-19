@@ -184,6 +184,20 @@ public class Ben : MonoBehaviour, NPC
     {
         Vector3 temPos;
         this.xyz = nextRoomXYZ;
+        //		Debug.Log ("玩家进入新房间: ");
+
+        if (xyz[2] == RoomConstant.ROOM_Z_UP)
+        {
+            temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_UP + (xyz[1] * roomV + 0.5f), 0);
+        }
+        else if (xyz[2] == RoomConstant.ROOM_Z_GROUND)
+        {
+            temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_GROUND + (xyz[1] * roomV + 0.5f), 0);
+        }
+        else
+        {
+            temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_DOWN + (xyz[1] * roomV), 0);
+        }
 
 
         this.transform.position = temPos;
