@@ -133,7 +133,8 @@ public class RoundController : MonoBehaviour
                 mState = OperatorState.Player;
                 //解除黑屏
                 //解锁roll点
-                roundCount++;   
+                roundCount++;
+                StartCoroutine("charaMove");
             }
             else
             {

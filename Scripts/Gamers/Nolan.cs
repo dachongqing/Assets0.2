@@ -268,6 +268,7 @@ public class Nolan : MonoBehaviour, NPC
         this.deadFlag = false;
       
         this.bag = new Bag();
+        // TargetRoomList.Enqueue(roomContraller.getRandomRoom());
         TargetRoomList.Enqueue(roomContraller.getRandomRoom());
         TargetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
         this.waitPlan = false;

@@ -16,5 +16,7 @@ public class SystemConstant  {
 
     public const string P6_NAME = "Heal"; //离开事件
 
+    public const int UPStairActionPoint = 1; //上下楼消耗的体力值
+
 
 }

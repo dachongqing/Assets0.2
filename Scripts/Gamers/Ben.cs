@@ -238,7 +238,7 @@ public class Ben : MonoBehaviour, NPC
        
         this.bag = new Bag();
         TargetRoomList.Enqueue(roomContraller.getRandomRoom());
-      
+
         this.waitPlan = false;
         targetChara = new List<string>();
         

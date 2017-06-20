@@ -15,9 +15,9 @@ public  class  RoomConstant
 
     public const string ROOM_TYPE_UPSTAIR_BACK = "UpStairOuterRoom"; //楼上返回房间
 
-    public const string ROOM_TYPE_DOWNSTAIR = "DownSTair"; //地下入口房间
+    public const string ROOM_TYPE_DOWNSTAIR = "DownStairEnterRoom"; //地下入口房间
 
-    public const string ROOM_TYPE_DOWNSTAIR_BACK = "DownBackSTair"; //地下返回房间
+    public const string ROOM_TYPE_DOWNSTAIR_BACK = "DownStairOuterRoom"; //地下返回房间
 
     public const int ROOM_Z_GROUND = 0;   //地面
 

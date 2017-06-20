@@ -4,13 +4,58 @@ using UnityEngine;
 
 public class DownStairEnter : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private RoomContraller roomContraller;
+    private RoundController roundController;
+
+    private CameraCtrl camCtrl;
+
+    void OnMouseDown()
+
+    {
+
+        if (!SystemUtil.IsTouchedUI())
+        {
+
+            doClick();
+
+        }
+
+
+    }
+
+    public void doClick()
+    {
+
+
+
+        // 载入上楼图片...
+        RoomInterface upStairRoom = roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_DOWNSTAIR_BACK);
+        Character chara = roundController.getCurrentRoundChar();
+        roomContraller.findRoomByXYZ(chara.getCurrentRoom()).removeChara(chara);
+        this.roomContraller.findMiniRoomByXYZ(chara.getCurrentRoom()).setPenable(this.roundController.getCurrentRoundChar().getName(), false);
+        upStairRoom.setChara(chara);
+        Debug.Log("upStairRoom.getXYZ() " + upStairRoom.getXYZ()[0]);
+        chara.setCurrentRoom(upStairRoom.getXYZ());
+        camCtrl.setTargetPos(upStairRoom.getXYZ(), RoomConstant.ROOM_Y_DOWN, true);
+
+        this.roomContraller.findMiniRoomByXYZ(upStairRoom.getXYZ()).setPenable(this.roundController.getCurrentRoundChar().getName(), true);
+        
+        // 载入上楼图片结束。。。
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+        roundController = FindObjectOfType<RoundController>();
+
+        roomContraller = FindObjectOfType<RoomContraller>();
+
+        camCtrl = FindObjectOfType<CameraCtrl>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }
