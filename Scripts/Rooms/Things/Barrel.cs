@@ -35,12 +35,12 @@ public class Barrel : MonoBehaviour, Thing
             NPC chara = (NPC)roundController.getCurrentRoundChar();
             if (chara.getActionPoint() >= 2)
             {
-                if (chara.getAbilityInfo()[2] >= 7)
+                if (chara.getAbilityInfo()[2] >= 1)
                 {
                     messageUI.ShowMessge("因为你的注意力高度集中，很容易就发现了药水道具", 1);
                     chara.getBag().insertItem(this.getItem());
                 }
-                else if (chara.getAbilityInfo()[2] >= 3)
+                else if (chara.getAbilityInfo()[2] >= 0)
                 {
                     messageUI.ShowMessge("你注意桶底有点黑色的物品，你需要对力量进行判断 大于5 才能取出那个物品", 1);
                     this.maxValue = 5;
@@ -97,7 +97,7 @@ public class Barrel : MonoBehaviour, Thing
         this.phase = 1;
         uiManager = FindObjectOfType<RollDiceUIManager>();
         item = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001
-            ,"速度回复药水");
+            ,"速度回复药水","模糊的字迹写着是哈尔滨六厂生产，蓝屏的钙");
 
     }
     private int rollValue;

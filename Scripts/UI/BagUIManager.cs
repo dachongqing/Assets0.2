@@ -1,51 +1,92 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BagUIManager : MonoBehaviour {
 
-    /**
-     * 正常流程是
-     * 1点击后显示包裹ui， 里面有所有玩家收集的物品，
-     * 最好有tab页面 按照物品的类型进行归类 ，可以切换
-     * 
-     * 2 点击一个物品，出现物品的介绍 和可选功能： 使用，丢弃
-     * 
-     * 3点击使用后， 调用itemcontroller 的使用方法
-     * 
-     * 4 点击丢弃后，调用itemcontroller的 丢弃方法
-     * */
-    // Use this for initialization
+  
 
-    private ItemController itemController;
+    private Vector3 showPos = new Vector3(4, 0, 0);
+    private Vector3 hidePos = new Vector3(-10, 0, 0);
 
-    private NPC chara;
+    public GameObject ItemParentPosition1;
+    public Transform ItemPosition1;
+    public GameObject ItemParentPosition2;
+    public Transform ItemPosition2;
+    public GameObject ItemParentPosition3;
+    public Transform ItemPosition3;
+    public Text itemDesc;
+
+    private List<Transform> positionList = new List<Transform>();
+    private List<GameObject> parentPositionList = new List<GameObject>();
+
+    private Item selectItem;
+
+    //对话界面
+    public GameObject BagItemMenuUI;
 
     private RoundController roundController;
 
-    public void showBag() {
 
-    }
+    public void showBagItemUI()
+    {
+        BagItemMenuUI.SetActive(true);
+        BagItemMenuUI.transform.localPosition = showPos;
 
-    public void tempUse() {
-        chara = (NPC)roundController.getCurrentRoundChar();
-        if (chara.getBag().getItemTotalCount() > 0)
+        NPC player = (NPC)roundController.getPlayerChara();
+        Bag bag = player.getBag();
+        for (int i = 0; i < bag.getItemTotalCount(); i++)
         {
-            itemController.useItem(chara.getBag().getRandomPotionItem(), chara);
+            Item item = bag.getAllItems()[i];
+            string url = "Prefabs/Items/" + item.getCode();
 
+            Debug.Log("item url " + url);
+            GameObject itemPrefab = Instantiate(Resources.Load(url)) as GameObject;
+            Vector3 temPos = positionList[i].localPosition;
+            Debug.Log("parentPositionList[i] " + parentPositionList[i]);
+            itemPrefab.GetComponent<RectTransform>().SetParent(parentPositionList[i].transform);
+            itemPrefab.GetComponent<RectTransform>().localPosition = temPos;
+            ItemClickEvent itemClickEvent = itemPrefab.GetComponent<ItemClickEvent>();
+            itemClickEvent.setI(i);
+           // itemDesc.text = item.getDesc();
         }
-        else {
-            Debug.Log("你没有可以用的物品");
-        }
+
+
     }
-	void Start () {
-        itemController = FindObjectOfType<ItemController>();
+
+    public void setSelectItem(int position) {
+        NPC player = (NPC)roundController.getPlayerChara();
+        Bag bag = player.getBag();
+        selectItem = bag.getAllItems()[position];
+    }
+
+    public void closeBagItemUI()
+    {
+        BagItemMenuUI.SetActive(false);
+        BagItemMenuUI.transform.localPosition = hidePos;
+
+       
+    }
+
+
+    void Start () {
         roundController = FindObjectOfType<RoundController>();
+        positionList.Add(ItemPosition1);
+        parentPositionList.Add(ItemParentPosition1);
+        positionList.Add(ItemPosition2);
+        parentPositionList.Add(ItemParentPosition2);
+        positionList.Add(ItemPosition3);
+        parentPositionList.Add(ItemParentPosition3);
 
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+
+        if (selectItem != null ) {
+            itemDesc.text = selectItem.getDesc();
+        }
 		
 	}
 }

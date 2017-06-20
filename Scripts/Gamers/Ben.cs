@@ -397,7 +397,7 @@ public class Ben : MonoBehaviour, NPC
 
     public bool checkItem(string itemCode)
     {
-        return this.getBag().checkTaskItem(itemCode);
+        return this.getBag().checkItem(itemCode);
     }
 
     public List<string> getTargetChara()

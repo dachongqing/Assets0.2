@@ -13,7 +13,7 @@ public class RaceTriggerConditionItem : Condition {
 	public bool getConditionStatus(Character chara, RoomInterface room)
 	{
 		NPC npc = (NPC)chara;
-		List<Item> its = npc.getBag ().getTaskItems ();
+		List<Item> its = npc.getBag ().getAllItems ();
 
 		for(int i =0; i<its.Count; i++) {
 			if(its[i].getCode() == ItemConstant.ITEM_CODE_SPEC_00001) {

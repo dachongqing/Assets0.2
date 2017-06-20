@@ -119,7 +119,7 @@ public class Box : MonoBehaviour, Thing
 		this.phase = 1;
 		uiManager = FindObjectOfType<RollDiceUIManager>();
 		item = new ItemTask(ItemConstant.ITEM_CODE_SPEC_00001
-			,"带血的内容：你需要用活血的几十来开始剧情");
+			,"黑色的书","带血的内容：你需要用活血的几十来开始剧情");
 
 	}
 	private int rollValue;

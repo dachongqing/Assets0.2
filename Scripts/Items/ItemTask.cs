@@ -12,12 +12,20 @@ public class ItemTask : Item {
 
 	private string name;
 
+    private string desc;
 
-	public ItemTask(string code , string name) {
+    public string getDesc()
+    {
+        return this.desc;
+    }
+
+
+    public ItemTask(string code , string name, string desc) {
 		this.code = code;
 		this.type = ItemConstant.ITEM_TYPE_SPEC;
 		this.durability = 1;
 		this.name = name;
+        this.desc = desc;
 	}
 
 	public string getCode()

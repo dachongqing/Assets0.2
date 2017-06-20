@@ -195,6 +195,15 @@ public class Player : MonoBehaviour, NPC
         this.waitFlag = true;
        
         this.bag = new Bag();
+
+        //测试代码。。。。。
+        Item item = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001
+           , "速度回复药水", "模糊的字迹写着是哈尔滨六厂生产，蓝屏的钙");
+        Item item2 = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001
+          , "力量回复药水", "模糊的字迹写着是哈尔滨六厂生产，红屏的钙");
+        this.bag.insertItem(item);
+        this.bag.insertItem(item2);
+        //测试代码。。。。。
     }
 
     // Update is called once per frame
@@ -340,7 +349,7 @@ public class Player : MonoBehaviour, NPC
 
     public bool checkItem(string itemCode)
     {
-       return this.bag.checkTaskItem(itemCode);
+        return this.getBag().checkItem(itemCode);
     }
 
     private string desc;

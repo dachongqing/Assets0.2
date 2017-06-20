@@ -1,102 +1,66 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Bag  {
 
-    private Dictionary<string, List<Item>> bag;
+   // private Dictionary<string, List<Item>> bag;
 
     public System.Random random = new System.Random();
+    
+    private List<Item> bag = new List<Item>();
 
     public Bag() {
-        List<Item> plist = new List<Item>();
-        List<Item> tlist = new List<Item>();
-        List<Item> slist = new List<Item>();
-        bag = new Dictionary<string, List<Item>>();
-        bag.Add(ItemConstant.ITEM_TYPE_POTION, plist);
-        bag.Add(ItemConstant.ITEM_TYPE_TOOL, tlist);
-        bag.Add(ItemConstant.ITEM_TYPE_SPEC, slist);
+      
     }
 
     public void removeItem(Item item)
     {
-        List<Item> list;
-        if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_POTION))
-        {
-            list = bag[ItemConstant.ITEM_TYPE_POTION];
-            list.Remove(item);
-        }
-        else if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_TOOL)) {
-            list = bag[ItemConstant.ITEM_TYPE_TOOL];
-            list.Remove(item);
-        }
-        else if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_SPEC)) {
-            list = bag[ItemConstant.ITEM_TYPE_SPEC];
-            list.Remove(item);
-        }
-       
+        bag.Remove(item);
     }
 
 	public void updateItem(Item item) {
-		List<Item> list;
-		if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_POTION))
-		{
-			list = bag[ItemConstant.ITEM_TYPE_POTION];
-		
-			list [list.IndexOf (item)].used ();
-
-		}
-		else if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_TOOL)) {
-			list = bag[ItemConstant.ITEM_TYPE_TOOL];
-			list [list.IndexOf (item)].used ();
-		}
-		else if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_SPEC)) {
-			list = bag[ItemConstant.ITEM_TYPE_SPEC];
-			list [list.IndexOf (item)].used ();
-		}
+        bag[bag.IndexOf (item)].used ();	
 	}
 
-	public List<Item> getTaskItems() {
-		return bag [ItemConstant.ITEM_TYPE_SPEC];
-	}
+	
 
     public int getItemTotalCount() {
-        return bag[ItemConstant.ITEM_TYPE_POTION].Count + bag[ItemConstant.ITEM_TYPE_TOOL].Count + bag[ItemConstant.ITEM_TYPE_SPEC].Count;
+        return bag.Count ;
     }
 
-    public Item getRandomPotionItem() {
-       return  bag[ItemConstant.ITEM_TYPE_POTION][random.Next(bag[ItemConstant.ITEM_TYPE_POTION].Count)];
+    public Item getRandomItem() {
+       return  bag[random.Next(bag.Count)];
     }
 
     public void insertItem(Item item) {
-        List<Item> list;
-        if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_POTION))
-        {
-            list = bag[ItemConstant.ITEM_TYPE_POTION];
-            list.Add(item);
-            Debug.Log("你放入了一个药水物品");
-        }
-        else if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_TOOL))
-        {
-            list = bag[ItemConstant.ITEM_TYPE_TOOL];
-            list.Add(item);
-            Debug.Log("你放入了一个道具物品");
-        }
-        else if (item.getCode().StartsWith(ItemConstant.ITEM_TYPE_SPEC))
-        {
-            list = bag[ItemConstant.ITEM_TYPE_SPEC];
-            list.Add(item);
-            Debug.Log("你放入了一个人物物品");
-        }
+            bag.Add(item);
+       
     }
 
-    public bool checkTaskItem(string code ) {
-        foreach (Item item in bag[ItemConstant.ITEM_TYPE_SPEC]) {
+    public bool checkItem(string code ) {
+        foreach (Item item in bag) {
             if (item.getCode() == code) {
                 return true;
             }
         }
         return false;
     }
-    
+
+    public List<Item> getAllItems() {
+       return  bag;
+    }
+
+    public  Item findItemByCode(string itemCode)
+    {
+        foreach (Item item in bag)
+        {
+            if (item.getCode() == itemCode)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
 }

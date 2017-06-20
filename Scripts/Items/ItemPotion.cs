@@ -13,12 +13,19 @@ public class ItemPotion : Item {
 
     private string name;
 
+    private string desc;
 
-    public ItemPotion(string code , string name) {
+    public string getDesc() {
+        return this.desc;
+    }
+
+
+    public ItemPotion(string code , string name, string desc) {
         this.code = code;
 		this.type = ItemConstant.ITEM_TYPE_POTION;
         this.durability = 1;
         this.name = name;
+        this.desc = desc;
     }
 
     public string getCode()

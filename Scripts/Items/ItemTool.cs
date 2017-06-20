@@ -12,12 +12,20 @@ public class ItemTool : Item {
 
 	private string name;
 
+    private string desc;
 
-	public ItemTool(string code , string name, int durability) {
+    public string getDesc()
+    {
+        return this.desc;
+    }
+
+
+    public ItemTool(string code , string name, int durability, string desc) {
 		this.code = code;
 		this.type = ItemConstant.ITEM_TYPE_TOOL;
 		this.durability = durability;
 		this.name = name;
+        this.desc = desc;
 	}
 
 	public string getCode()

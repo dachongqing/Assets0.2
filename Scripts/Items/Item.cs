@@ -14,4 +14,6 @@ public interface Item  {
     string getCode();
 
     string getName();
+
+    string getDesc();
 }
