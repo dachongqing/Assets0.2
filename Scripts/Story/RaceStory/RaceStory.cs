@@ -23,17 +23,17 @@ public class RaceStory :  StoryInterface {
         badStoryScript = new RaceBadScript();
     }
 
-    public bool checkStoryEnd(Character chara, RoomInterface room)
+    public bool checkStoryEnd(Character chara, RoomInterface room, RoundController roundController)
     {
         if (chara.isBoss())
         {
-            if (badStoryScript.checkStatus(chara, room))
+            if (badStoryScript.checkStatus(chara, room, roundController))
             {
                 return true;
             }
         }
         else {
-            if (goodStoryScript.checkStatus(chara, room)) {
+            if (goodStoryScript.checkStatus(chara, room, roundController)) {
                 return true;
             }
         }
@@ -41,10 +41,10 @@ public class RaceStory :  StoryInterface {
         return false;
     }
 
-    public bool checkStoryStart(Character chara, RoomInterface room)
+    public bool checkStoryStart(Character chara, RoomInterface room, RoundController roundController)
     {
         for (int i=0; i< triggerConditions.Count; i++) {
-            if (!triggerConditions[i].getConditionStatus(chara, room)) {
+            if (!triggerConditions[i].getConditionStatus(chara, room, roundController)) {
                 return false;
             }
         }

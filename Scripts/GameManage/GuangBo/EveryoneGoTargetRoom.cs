@@ -57,15 +57,25 @@ public class EveryoneGoTargetRoom : GuangBoAction
     {
         return this.ownerName;
     }
-
-    public string getGuangBoRoomType()
+      
+    public string getGuangBoTargetVaule()
     {
         return this.targetRoomType;
+    }
+
+    public string getGuangBoType()
+    {
+        return GuangBoConstant.GUANGBO_TYPE_MOVE_ROOM;
     }
 
     public int getSanLimit()
     {
         return this.sanLimit;
+    }
+
+    public Character getVictim()
+    {
+        return null;
     }
 
     public List<string> getWhiteList()
@@ -80,6 +90,11 @@ public class EveryoneGoTargetRoom : GuangBoAction
         AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, this.targetRoomType);
     }
 
+    public bool hasVictim()
+    {
+        return false;
+    }
+
     public bool isPlanSuccess()
     {
         foreach (string name in targetNameList) {
@@ -88,6 +103,12 @@ public class EveryoneGoTargetRoom : GuangBoAction
             }
         }
         return true;
+    }
+
+    public void sendGuangBoToOwner(NPC npc, RoomContraller roomContraller, RoundController roundController)
+    {
+        string targetRoomName = roomContraller.findRoomByRoomType(this.getGuangBoTargetVaule()).getRoomName();
+        npc.sendMessageToPlayer(new string[] { npc.getName() + " :我准备听从" + this.getGuangBoOwnerName() + "的意见去" + targetRoomName + "看看" });
     }
 
     public void setSanLimit(int sanLimit)

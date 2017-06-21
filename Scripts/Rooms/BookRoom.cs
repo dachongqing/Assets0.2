@@ -148,9 +148,9 @@ public class BookRoom : MonoBehaviour, RoomInterface
        
     }
 
-    public bool checkRoomStoryStart(Character chara)
+    public bool checkRoomStoryStart(Character chara, RoundController roundController)
     {
-        return si.checkStoryStart(chara, this);
+        return si.checkStoryStart(chara, this, roundController);
     }
 
     public void setRoomStory(StoryInterface si)

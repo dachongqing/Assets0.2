@@ -12,12 +12,13 @@ public class APathManager
     private Node node;
     private Node currentNode;
 
+    private    List<Node> openList = new List<Node>();
+    private    List<Node> closeList = new List<Node>();
 
 
     public Stack<Node> findPath(RoomInterface intiRoom, RoomInterface targetNode, RoomContraller roundController) {
-         List<Node> openList = new List<Node>();
-
-         List<Node> closeList = new List<Node>();
+        openList.Clear();
+        closeList.Clear();
      //   Debug.Log(" intiRoom Room is " + intiRoom.getXYZ()[0] + "," + intiRoom.getXYZ()[1]);
      //   Debug.Log(" targetNode Room is " + targetNode.getXYZ()[0] + "," + targetNode.getXYZ()[1]);
         bool finded = false;

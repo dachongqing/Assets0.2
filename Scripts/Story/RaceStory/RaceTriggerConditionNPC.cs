@@ -13,7 +13,7 @@ public class RaceTriggerConditionNPC : Condition
         return "本尼和叶乘凉都在书房";
     }
 
-    public bool getConditionStatus(Character chara, RoomInterface room)
+    public bool getConditionStatus(Character chara, RoomInterface room, RoundController roundController)
     {
        roomNames.Clear();
        NPC npc = (NPC)chara;

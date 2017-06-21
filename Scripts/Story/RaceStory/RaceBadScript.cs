@@ -18,13 +18,13 @@ public class RaceBadScript : StoryScript
         winBadditions.Add(raceBadWinCondition);
     }
 
-    public bool checkStatus(Character chara, RoomInterface room)
+    public bool checkStatus(Character chara, RoomInterface room, RoundController roundController)
     {
          bool winc = true;
 
         for (int i = 0; i < winBadditions.Count; i++)
         {
-            bool con = winBadditions[i].getConditionStatus(chara, room);
+            bool con = winBadditions[i].getConditionStatus(chara, room, roundController);
          
             if (!con)
             {
@@ -68,9 +68,9 @@ public class RaceBadScript : StoryScript
         RoundController roundController, BattleController battleController)
     {
         
-        if (chara.getName() == "叶成亮") {
+       
             NolanMove( chara,  roomContraller,  eventController,  diceRoll,  aPathManager, roundController, battleController);
-        }
+        
        
     }
 

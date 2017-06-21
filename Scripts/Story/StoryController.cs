@@ -30,7 +30,7 @@ public class StoryController : MonoBehaviour
         RoomInterface room = roomContraller.findRoomByXYZ(boss.getCurrentRoom());
         if (!isStartStory)
         {
-            if (room.checkRoomStoryStart(boss))
+            if (room.checkRoomStoryStart(boss, roundController))
             {
                 isStartStory = true;
                 //正式开始剧情模式， 剧情UI介绍
@@ -56,7 +56,7 @@ public class StoryController : MonoBehaviour
         else
         {
             //剧情已经开始，监听剧本的结束条件
-            if (this.story.checkStoryEnd(boss, room))
+            if (this.story.checkStoryEnd(boss, room, roundController))
             {
                 //找到玩家所在的角色，检查胜利条件
                 Debug.Log("剧情已经开始，监听剧本的结束条件");

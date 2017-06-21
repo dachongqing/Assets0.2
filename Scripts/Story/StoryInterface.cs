@@ -8,9 +8,9 @@ public interface StoryInterface  {
 
     StoryScript getBadManScript();
     
-    bool checkStoryStart(Character chara, RoomInterface room);
+    bool checkStoryStart(Character chara, RoomInterface room, RoundController roundController);
 
-    bool checkStoryEnd(Character chara, RoomInterface room);
+    bool checkStoryEnd(Character chara, RoomInterface room, RoundController roundController);
     
     string getStoryInfo();
 

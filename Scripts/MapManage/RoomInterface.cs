@@ -47,7 +47,7 @@ public interface RoomInterface
     //获取当前房间的隐藏物品列表
 
     //检查房间是否开启剧本
-    bool checkRoomStoryStart(Character chara);
+    bool checkRoomStoryStart(Character chara, RoundController roundController);
     //
     void setRoomStory(StoryInterface si);
 

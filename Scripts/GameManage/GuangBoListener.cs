@@ -27,7 +27,7 @@ public class GuangBoListener : MonoBehaviour {
             quere.Add(chara, content);
             keyList.Add(chara);
         }
-        keyList = FunctionUnity<Character>.orderList(keyList);
+      //  keyList = FunctionUnity<Character>.orderList(keyList);
     }
 
     // Use this for initialization
@@ -44,11 +44,12 @@ public class GuangBoListener : MonoBehaviour {
        
     }
 
-    // Update is called once per frame
-    void Update () {
+    public void showGuangBoMessage() {
+
         if (duiHuaUImanager.isDuiHuaEnd()) {
-          
-            if (quere.Count > 0 ) {
+
+            if (quere.Count > 0)
+            {
                 // quere.g
                 Debug.Log("guangbo quere.Count " + quere.Count);
                 Character key = keyList[0];
@@ -59,15 +60,23 @@ public class GuangBoListener : MonoBehaviour {
                     Debug.Log(key.getName() + " guangbo msg " + ms[0]);
                     duiHuaUImanager.setDuiHuaEndFalse();
                     StartCoroutine(showMessageToPlay(key, ms, random.Next(2, 5)));
-                    Debug.Log("guangbo quere[key].Count " + quere[key].Count);
+                    //  Debug.Log("guangbo quere[key].Count " + quere[key].Count);
                 }
-                else {
+                else
+                {
                     keyList.Remove(key);
                     quere.Remove(key);
                 }
-                 
-               // quere.Clear();
+
+                // quere.Clear();
+            }
+            else {
+                Debug.Log("没有广播信息了");
             }
         }
+    }
+
+    // Update is called once per frame
+    void Update () {
     }
 }

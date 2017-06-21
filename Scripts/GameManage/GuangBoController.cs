@@ -35,7 +35,16 @@ public class GuangBoController : MonoBehaviour {
                 if (typeof(NPC).IsAssignableFrom(chara.GetType()))
                 {
                    
+
+
                     NPC npc = (NPC)chara;
+                    if (gAction.hasVictim() && gAction.getVictim().getName() == npc.getName()) {
+                        npc.setFollowGuangBoAction(true);
+                        npc.setGuangBoAction(gAction);
+                        gAction.addWhiteList(npc.getName());
+                        gAction.sendGuangBoToOwner(npc, roomContraller, roundController);
+                    }
+
                     if (!npc.isFollowGuangBoAction() && !gAction.checkOwner(npc.getName()) && !npc.isPlayer()) {
                         int san = npc.getAbilityInfo()[3];
                         int res = diceRoll.calculateDice(san);
@@ -44,8 +53,7 @@ public class GuangBoController : MonoBehaviour {
                             npc.setFollowGuangBoAction(true);
                             npc.setGuangBoAction(gAction);
                             gAction.addWhiteList(npc.getName());
-                            string targetRoomName = roomContraller.findRoomByRoomType(gAction.getGuangBoRoomType()).getRoomName();
-                            npc.sendMessageToPlayer(new string[] { npc.getName() +  " :我准备听从" + gAction.getGuangBoOwnerName() + "的意见去" + targetRoomName + "看看" });
+                            gAction.sendGuangBoToOwner(npc, roomContraller, roundController);
                         }
                         else {
                             gAction.addBlackList(npc.getName());

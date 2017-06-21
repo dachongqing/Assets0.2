@@ -19,13 +19,13 @@ public class RaceGoodScript : StoryScript {
         winConditions.Add(raceGoodWinCondition);
     }
 
-    public bool checkStatus(Character chara, RoomInterface room)
+    public bool checkStatus(Character chara, RoomInterface room, RoundController roundController)
     {
 
         bool winc = true;
         for (int i = 0; i < winConditions.Count; i++)
         {
-            if (!winConditions[i].getConditionStatus(chara, room))
+            if (!winConditions[i].getConditionStatus(chara, room, roundController))
             {
                 winc =  false;
                 break;

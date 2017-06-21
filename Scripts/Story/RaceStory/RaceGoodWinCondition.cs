@@ -10,7 +10,7 @@ public class RaceGoodWinCondition : Condition {
         return "跑到起始房间";
     }
 
-    public bool getConditionStatus(Character chara, RoomInterface room)
+    public bool getConditionStatus(Character chara, RoomInterface room, RoundController roundController)
     {
         if (chara.getCurrentRoom()[0] == 0 && chara.getCurrentRoom()[1] == 0)
         {

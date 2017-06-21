@@ -9,10 +9,10 @@ public class RaceBadWinCondition : Condition {
         return "跑到起始房间";
     }
 
-    public bool getConditionStatus(Character chara, RoomInterface room)
+    public bool getConditionStatus(Character chara, RoomInterface room, RoundController roundController)
     {
 
-        if (chara.getCurrentRoom()[0] == 0 && chara.getCurrentRoom()[1] == 0)
+        if (chara.getCurrentRoom()[0] == 0 && chara.getCurrentRoom()[1] == 0 &&  roundController.getPlayerChara().isDead())
         {
           Debug.Log("坏人当前房间 " + chara.getCurrentRoom()[0] + ","+chara.getCurrentRoom()[1]);
             return true;

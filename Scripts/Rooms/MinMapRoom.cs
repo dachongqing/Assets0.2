@@ -48,7 +48,7 @@ public class MinMapRoom : MonoBehaviour {
 
     public void setPenable(string name,bool showFlag)
     {
-        Debug.Log("name is " + name  + ", showFlag " + showFlag);
+       // Debug.Log("name is " + name  + ", showFlag " + showFlag);
         //   p1.GetComponent<SpriteRenderer>().enabled = true;
         if (name == SystemConstant.P1_NAME) { 
              p1.GetComponent<Image>().enabled = showFlag;

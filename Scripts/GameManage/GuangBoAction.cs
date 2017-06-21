@@ -23,5 +23,14 @@ public interface GuangBoAction  {
 
     string getGuangBoOwnerName();
 
-    string getGuangBoRoomType();
+    string getGuangBoTargetVaule();
+
+    string getGuangBoType();
+
+    void sendGuangBoToOwner(NPC npc, RoomContraller roomContraller, RoundController roundController);
+
+    bool hasVictim();
+
+    Character getVictim();
+
 }

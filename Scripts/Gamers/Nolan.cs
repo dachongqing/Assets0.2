@@ -130,11 +130,14 @@ public class Nolan : MonoBehaviour, NPC
         } else {
 
             if (this.TargetRoomList.Count<= 0 ) {
+                Debug.Log("随便找个房间看看");
                 this.TargetRoomList.Enqueue(roomContraller.getRandomRoom());
             }
             RoomInterface target = this.TargetRoomList.Peek();
+            Debug.Log("targetRoom is " + target.getXYZ()[0] +","+ target.getXYZ()[1] + "," + target.getXYZ()[2]);
             if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, target.getXYZ()))
             {
+                Debug.Log("reached the targetRoom is " + target.getXYZ()[0] + "," + target.getXYZ()[1] + "," + target.getXYZ()[2]);
                 this.TargetRoomList.Dequeue();
                 if (target.getRoomType() == RoomConstant.ROOM_TYPE_BOOK)
                 {

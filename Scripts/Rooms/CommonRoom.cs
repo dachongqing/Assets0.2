@@ -150,7 +150,7 @@ public class CommonRoom : MonoBehaviour, RoomInterface
         return this.si;
     }
 
-    public bool checkRoomStoryStart(Character chara)
+    public bool checkRoomStoryStart(Character chara, RoundController roundController)
     {
         return false;
     }

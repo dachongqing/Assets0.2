@@ -6,7 +6,7 @@ public interface Condition  {
 
     string getConditionInfo();
 
-    bool getConditionStatus(Character chara, RoomInterface room);
+    bool getConditionStatus(Character chara, RoomInterface room,RoundController roundController);
 
     string getConditionType();
 }

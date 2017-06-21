@@ -16,6 +16,6 @@ public interface StoryScript  {
 
     string getFailureEndInfo();
 
-    bool checkStatus(Character chara, RoomInterface room);
+    bool checkStatus(Character chara, RoomInterface room, RoundController roundController);
 
 }

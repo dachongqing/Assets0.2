@@ -7,18 +7,29 @@ public class AutoMoveManager  {
     public static bool move(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager, string targetRoomType)
     {
         RoomInterface targetRoom = roomContraller.findRoomByRoomType(targetRoomType);
-        return doMove(chara,  roomContraller,  eventController,  diceRoll,  aPathManager, targetRoom);
+        return doMove(chara,  roomContraller,  eventController,  diceRoll,  aPathManager, targetRoom,false);
     }
 
     public static bool move(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager, int[] targetRoomXYZ)
     {
         RoomInterface targetRoom = roomContraller.findRoomByXYZ(targetRoomXYZ);
-        return doMove(chara, roomContraller, eventController, diceRoll, aPathManager, targetRoom);
+        return doMove(chara, roomContraller, eventController, diceRoll, aPathManager, targetRoom, false);
+    }
+
+    private static bool move(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager, string targetRoomType, bool goUpOrDown)
+    {
+        RoomInterface targetRoom = roomContraller.findRoomByRoomType(targetRoomType);
+        return doMove(chara, roomContraller, eventController, diceRoll, aPathManager, targetRoom, goUpOrDown);
+    }
+
+    private static bool move(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager, int[] targetRoomXYZ, bool goUpOrDown)
+    {
+        RoomInterface targetRoom = roomContraller.findRoomByXYZ(targetRoomXYZ);
+        return doMove(chara, roomContraller, eventController, diceRoll, aPathManager, targetRoom, goUpOrDown);
     }
 
 
-
-    public static bool doMove(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager, RoomInterface targetRoom)
+    public static bool doMove(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager, RoomInterface targetRoom,bool goUpOrDown)
     {
         if (chara.ActionPointrolled())
         {
@@ -44,7 +55,7 @@ public class AutoMoveManager  {
                         if (chara.getCurrentRoom()[2] == RoomConstant.ROOM_Z_GROUND)
                         {
                             Debug.Log("当前房间 是地面， 只要到向上楼梯房间");
-                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_UPSTAIR))
+                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_UPSTAIR,true))
                             {
 
                                 return false;
@@ -60,14 +71,14 @@ public class AutoMoveManager  {
                         else
                         {
 
-                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_DOWNSTAIR_BACK))
+                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_DOWNSTAIR_BACK,true))
                             {
 
                                 return false;
                             }
                             else
                             {
-                                if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_UPSTAIR))
+                                if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_UPSTAIR, true))
                                 {
 
                                     return false;
@@ -85,7 +96,7 @@ public class AutoMoveManager  {
                     {
                         if (chara.getCurrentRoom()[2] == RoomConstant.ROOM_Z_UP)
                         {
-                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_UPSTAIR_BACK))
+                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_UPSTAIR_BACK, true))
                             {
 
                                 return false;
@@ -100,7 +111,7 @@ public class AutoMoveManager  {
                         else
                         {
 
-                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_DOWNSTAIR_BACK))
+                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_DOWNSTAIR_BACK, true))
                             {
 
                                 return false;
@@ -122,7 +133,7 @@ public class AutoMoveManager  {
                         if (chara.getCurrentRoom()[2] == RoomConstant.ROOM_Z_GROUND)
                         {
                             Debug.Log("当前房间 是地面， 只要到向下楼梯房间");
-                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_DOWNSTAIR))
+                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_DOWNSTAIR, true))
                             {
 
                                 return false;
@@ -140,14 +151,14 @@ public class AutoMoveManager  {
                         else
                         {
 
-                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_UPSTAIR_BACK))
+                            if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_UPSTAIR_BACK, true))
                             {
 
                                 return false;
                             }
                             else
                             {
-                                if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_DOWNSTAIR))
+                                if (!AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, RoomConstant.ROOM_TYPE_DOWNSTAIR, true))
                                 {
 
                                     return false;
@@ -269,8 +280,8 @@ public class AutoMoveManager  {
             }
             else
             {
-                if (targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_UPSTAIR || targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_UPSTAIR_BACK
-                    || targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_DOWNSTAIR || targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_DOWNSTAIR_BACK)
+                if (goUpOrDown &&(targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_UPSTAIR || targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_UPSTAIR_BACK
+                    || targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_DOWNSTAIR || targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_DOWNSTAIR_BACK))
                 {
                     //找到房间后， 如果还有体力值， 判定是否是上下楼的房间，如果是 直接上下楼
                     if (chara.getActionPoint() > 0)
@@ -311,6 +322,7 @@ public class AutoMoveManager  {
 
                 }
                
+                Debug.Log("和目标房间 一起");
                 return true;
 
             }

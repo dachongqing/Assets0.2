@@ -10,7 +10,7 @@ public class RaceTriggerCondition :  Condition{
         return "NPC到达书房";
     }
 
-    public bool getConditionStatus(Character chara, RoomInterface room)
+    public bool getConditionStatus(Character chara, RoomInterface room, RoundController roundController)
     {
         if (room.getRoomType() == RoomConstant.ROOM_TYPE_BOOK && chara.getName() == SystemConstant.P1_NAME)
         {

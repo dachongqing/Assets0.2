@@ -10,7 +10,7 @@ public class RaceTriggerConditionItem : Condition {
 		return "NPC拿到带血的黑书";
 	}
 
-	public bool getConditionStatus(Character chara, RoomInterface room)
+	public bool getConditionStatus(Character chara, RoomInterface room, RoundController roundController)
 	{
 		NPC npc = (NPC)chara;
 		List<Item> its = npc.getBag ().getAllItems ();
