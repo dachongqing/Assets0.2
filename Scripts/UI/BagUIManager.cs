@@ -20,6 +20,9 @@ public class BagUIManager : MonoBehaviour {
 
     private List<Transform> positionList = new List<Transform>();
     private List<GameObject> parentPositionList = new List<GameObject>();
+    private List<GameObject> profabsList = new List<GameObject>();
+
+    private ItemController itemController;
 
     private Item selectItem;
 
@@ -49,8 +52,10 @@ public class BagUIManager : MonoBehaviour {
             itemPrefab.GetComponent<RectTransform>().localPosition = temPos;
             ItemClickEvent itemClickEvent = itemPrefab.GetComponent<ItemClickEvent>();
             itemClickEvent.setI(i);
-           // itemDesc.text = item.getDesc();
+            profabsList.Add(itemPrefab);
+         
         }
+            itemDesc.text = "";
 
 
     }
@@ -65,13 +70,32 @@ public class BagUIManager : MonoBehaviour {
     {
         BagItemMenuUI.SetActive(false);
         BagItemMenuUI.transform.localPosition = hidePos;
+        selectItem = null;
+    }
 
-       
+    public void useItem() {     
+        itemController.useItem(selectItem,(NPC)roundController.getPlayerChara());
+        this.clear();
+    }
+
+    public void dropItem() {        
+        itemController.destroyItemTool(selectItem, (NPC)roundController.getPlayerChara());
+        clear();
     }
 
 
+    private void clear() {
+        foreach (GameObject itemPrefab in profabsList)
+        {
+            itemPrefab.SetActive(false);
+        }
+        profabsList.Clear();       
+        closeBagItemUI();
+    }
+
     void Start () {
         roundController = FindObjectOfType<RoundController>();
+        itemController = FindObjectOfType<ItemController>();
         positionList.Add(ItemPosition1);
         parentPositionList.Add(ItemParentPosition1);
         positionList.Add(ItemPosition2);

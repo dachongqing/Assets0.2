@@ -26,6 +26,10 @@ public class MessageUI : MonoBehaviour, IPointerClickHandler
         
     }
 
+    public void showMessage(string msg) {
+        this.ShowMessge(msg, ShowTime);
+    }
+
 	/// <summary>
 	/// 显示信息UI框,内容,延时几秒显示
 	/// </summary>
