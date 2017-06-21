@@ -87,7 +87,10 @@ public class EveryoneGoTargetRoom : GuangBoAction
     {
 
         Debug.Log("执行广播任务，目标是 " + this.targetRoomType);
-        AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, this.targetRoomType);
+        if (AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, this.targetRoomType)) {
+            NPC npc = (NPC)chara;
+            npc.setFollowGuangBoAction(false);
+        };
     }
 
     public bool hasVictim()

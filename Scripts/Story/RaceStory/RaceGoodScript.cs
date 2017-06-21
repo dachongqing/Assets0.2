@@ -66,10 +66,9 @@ public class RaceGoodScript : StoryScript {
         RoundController roundController,BattleController battleController)
     {
 
-        if (chara.getName() == "本尼")
-        {
+      
             BenMove(chara, roomContraller, eventController, diceRoll, aPathManager, roundController,battleController);
-        }
+       
 
       
        

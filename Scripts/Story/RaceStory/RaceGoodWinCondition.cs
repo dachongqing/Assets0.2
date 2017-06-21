@@ -12,7 +12,7 @@ public class RaceGoodWinCondition : Condition {
 
     public bool getConditionStatus(Character chara, RoomInterface room, RoundController roundController)
     {
-        if (chara.getCurrentRoom()[0] == 0 && chara.getCurrentRoom()[1] == 0)
+        if (chara.getCurrentRoom()[0] == 0 && chara.getCurrentRoom()[1] == 0 && chara.getCurrentRoom()[2] == 0)
         {
             return true;
         }
