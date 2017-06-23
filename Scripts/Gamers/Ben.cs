@@ -241,7 +241,11 @@ public class Ben : MonoBehaviour, NPC
 
         this.waitPlan = false;
         targetChara = new List<string>();
-        
+
+
+        Debug.Log(TextReader.readerText("commonDialogue/Ben/ben")[0]);
+
+
     }
 
     // Update is called once per frame
