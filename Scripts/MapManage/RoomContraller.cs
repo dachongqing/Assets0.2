@@ -47,12 +47,12 @@ public class RoomContraller : MonoBehaviour
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY);
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_SECURITY);
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
@@ -71,12 +71,12 @@ public class RoomContraller : MonoBehaviour
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_MINITOR);
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_DEAN);
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
@@ -94,6 +94,7 @@ public class RoomContraller : MonoBehaviour
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_TRI_OPERATION);
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
@@ -101,8 +102,7 @@ public class RoomContraller : MonoBehaviour
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_STORE);
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
@@ -183,7 +183,7 @@ public class RoomContraller : MonoBehaviour
         {
             roomType = this.upRoomType.Dequeue();
         }
-        string url = "Prefabs/" + roomType;
+        string url = getPrefabUrlByRoomType(roomType);
 
         //仅用Resources.Load会永久修改原形Prefab。应该用Instatiate,操作修改原形的克隆体
         GameObject room = Instantiate(Resources.Load(url)) as GameObject;
@@ -228,78 +228,10 @@ public class RoomContraller : MonoBehaviour
 
             setRoomStory(ri);
 
+            setRoomDoor(door,ri,roomType, xyz);
 
-            //根据这房间门的数据，生成对应的门
-            if (door[0] == 1)
-            {
-                //门启用
-                ri.northDoorEnable();
-                //门属于这个房间
-                GameObject doorGo = ri.getNorthDoor();
-                doorGo.GetComponent<DoorInterface>().setRoom(ri);
-                //门外有相邻房间的坐标为
-                //				错误代码int[] nextRoomXYZ = xyz;
-                //				错误代码nextRoomXYZ [2] += 1原因：一维数组是引用类型,+1会导致xyz[]的修改;
-                //				体现为  房间的map坐标!=房间的getXYZ
 
-                //修正为
-                int[] nextRoomXYZ = new int[3];
-                nextRoomXYZ[0] = xyz[0];
-                nextRoomXYZ[1] = xyz[1];
-                nextRoomXYZ[2] = xyz[2];
-                nextRoomXYZ[1] += 1;
-
-                doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
-
-            }
-            if (door[1] == 1)
-            {
-                //门启用
-                ri.southDoorEnable();
-                //门属于这个房间
-                GameObject doorGo = ri.getSouthDoor();
-                doorGo.GetComponent<DoorInterface>().setRoom(ri);
-                //门外有相邻房间的坐标为
-                int[] nextRoomXYZ = new int[3];
-                nextRoomXYZ[0] = xyz[0];
-                nextRoomXYZ[1] = xyz[1];
-                nextRoomXYZ[2] = xyz[2];
-                nextRoomXYZ[1] -= 1;
-
-                doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
-            }
-            if (door[2] == 1)
-            {
-                //门启用
-                ri.westDoorEnable();
-                //门属于这个房间
-                GameObject doorGo = ri.getWestDoor();
-                doorGo.GetComponent<DoorInterface>().setRoom(ri);
-                //门外有相邻房间的坐标为
-                int[] nextRoomXYZ = new int[3];
-                nextRoomXYZ[0] = xyz[0];
-                nextRoomXYZ[1] = xyz[1];
-                nextRoomXYZ[2] = xyz[2];
-                nextRoomXYZ[0] -= 1;
-
-                doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
-            }
-            if (door[3] == 1)
-            {
-                //门启用
-                ri.eastDoorEnable();
-                //门属于这个房间
-                GameObject doorGo = ri.getEastDoor();
-                doorGo.GetComponent<DoorInterface>().setRoom(ri);
-                //门外有相邻房间的坐标为
-                int[] nextRoomXYZ = new int[3];
-                nextRoomXYZ[0] = xyz[0];
-                nextRoomXYZ[1] = xyz[1];
-                nextRoomXYZ[2] = xyz[2];
-                nextRoomXYZ[0] += 1;
-
-                doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
-            }
+            
 
             if (xyz[2] == RoomConstant.ROOM_Z_GROUND)
             {
@@ -322,6 +254,88 @@ public class RoomContraller : MonoBehaviour
         return room;
     }
 
+    private void setRoomDoor(int[] door,RoomInterface ri, string roomType,int[] xyz)
+    {
+        //根据这房间门的数据，生成对应的门
+        if (door[0] == 1)
+        {
+            //门启用
+            ri.northDoorEnable();
+            //门属于这个房间
+            GameObject doorGo = ri.getNorthDoor();
+            doorGo.GetComponent<DoorInterface>().setRoom(ri);
+            //门外有相邻房间的坐标为
+            //				错误代码int[] nextRoomXYZ = xyz;
+            //				错误代码nextRoomXYZ [2] += 1原因：一维数组是引用类型,+1会导致xyz[]的修改;
+            //				体现为  房间的map坐标!=房间的getXYZ
+
+            //修正为
+            int[] nextRoomXYZ = new int[3];
+            nextRoomXYZ[0] = xyz[0];
+            nextRoomXYZ[1] = xyz[1];
+            nextRoomXYZ[2] = xyz[2];
+            nextRoomXYZ[1] += 1;
+
+            doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
+
+        }
+        if (door[1] == 1)
+        {
+            //门启用
+            ri.southDoorEnable();
+            //门属于这个房间
+            GameObject doorGo = ri.getSouthDoor();
+            doorGo.GetComponent<DoorInterface>().setRoom(ri);
+            //门外有相邻房间的坐标为
+            int[] nextRoomXYZ = new int[3];
+            nextRoomXYZ[0] = xyz[0];
+            nextRoomXYZ[1] = xyz[1];
+            nextRoomXYZ[2] = xyz[2];
+            nextRoomXYZ[1] -= 1;
+
+            doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
+        }
+        if (door[2] == 1)
+        {
+            //门启用
+            ri.westDoorEnable();
+            //门属于这个房间
+            GameObject doorGo = ri.getWestDoor();
+            doorGo.GetComponent<DoorInterface>().setRoom(ri);
+            //门外有相邻房间的坐标为
+            int[] nextRoomXYZ = new int[3];
+            nextRoomXYZ[0] = xyz[0];
+            nextRoomXYZ[1] = xyz[1];
+            nextRoomXYZ[2] = xyz[2];
+            nextRoomXYZ[0] -= 1;
+
+            doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
+        }
+        if (door[3] == 1)
+        {
+            //门启用
+            ri.eastDoorEnable();
+            //门属于这个房间
+            GameObject doorGo = ri.getEastDoor();
+            doorGo.GetComponent<DoorInterface>().setRoom(ri);
+            //门外有相邻房间的坐标为
+            int[] nextRoomXYZ = new int[3];
+            nextRoomXYZ[0] = xyz[0];
+            nextRoomXYZ[1] = xyz[1];
+            nextRoomXYZ[2] = xyz[2];
+            nextRoomXYZ[0] += 1;
+
+            doorGo.GetComponent<DoorInterface>().setNextRoomXYZ(nextRoomXYZ);
+        }
+    }
+
+    private string getPrefabUrlByRoomType(string roomType)
+    {
+        if (roomType.StartsWith("H_")) {
+            return "Prefabs/SPRoom/Hospital/" + roomType;
+        }
+        return "Prefabs/" + roomType;
+    }
 
     public RoomInterface findRoomByXYZ(int[] xyz)
     {

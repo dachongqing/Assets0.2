@@ -6,8 +6,23 @@ public class RollDiceParam  {
 
     private int diceNum;
 
+    private string diceType;
+
+    private string defautType = "D2";
+
     public RollDiceParam(int diceNum) {
         this.diceNum = diceNum;
+        this.diceType = defautType;
+    }
+
+    public string getDiceType()
+    {
+        return this.diceType;
+    }
+
+    public void setDiceType(string diceType)
+    {
+        this.diceType = diceType;
     }
 
     public int  getDiceNum() {

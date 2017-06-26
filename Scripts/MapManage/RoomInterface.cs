@@ -63,4 +63,8 @@ public interface RoomInterface
     GameObject getEastDoor();
     GameObject getWestDoor();
 
+    bool isLock();
+
+    bool checkOpen(Character chara);
+
 }

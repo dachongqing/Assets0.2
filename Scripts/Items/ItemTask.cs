@@ -51,4 +51,8 @@ public class ItemTask : Item {
 	public void used(){
 		this.durability = this.durability - 1;
 	}
+    public string getDetailURL()
+    {
+        return null;
+    }
 }

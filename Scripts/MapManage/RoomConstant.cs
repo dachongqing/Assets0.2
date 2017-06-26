@@ -32,4 +32,12 @@ public  class  RoomConstant
     public const int ROOM_Y_DOWN = -440; //地下
 
 
+    public const string ROOM_TYPE_HOSPITAIL_DEAN = "H_deanRoom"; //医院院长室
+    public const string ROOM_TYPE_HOSPITAIL_MINITOR = "H_minitorRoom"; //医院监控室
+    public const string ROOM_TYPE_HOSPITAIL_MORGUE = "H_morgueRoom"; //医院停尸室
+    public const string ROOM_TYPE_HOSPITAIL_SECURITY = "H_securityRoom"; //医院保安室
+    public const string ROOM_TYPE_HOSPITAIL_STORE = "H_storeRoom"; //医院储存室
+    public const string ROOM_TYPE_HOSPITAIL_SURGERY = "H_surgeryRoom"; //医院外科室
+    public const string ROOM_TYPE_HOSPITAIL_TRI_OPERATION = "H_tridOperationRoom"; //医院第3手术室
+
 }

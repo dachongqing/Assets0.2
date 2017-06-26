@@ -180,4 +180,14 @@ public class BookRoom : MonoBehaviour, RoomInterface
 
         return null;
     }
+
+    public bool isLock()
+    {
+        return false;
+    }
+
+    public bool checkOpen(Character chara)
+    {
+        return true;
+    }
 }

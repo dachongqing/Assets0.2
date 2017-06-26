@@ -52,6 +52,11 @@ public class ItemPotion : Item {
 		this.durability =	this.durability - 1;
 	}
 
-    
-    
+    public string getDetailURL()
+    {
+        return null;
+    }
+
+
+
 }

@@ -200,7 +200,7 @@ public class Player : MonoBehaviour, NPC
         Item item = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001
            , "速度回复药水", "模糊的字迹写着是哈尔滨六厂生产，蓝屏的钙");
         Item item2 = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001
-          , "力量回复药水", "模糊的字迹写着是哈尔滨六厂生产，红屏的钙");
+          , "力量回复药水", "模糊的字迹写着是哈尔滨六厂生产，红屏的钙你的发送的你说的分手的方式的方式，水电费水电费水电费是否发生地方");
         this.bag.insertItem(item);
         this.bag.insertItem(item2);
         //测试代码。。。。。

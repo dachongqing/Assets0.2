@@ -8,7 +8,7 @@ public class Dice6 : Dice {
 
     void Dice.Roll()
     {
-        _DiceRes = Random.Range(1, 7);
+        _DiceRes = Random.Range(0, 7);
     }
     int Dice.getDiceRes()
     {

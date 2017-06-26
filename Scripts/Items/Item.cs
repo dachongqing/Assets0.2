@@ -16,4 +16,6 @@ public interface Item  {
     string getName();
 
     string getDesc();
+
+    string getDetailURL();
 }

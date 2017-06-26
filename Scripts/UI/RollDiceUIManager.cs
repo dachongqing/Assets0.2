@@ -118,10 +118,17 @@ public class RollDiceUIManager : MonoBehaviour ,IPointerClickHandler
 
             rollStartGO.SetActive(false);
 
-            //马山根据属性值计算roll点的得到了结果
-//            int speed = ply.getAbilityInfo()[1] + ply.getEffectBuff();
-            //int speed = ply.getAbilityInfo()[1];
-            int res = diceRoll.calculateDice(this.para.getDiceNum(), 0);
+        //马山根据属性值计算roll点的得到了结果
+        //            int speed = ply.getAbilityInfo()[1] + ply.getEffectBuff();
+        //int speed = ply.getAbilityInfo()[1];
+        int res = 0;
+        if (this.para.getDiceType() == "D2") {
+             res = diceRoll.calculateDice(this.para.getDiceNum(), 0);
+        }
+        else {
+             res = diceRoll.calculateDice(0,this.para.getDiceNum());
+        }
+          //  int res = diceRoll.calculateDice(this.para.getDiceNum(), 0);
 
             //根据属性值，播放几颗骰子的动画
             displayDices(this.para.getDiceNum(), 0);
