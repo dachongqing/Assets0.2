@@ -126,6 +126,7 @@ public class RoundController : MonoBehaviour
             isRoundEnd = false;
             if (playChara.isPlayer())
             {
+              
                 if (this.roundList.Count == 0) {
                  Debug.Log("世界安静了。。。你是唯一的幸存者。。游戏结束");
                 }
@@ -138,6 +139,7 @@ public class RoundController : MonoBehaviour
             }
             else
             {
+               
                 if (playChara.isDead())
                 {
                     Debug.Log("npc 死了");
@@ -145,7 +147,8 @@ public class RoundController : MonoBehaviour
 
                 }
                 else {
-                     StartCoroutine("charaMove");
+                   
+                    StartCoroutine("charaMove");
 
                 }
                

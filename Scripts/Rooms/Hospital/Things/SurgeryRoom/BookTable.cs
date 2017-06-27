@@ -72,6 +72,27 @@ public class BookTable : MonoBehaviour, Thing
         return this.item;
     }
 
+    public Item getItem(Character chara)
+    {
+        if (chara.isPlayer())
+        {
+            return null;
+        }
+        else
+        {
+            if (this.isEmpty)
+            {
+                return null;
+            }
+            else
+            {
+                this.isEmpty = true;
+                return this.item;
+
+            }
+        }
+    }
+
     // Use this for initialization
     void Start()
     {

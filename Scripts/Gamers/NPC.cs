@@ -20,4 +20,8 @@ public interface NPC : Character {
 
     List<string> getTargetChara();
 
+    void setTargetRoomLocked(string roomType);
+
+    bool isTargetRoomLocked();
+
 }

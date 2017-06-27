@@ -2,36 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TridOperationRoom : MonoBehaviour, RoomInterface
+public class H_tridOperationRoom : MonoBehaviour, RoomInterface
 {
 
     private string roomName;
 
     [SerializeField] private int[] xyz;
-
-
-
+    
     public GameObject northDoor;
     public GameObject southDoor;
     public GameObject westDoor;
     public GameObject eastDoor;
-
-    public GameObject box;
-
+    
     private List<Character> charas = new List<Character>();
-
-
+    
     private StoryInterface si;
-
-
+    
     private Dictionary<string, EventInterface> eventsList = new Dictionary<string, EventInterface>();
 
     private string roomType;
 
     public void setRoomType(string roomType)
     {
-
-        this.roomType = roomType;
+       this.roomType = roomType;
     }
 
 
@@ -60,8 +53,7 @@ public class TridOperationRoom : MonoBehaviour, RoomInterface
     {
         this.xyz = xyz;
     }
-
-
+    
     public void northDoorEnable()
     {
         //		northDoor.GetComponent<DoorInterface>().enabled = true;
@@ -104,13 +96,7 @@ public class TridOperationRoom : MonoBehaviour, RoomInterface
     {
         return westDoor;
     }
-
-    public GameObject getBox()
-    {
-        return box;
-    }
-
-
+    
     public EventInterface getRoomEvent(string eventType)
     {
         if (eventsList.Count != 0)
@@ -181,31 +167,51 @@ public class TridOperationRoom : MonoBehaviour, RoomInterface
         return null;
     }
 
+    void Start()
+    {
+        locked = true;
+    }
+
+    private bool locked; 
+
     public bool isLock()
     {
-        return false;
+        return locked;
     }
 
     public bool checkOpen(Character chara)
     {
-
-        if (typeof(NPC).IsAssignableFrom(chara.GetType()))
+        if (locked)
         {
-           
-            NPC npc = (NPC)chara;
+            if (typeof(NPC).IsAssignableFrom(chara.GetType()))
+            {
 
-            if (npc.getBag().checkItem(ItemConstant.ITEM_CODE_SPEC_Y0002)) {
-                return true;
-            } else if (npc.getName() == SystemConstant.P1_NAME) {
-                return true;
-            } else {
+                NPC npc = (NPC)chara;
+
+                if (npc.getBag().checkItem(ItemConstant.ITEM_CODE_SPEC_Y0002))
+                {
+                    locked = false;
+                    return true;
+                }
+                else if (npc.getName() == SystemConstant.P1_NAME)
+                {
+                    locked = false;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            else
+            {
                 return false;
             }
-          
+
         }
-        else
-        {
-            return false;
-        };
+        else {
+            return true;
+        }
     }
 }

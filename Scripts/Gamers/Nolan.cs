@@ -3,122 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class Nolan : MonoBehaviour, NPC
+public class Nolan :  CommonUser
 {
-	[Tooltip("房间宽度")]public float roomH=13.7f;
-	[Tooltip("房间高度")]public float roomV=11f;
-
-    [SerializeField] private int actionPoint;
-
-    private int[] abilityInfo;
-
-    private int[] maxAbilityInfo;
-
-    [SerializeField] private int[] xyz;
-
-    private String playerName;
-
-    private bool roundOver;
-
-    private bool actionPointrolled;
-
-    private APathManager aPathManager = new APathManager();
 
     private RoomContraller roomContraller;
-
     private DiceRollCtrl diceRoll;
-
     private EventController eventController;
-
-    private StoryScript ss;
-
-    private bool bossFlag;
-
-    private bool deadFlag;
-
+    private RoundController roundController;
+    private BattleController battleController;
+    private CharaInfoManager charaInfoManager; 
+    private GuangBoController guangBoController;
+    private Queue<RoomInterface> targetRoomList = new Queue<RoomInterface>();
+    private APathManager aPathManager = new APathManager();
+    private bool waitPlan;
+    
     private bool scriptEnd;
 
-    private Bag bag;
-
-    private RoundController roundController;
-
-    private BattleController battleController;
-
-    //private DuiHuaUImanager duiHuaUImanager;
-
-    private CharaInfoManager charaInfoManager;
-
-    private Queue<RoomInterface> TargetRoomList = new Queue<RoomInterface>();
-
-    private GuangBoController guangBoController;
-
-    List<string> targetChara;
-
-    public bool ActionPointrolled()
-    {
-        return actionPointrolled;
-    }
-
-    public void endRound()
-    {
-        this.roundOver = true;
-    }
-
-    public int[] getAbilityInfo()
-    {
-        return abilityInfo;
-    }
-
-    public int getActionPoint()
-    {
-        return actionPoint;
-    }
-
-    public int[] getCurrentRoom()
-    {
-        return xyz;
-    }
-
-    public string getName()
-    {
-        return playerName;
-    }
-
-    public bool isDead()
-    {
-        return this.deadFlag;
-    }
-
-    public bool isPlayer()
+    public new bool isPlayer()
     {
         return false;
     }
 
-    public bool isRoundOver()
+    public new string getLiHuiURL()
     {
-        return this.roundOver;
+        return "lihui/ren_wu_1";
     }
 
 
 
-    public bool isWaitPlayer()
+    public new void defaultAction()
     {
-        return this.waitFlag;
-    }
-    private bool waitFlag;
-    public void setWaitPlayer(bool waitFlag) {
-        this.waitFlag = waitFlag;
-    }
-
-    private bool waitPlan;
-
-    private GuangBoAction gba;
-
-    public void defaultAction()
-    {
+        Debug.Log("run default aciont");
         if (waitPlan) {
             
-            if (this.gba.isPlanSuccess())
+            if (this.getGuangBoAction().isPlanSuccess())
             {
                 this.sendMessageToPlayer(new string[] { "快点来，我的大刀已经饥渴难耐了。" });
             }
@@ -129,16 +47,16 @@ public class Nolan : MonoBehaviour, NPC
 
         } else {
 
-            if (this.TargetRoomList.Count<= 0 ) {
+            if (this.targetRoomList.Count<= 0 ) {
                 Debug.Log("随便找个房间看看");
-                this.TargetRoomList.Enqueue(roomContraller.getRandomRoom());
+                this.targetRoomList.Enqueue(roomContraller.getRandomRoom());
             }
-            RoomInterface target = this.TargetRoomList.Peek();
+            RoomInterface target = this.targetRoomList.Peek();
             Debug.Log("targetRoom is " + target.getXYZ()[0] +","+ target.getXYZ()[1] + "," + target.getXYZ()[2]);
             if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, target.getXYZ()))
             {
                 Debug.Log("reached the targetRoom is " + target.getXYZ()[0] + "," + target.getXYZ()[1] + "," + target.getXYZ()[2]);
-                this.TargetRoomList.Dequeue();
+                this.targetRoomList.Dequeue();
                 if (target.getRoomType() == RoomConstant.ROOM_TYPE_BOOK)
                 {
                     BookRoom bookRoom = (BookRoom)roomContraller.findRoomByXYZ(this.getCurrentRoom()); ;
@@ -152,13 +70,13 @@ public class Nolan : MonoBehaviour, NPC
                     {
                        // Debug.Log("我的任务物品，拿到手了，我已经无敌了");
                         this.sendMessageToPlayer(new string[] { "哈哈。。我的任务物品，拿到手了，我已经无敌了！", "所有人都得死！" });
-                        this.bag.insertItem(item);
+                        this.getBag().insertItem(item);
                        
                     }
 
                     if (this.checkItem(ItemConstant.ITEM_CODE_SPEC_00001)) {
-                        this.gba = new EveryoneGoTargetRoom(this.getName(), RoomConstant.ROOM_TYPE_BOOK, targetChara, 60);
-                        guangBoController.insertGuangBo(gba);
+                        
+                        guangBoController.insertGuangBo(new EveryoneGoTargetRoom(this.getName(), RoomConstant.ROOM_TYPE_BOOK, getTargetChara(), 60));
                         waitPlan = true;
                         this.sendMessageToPlayer(new string[] { "书房有一个好东西，大家都来看看啊"," 你一定要来啊"});
 
@@ -174,26 +92,27 @@ public class Nolan : MonoBehaviour, NPC
         endRound();
     }
 
-    public void roundStart()
+    public override void roundStart()
     {
-        roundOver = false;
+        Debug.Log("roundStart round this game");
+        startRound();
         scriptEnd = false;
         if (this.isPlayer())
         {
         }
         else
         {
-            if (ss != null)
+            if (getScriptAciont() != null)
             {
-                ss.scriptAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
-                Debug.Log("npc 当前回合状态是: "+ roundOver);
+                getScriptAciont().scriptAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
+                Debug.Log("npc 当前回合状态是: "+ isRoundOver());
                 scriptEnd = true;
             }
             else
             {
                 if (this.isFollowGuangBoAction())
                 {
-                    this.guangBoAction.guangBoAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
+                    getGuangBoAction().guangBoAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
                     scriptEnd = true;
                 }
                 else {
@@ -205,39 +124,11 @@ public class Nolan : MonoBehaviour, NPC
 
     }
 
-    public void setActionPointrolled(bool actionPointrolled)
-    {
-        this.actionPointrolled = actionPointrolled;
-    }
+   
 
-    public void setCurrentRoom(int[] nextRoomXYZ)
-    {
-        Vector3 temPos;
-        this.xyz = nextRoomXYZ;
-        //		Debug.Log ("玩家进入新房间: ");
+   
 
-        if (xyz[2] == RoomConstant.ROOM_Z_UP)
-        {
-            temPos = new Vector3(xyz[0] * roomH + 0.5f , RoomConstant.ROOM_Y_UP + (xyz[1] * roomV), 0);
-        }
-        else if (xyz[2] == RoomConstant.ROOM_Z_GROUND)
-        {
-            temPos = new Vector3(xyz[0] * roomH + 0.5f, RoomConstant.ROOM_Y_GROUND + (xyz[1] * roomV), 0);
-        }
-        else
-        {
-            temPos = new Vector3(xyz[0] * roomH + 0.5f, RoomConstant.ROOM_Y_DOWN + (xyz[1] * roomV), 0);
-        }
-
-
-        this.transform.position = temPos;
-
-    }
-
-    public void updateActionPoint(int actionPoint)
-    {
-        this.actionPoint = actionPoint;
-    }
+   
 
     // Use this for initialization
     void Start()
@@ -249,35 +140,33 @@ public class Nolan : MonoBehaviour, NPC
         battleController = FindObjectOfType<BattleController>();
         //duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
         charaInfoManager = FindObjectOfType<CharaInfoManager>();
-        listener = FindObjectOfType<GuangBoListener>();
+       
         guangBoController = FindObjectOfType<GuangBoController>();
-        playerName = SystemConstant.P1_NAME;
+        this.setName(SystemConstant.P1_NAME);
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
+        setDistance(2.5f);
         setCurrentRoom(roomXYZ);
-        if (roomContraller == null ) {
-        }
-            Debug.Log("@@@@@@@@@@@@@@@@ roomContraller " + roomContraller);
-        if (this.roomContraller.findRoomByXYZ(roomXYZ) == null)
-        {
-            Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
+        setCrazyFlag(false);
+        
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(this.xyz).setPenable(this.getName(), true);
-        abilityInfo = new int[] { 3, 3, 2, 6,15 };
+        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+        setAbilityInfo(new int[] { 8, 3, 6, 7 });
 
-        maxAbilityInfo = new int[] { 3, 3, 2, 6, 15 };
-        this.actionPointrolled = false;
-        this.deadFlag = false;
-      
-        this.bag = new Bag();
-        // TargetRoomList.Enqueue(roomContraller.getRandomRoom());
-        TargetRoomList.Enqueue(roomContraller.getRandomRoom());
-        TargetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
+        setMaxAbilityInfo(new int[] { 8, 3, 6, 7 });
+        setActionPointrolled(false);
+        setIsDead(false);
+
+        setBag(new Bag());
+
+        targetRoomList.Enqueue(roomContraller.getRandomRoom());
+        targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
         this.waitPlan = false;
-        targetChara = new List<string>();
-        targetChara.Add(SystemConstant.P2_NAME);
-        this.setDesc("这个人看起来好像一条狗");
+        setTargetChara(new List<string>());
+        getTargetChara().Add(SystemConstant.P1_NAME);
+        this.setDesc("一身脏兮兮的白大褂，第一感觉是个跳大神的庸医。");
+
+      
         
     }
 
@@ -285,92 +174,32 @@ public class Nolan : MonoBehaviour, NPC
     void Update()
     {
 		if (getAbilityInfo()[0] <=0 || getAbilityInfo()[1] <=0  ||
-			getAbilityInfo()[2] <=0 || getAbilityInfo()[3] <=0  ||
-			getAbilityInfo()[4] <=0
+			getAbilityInfo()[2] <=0 || getAbilityInfo()[3] <=0  			
 		) {
             Debug.Log(this.getName() + " 已经死亡。。。");
-			this.deadFlag = true;
+            setIsDead(true);
 		}
-        if (!roundOver) {
+        if (getAbilityInfo()[3] <= 3) {
+            setCrazyFlag(true);
+        }
+        if (!isRoundOver()) {
 
-            if (scriptEnd && !waitFlag) {
+            if (scriptEnd && !isWaitPlayer()) {
                 this.endRound();
             }
         }
     }
 
-    public void setScriptAction(StoryScript ss)
-    {
-        this.ss = ss;
-    }
+   
+   
+   
 
-    public bool isScriptWin()
-    {
-        return this.ss.getResult();
-    }
 
-    public StoryScript getScriptAciont()
-    {
-        return this.ss;
-    }
 
-    public bool isBoss()
-    {
-        return bossFlag;
-    }
+	
+	
 
-    public void setBoss(bool bossFlag)
-    {
-        this.bossFlag = bossFlag;
-    }
-
-    public int[] getMaxAbilityInfo()
-    {
-        return maxAbilityInfo;
-    }
-
-    public Bag getBag()
-    {
-        return this.bag;
-    }
-
-	private int diceNum;
-
-	public void setDiceNumberBuffer(int number){
-		this.diceNum = number;
-	}
-	public int getDiceNumberBuffer() {
-		int tmp = this.diceNum;
-		this.diceNum = 0;
-		return tmp;
-	}
-
-	private int diceValue;
-
-	public void setDiceValueBuffer(int value) {
-		this.diceValue = value;
-	}
-
-	public int getDiceValueBuffer(){
-
-		int tmp = this.diceValue;
-		this.diceValue = 0;
-		return tmp;
-	}
-
-	private int damge =1;
-
-	public void setDamgeBuffer (int damge) {
-
-		this.damge = damge;
-	}
-
-	public int getDamgeBuffer () {
-
-		int tmp = this.damge;
-		this.damge = 1;
-		return tmp;
-	}
+	
 
 	void OnMouseDown ()
 	{
@@ -388,57 +217,19 @@ public class Nolan : MonoBehaviour, NPC
 
 	}
 
-    public string getLiHuiURL()
-    {
-        return "lihui/ren_wu_2";
-    }
+   
 
-    private GuangBoListener listener;
+  
 
+   
 
-    public void sendMessageToPlayer(string[] message) {
-        
-           
-            listener.insert(this, message);
-       
-    }
+   
 
-    private bool isFollowGuangBoActionFlag;
+   
 
-    public bool isFollowGuangBoAction()
-    {
-        return isFollowGuangBoActionFlag;
-    }
+   
 
-    public void setFollowGuangBoAction(bool flag)
-    {
-        this.isFollowGuangBoActionFlag = flag;
-    }
+   
 
-    private GuangBoAction guangBoAction;
-
-    public void setGuangBoAction(GuangBoAction gb)
-    {
-        this.guangBoAction = gb;
-    }
-
-    public bool checkItem(string itemCode) {
-        return this.getBag().checkItem(itemCode);
-    }
-
-    public List<string> getTargetChara() {
-        return this.targetChara;
-    }
-
-    private string desc;
-
-    public void setDesc(string desc)
-    {
-        this.desc = desc;
-    }
-
-    public string getDesc()
-    {
-        return this.desc;
-    }
+  
 }

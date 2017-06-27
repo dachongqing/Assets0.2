@@ -76,5 +76,6 @@ public interface Character
 
     string getDesc();
 
+    bool isCrazy();
 
 }

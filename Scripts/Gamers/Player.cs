@@ -187,35 +187,39 @@ public class Player : MonoBehaviour, NPC
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.findMiniRoomByXYZ(roomXYZ).setPenable(this.getName(), true);
-        abilityInfo = new int[] { 5, 4, 6, 8, 20};
+        abilityInfo = new int[] { 7,4,6,7};
 
-        maxAbilityInfo = new int[] { 5, 4, 6, 8,20 };
+        maxAbilityInfo = new int[] { 7, 4, 6, 7 };
         this.deadFlag = false;
         this.actionPointrolled = false;
         this.waitFlag = true;
        
         this.bag = new Bag();
 
-        //测试代码。。。。。
-        Item item = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001
-           , "速度回复药水", "模糊的字迹写着是哈尔滨六厂生产，蓝屏的钙");
-        Item item2 = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001
-          , "力量回复药水", "模糊的字迹写着是哈尔滨六厂生产，红屏的钙你的发送的你说的分手的方式的方式，水电费水电费水电费是否发生地方");
-        this.bag.insertItem(item);
-        this.bag.insertItem(item2);
-        //测试代码。。。。。
+
+      
+        crazyFlag = false;
     }
 
     // Update is called once per frame
     void Update()
     {
 		if (getAbilityInfo()[0] <=0 || getAbilityInfo()[1] <=0  ||
-			getAbilityInfo()[2] <=0 || getAbilityInfo()[3] <=0  ||
-			getAbilityInfo()[4] <=0
+			getAbilityInfo()[2] <=0 || getAbilityInfo()[3] <=0  
 		) {
             this.deadFlag = true;
         }
+        if (getAbilityInfo()[3] <= 3)
+        {
+            crazyFlag = true;
+        }
+    }
 
+    private bool crazyFlag;
+
+    public bool isCrazy()
+    {
+        return crazyFlag;
     }
 
     public void defaultAction()
@@ -362,5 +366,16 @@ public class Player : MonoBehaviour, NPC
     public string getDesc()
     {
         return this.desc;
+    }
+    private bool locked;
+
+    public void setTargetRoomLocked(string roomType)
+    {
+        locked = false;
+    }
+
+    public bool isTargetRoomLocked()
+    {
+        return this.locked;
     }
 }

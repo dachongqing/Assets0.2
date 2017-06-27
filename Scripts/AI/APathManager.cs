@@ -48,6 +48,9 @@ public class APathManager
                 if (!this.containClose(node, closeList)) {
                     node.G = 10 + currentNode.G;
                     node.H = (System.Math.Abs(node.xy[0] - targetNode.getXYZ()[0]) + System.Math.Abs(node.xy[1] - targetNode.getXYZ()[1])) * 10;
+                    if (roundController.findRoomByXYZ(node.xy).isLock()) {
+                        node.H = node.H + 50;
+                    }
                     node.F = node.G + node.H;
                     node.parent = currentNode;
                     openList.Add(node);
@@ -60,6 +63,10 @@ public class APathManager
                 {
                     node.G = 10 + currentNode.G;
                     node.H = (System.Math.Abs(node.xy[0] - targetNode.getXYZ()[0]) + System.Math.Abs(node.xy[1] - targetNode.getXYZ()[1])) * 10;
+                    if (roundController.findRoomByXYZ(node.xy).isLock())
+                    {
+                        node.H = node.H + 50;
+                    }
                     node.F = node.G + node.H;
                     node.parent = currentNode;
                     openList.Add(node);
@@ -72,9 +79,14 @@ public class APathManager
                 {
                     node.G = 10 + currentNode.G;
                     node.H = (System.Math.Abs(node.xy[0] - targetNode.getXYZ()[0]) + System.Math.Abs(node.xy[1] - targetNode.getXYZ()[1])) * 10;
-                node.F = node.G + node.H;
-                node.parent = currentNode;
-                openList.Add(node);
+                    if (roundController.findRoomByXYZ(node.xy).isLock())
+                    {
+                        node.H = node.H + 50;
+                    }
+
+                    node.F = node.G + node.H;
+                    node.parent = currentNode;
+                    openList.Add(node);
 
                 }
             }
@@ -86,9 +98,13 @@ public class APathManager
                 {
                     node.G = 10 + currentNode.G;
                     node.H = (System.Math.Abs(node.xy[0] - targetNode.getXYZ()[0]) + System.Math.Abs(node.xy[1] - targetNode.getXYZ()[1])) * 10;
-                node.F = node.G + node.H;
-                node.parent = currentNode;
-                openList.Add(node);
+                    if (roundController.findRoomByXYZ(node.xy).isLock())
+                    {
+                        node.H = node.H + 50;
+                    }
+                    node.F = node.G + node.H;
+                    node.parent = currentNode;
+                    openList.Add(node);
                 }
             }
        //     Debug.Log("openList.Count  " + openList.Count);

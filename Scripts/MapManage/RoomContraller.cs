@@ -196,12 +196,16 @@ public class RoomContraller : MonoBehaviour
         {
             RoomInterface ri;
 
-            if (roomType == RoomConstant.ROOM_TYPE_BOOK || roomType == RoomConstant.ROOM_TYPE_LOBBY)
+            if (roomType == RoomConstant.ROOM_TYPE_BOOK || roomType == RoomConstant.ROOM_TYPE_LOBBY
+                || roomType == RoomConstant.ROOM_TYPE_HOSPITAIL_TRI_OPERATION)
             {
                 ri = room.GetComponent(System.Type.GetType(roomType)) as RoomInterface;
             }
             else {
                 ri = room.GetComponent(System.Type.GetType(RoomConstant.ROOM_TYPE_COMMON)) as RoomInterface;
+            }
+            if (ri == null) {
+                Debug.Log("cant find type:  " + roomType);
             }
             ri.setRoomType(roomType);
             ri.setXYZ(xyz);

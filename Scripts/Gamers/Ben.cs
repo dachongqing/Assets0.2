@@ -242,7 +242,7 @@ public class Ben : MonoBehaviour, NPC
         this.waitPlan = false;
         targetChara = new List<string>();
 
-
+        crazyFlag = false;
         Debug.Log(TextReader.readerText("commonDialogue/Ben/ben")[0]);
 
 
@@ -254,9 +254,12 @@ public class Ben : MonoBehaviour, NPC
         if (getAbilityInfo()[0] <= 0 || getAbilityInfo()[1] <= 0 ||
             getAbilityInfo()[2] <= 0 || getAbilityInfo()[3] <= 0 ||
             getAbilityInfo()[4] <= 0
-        )
-        {
+        ){
             this.deadFlag = true;
+        }
+        if (getAbilityInfo()[3] <= 3)
+        {
+            crazyFlag = true;
         }
         if (!roundOver)
         {
@@ -266,6 +269,13 @@ public class Ben : MonoBehaviour, NPC
                 this.endRound();
             }
         }
+    }
+
+    private bool crazyFlag;
+
+    public bool isCrazy()
+    {
+        return crazyFlag;
     }
 
     public void setScriptAction(StoryScript ss)
@@ -418,5 +428,17 @@ public class Ben : MonoBehaviour, NPC
 
     public string getDesc() {
         return this.desc;
+    }
+
+    private bool locked;
+
+    public void setTargetRoomLocked(string roomType)
+    {
+        locked = false;
+    }
+
+    public bool isTargetRoomLocked()
+    {
+        return this.locked;
     }
 }

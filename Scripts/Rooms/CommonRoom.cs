@@ -10,9 +10,7 @@ public class CommonRoom : MonoBehaviour, RoomInterface
     private String roomName;
 
     [SerializeField] private int[] xyz;
-
-
-
+    
     public GameObject northDoor;
     public GameObject southDoor;
     public GameObject westDoor;
@@ -45,9 +43,7 @@ public class CommonRoom : MonoBehaviour, RoomInterface
     {
         return this.roomType;
     }
-
-
-
+    
     int[] RoomInterface.getXYZ()
     {
         return xyz;
@@ -157,10 +153,13 @@ public class CommonRoom : MonoBehaviour, RoomInterface
 
     List<string> guangboMessage = new List<string>();
 
+    public List<string> getGuangboMessage() {
+        return guangboMessage;
+    }
+
     public List<string> findSomethingNews(string charaName)
     {
      
-
         return null;
     }
 

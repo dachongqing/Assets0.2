@@ -188,28 +188,49 @@ public class AutoMoveManager  {
                     Node nextRoom = path.Peek();
                     bool opened = false;
                     //判断向什么方向的房间
+                    GameObject targetDoor = null ;
                     if (chara.getCurrentRoom()[0] == nextRoom.xy[0] && chara.getCurrentRoom()[1] - nextRoom.xy[1] < 0)
                     {
                         //up room
                         //调用AI 专用方法
-                        opened = currentRoom.getNorthDoor().GetComponent<WoodDoor>().openDoor(chara);
+
+                        targetDoor = currentRoom.getNorthDoor();
                         //开门成功
 
                     }
                     else if (chara.getCurrentRoom()[0] == nextRoom.xy[0] && chara.getCurrentRoom()[1] - nextRoom.xy[1] > 0)
                     {
                         //down room
-                        opened = currentRoom.getSouthDoor().GetComponent<WoodDoor>().openDoor(chara);
+                        targetDoor = currentRoom.getSouthDoor();
                     }
                     else if (chara.getCurrentRoom()[1] == nextRoom.xy[1] && chara.getCurrentRoom()[0] - nextRoom.xy[0] < 0)
                     {
                         //east room
-                        opened = currentRoom.getEastDoor().GetComponent<WoodDoor>().openDoor(chara);
+                        targetDoor = currentRoom.getEastDoor();
                     }
                     else
                     {
                         //west room
-                        opened = currentRoom.getWestDoor().GetComponent<WoodDoor>().openDoor(chara);
+                        targetDoor = currentRoom.getWestDoor();
+                    }
+
+                    if (roomContraller.findRoomByXYZ(nextRoom.xy).checkOpen(chara))
+                    {
+                        opened = targetDoor.GetComponent<WoodDoor>().openDoor(chara);
+                        //开门成功
+                    }
+                    else
+                    {
+                        if (typeof(NPC).IsAssignableFrom(chara.GetType()))
+                        {
+                            NPC npc = (NPC)chara;
+                            npc.setTargetRoomLocked(roomContraller.findRoomByXYZ(nextRoom.xy).getRoomType());
+                            return false;
+                        }
+                        else
+                        {
+                            Debug.Log("怪物无法发言，只能等门被打开。");
+                        };
                     }
 
 
@@ -224,16 +245,15 @@ public class AutoMoveManager  {
                         if (result == true)
                         {
                             //离开门成功
-
-                            path.Pop();
-                            currentRoom.removeChara(chara);
-                            roomContraller.findMiniRoomByXYZ(chara.getCurrentRoom()).setPenable(chara.getName(), false);
-                            //当前人物坐标移动到下一个房间
-                            chara.setCurrentRoom(nextRoom.xy);
-                            roomContraller.findRoomByXYZ(nextRoom.xy).setChara(chara);
-                            roomContraller.findMiniRoomByXYZ(nextRoom.xy).setPenable(chara.getName(), true);
-                            //触发进门事件
-                            //	eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
+                                path.Pop();
+                                currentRoom.removeChara(chara);
+                                roomContraller.findMiniRoomByXYZ(chara.getCurrentRoom()).setPenable(chara.getName(), false);
+                                //当前人物坐标移动到下一个房间
+                                chara.setCurrentRoom(nextRoom.xy);
+                                roomContraller.findRoomByXYZ(nextRoom.xy).setChara(chara);
+                                roomContraller.findMiniRoomByXYZ(nextRoom.xy).setPenable(chara.getName(), true);
+                                //触发进门事件
+                                //	eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
                         }
                         else
                         {
