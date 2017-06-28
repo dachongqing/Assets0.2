@@ -14,6 +14,9 @@ public class StoryController : MonoBehaviour
     private StoryInterface story;
 
 
+    public void checkStoryStartBySPEvnet(StoryInterface story,Character boss, RoundController roundController) {
+
+    }
 
     // Use this for initialization
     void Start()

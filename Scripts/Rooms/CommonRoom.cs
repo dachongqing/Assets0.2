@@ -157,18 +157,25 @@ public class CommonRoom : MonoBehaviour, RoomInterface
         return guangboMessage;
     }
 
-    public List<string> findSomethingNews(string charaName)
+    public virtual List<string> findSomethingNews(string charaName)
     {
      
         return null;
     }
 
-    public bool isLock()
+    private bool locked;
+
+    public void setLock(bool locked)
     {
-        return false;
+        this.locked = locked;
     }
 
-    public bool checkOpen(Character chara)
+    public bool isLock()
+    {
+        return locked;
+    }
+
+    public virtual bool checkOpen(Character chara)
     {
         return true;
     }

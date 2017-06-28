@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class H_securityRoom : CommonRoom
+public class H_minitorRoom : CommonRoom
+
 {
+    public GameObject computer;
 
-    public GameObject keysCabinet;
-
-    public GameObject getKeysCabinet() {
-        return keysCabinet;
+    public GameObject getComputer() {
+        return computer;
     }
 
     // Use this for initialization

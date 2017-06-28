@@ -18,6 +18,7 @@ public class AutoMoveManager  {
 
     private static bool move(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager, string targetRoomType, bool goUpOrDown)
     {
+        Debug.Log(targetRoomType + ", " + goUpOrDown);
         RoomInterface targetRoom = roomContraller.findRoomByRoomType(targetRoomType);
         return doMove(chara, roomContraller, eventController, diceRoll, aPathManager, targetRoom, goUpOrDown);
     }
@@ -31,7 +32,7 @@ public class AutoMoveManager  {
 
     public static bool doMove(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager, RoomInterface targetRoom,bool goUpOrDown)
     {
-        if (chara.ActionPointrolled())
+        if (chara.ActionPointrolled() || chara.getActionPoint() >0)
         {
             
            
@@ -85,6 +86,7 @@ public class AutoMoveManager  {
                                 }
                                 else
                                 {
+                                    Debug.Log("现在同层了。。可以找最终目标房间了 ：" + targetRoom);
                                     path = aPathManager.findPath(roomContraller.findRoomByXYZ(chara.getCurrentRoom()), targetRoom, roomContraller);
                                 }
                             }
@@ -103,7 +105,8 @@ public class AutoMoveManager  {
                             }
                             else
                             {
-                                path = aPathManager.findPath(currentRoom, targetRoom, roomContraller);
+                                Debug.Log("现在同层了。。可以找最终目标房间了 ：" + targetRoom);
+                                path = aPathManager.findPath(roomContraller.findRoomByXYZ(chara.getCurrentRoom()), targetRoom, roomContraller);
                             }
 
 
@@ -118,8 +121,8 @@ public class AutoMoveManager  {
                             }
                             else
                             {
-
-                                path = aPathManager.findPath(currentRoom, targetRoom, roomContraller);
+                                Debug.Log("现在同层了。。可以找最终目标房间了 ：" + targetRoom);
+                                path = aPathManager.findPath(roomContraller.findRoomByXYZ(chara.getCurrentRoom()), targetRoom, roomContraller);
 
                             }
 
@@ -165,6 +168,7 @@ public class AutoMoveManager  {
                                 }
                                 else
                                 {
+                                    Debug.Log("现在同层了。。可以找最终目标房间了 ：" + targetRoom);
                                     path = aPathManager.findPath(roomContraller.findRoomByXYZ(chara.getCurrentRoom()), targetRoom, roomContraller);
                                 }
                             }
@@ -175,12 +179,13 @@ public class AutoMoveManager  {
                 }
                 else
                 {
-
-                    Debug.Log("如果目标房间同层，直接找路");
-                    int speed = chara.getAbilityInfo()[1] + chara.getDiceNumberBuffer();
-                    int res = diceRoll.calculateDice(speed) + chara.getDiceValueBuffer();
-                    chara.updateActionPoint(res);
-                    chara.setActionPointrolled(false);
+                    if (chara.ActionPointrolled()) {
+                        Debug.Log("如果目标房间同层，直接找路");
+                        int speed = chara.getAbilityInfo()[1] + chara.getDiceNumberBuffer();
+                        int res = diceRoll.calculateDice(speed) + chara.getDiceValueBuffer();
+                        chara.updateActionPoint(res);
+                        chara.setActionPointrolled(false);
+                    }
                     path = aPathManager.findPath(currentRoom, targetRoom, roomContraller);
                 }
                 while (chara.getActionPoint() > 0 && path.Count > 0)
@@ -216,15 +221,18 @@ public class AutoMoveManager  {
 
                     if (roomContraller.findRoomByXYZ(nextRoom.xy).checkOpen(chara))
                     {
+                        Debug.Log("没有锁，可以开门");
                         opened = targetDoor.GetComponent<WoodDoor>().openDoor(chara);
                         //开门成功
                     }
                     else
                     {
+                        Debug.Log("有锁，不可以开门");
                         if (typeof(NPC).IsAssignableFrom(chara.GetType()))
                         {
+                            Debug.Log("我是npc，我要去找钥匙开门");
                             NPC npc = (NPC)chara;
-                            npc.setTargetRoomLocked(roomContraller.findRoomByXYZ(nextRoom.xy).getRoomType());
+                            npc.checkTargetRoomLocked(roomContraller.findRoomByXYZ(nextRoom.xy).getRoomType());
                             return false;
                         }
                         else
@@ -300,9 +308,19 @@ public class AutoMoveManager  {
             }
             else
             {
+                 if (chara.ActionPointrolled())
+                {
+                    Debug.Log("如果目标房间同层，直接找路");
+                    int speed = chara.getAbilityInfo()[1] + chara.getDiceNumberBuffer();
+                    int res = diceRoll.calculateDice(speed) + chara.getDiceValueBuffer();
+                    chara.updateActionPoint(res);
+                    chara.setActionPointrolled(false);
+                }
+
                 if (goUpOrDown &&(targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_UPSTAIR || targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_UPSTAIR_BACK
                     || targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_DOWNSTAIR || targetRoom.getRoomType() == RoomConstant.ROOM_TYPE_DOWNSTAIR_BACK))
                 {
+                    Debug.Log("当前房间是上或者下楼口");
                     //找到房间后， 如果还有体力值， 判定是否是上下楼的房间，如果是 直接上下楼
                     if (chara.getActionPoint() > 0)
                     {
@@ -337,6 +355,7 @@ public class AutoMoveManager  {
                         return true;
                     }
                     else {
+                        Debug.Log("没有体力行动了");
                         return false;
                     }
 

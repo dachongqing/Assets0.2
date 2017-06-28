@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class H_securityRoom : CommonRoom
+public class H_deanRoom : CommonRoom
 {
+    public GameObject safeBox;
 
-    public GameObject keysCabinet;
+    public GameObject getSafeBox()
+    {
+        return safeBox;
 
-    public GameObject getKeysCabinet() {
-        return keysCabinet;
     }
-
     // Use this for initialization
     void Start () {
 		

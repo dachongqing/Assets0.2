@@ -2,16 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-abstract public class CommonUser : MonoBehaviour , NPC
-{
-
+public class CommonMonster : MonoBehaviour,Monsters {
     [Tooltip("房间宽度")] public float roomH = 13.7f;
     [Tooltip("房间高度")] public float roomV = 11f;
 
     private float distance;
-   
+
 
     [SerializeField] private int actionPoint;
 
@@ -34,20 +31,23 @@ abstract public class CommonUser : MonoBehaviour , NPC
     private bool bossFlag;
 
     private bool deadFlag;
-    
+
     private Bag bag;
-    
+
     private List<string> targetChara = new List<string>();
 
-    public void setClickMessage(string[] clickMessage) {
+    public void setClickMessage(string[] clickMessage)
+    {
         this.clickMessage = clickMessage;
     }
 
-    public string[]  getClickMessage() {
+    public string[] getClickMessage()
+    {
         return this.clickMessage;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(float distance)
+    {
         this.distance = distance;
     }
 
@@ -66,7 +66,7 @@ abstract public class CommonUser : MonoBehaviour , NPC
         this.roundOver = true;
     }
 
-    public void setAbilityInfo(int[]  abilityInfo)
+    public void setAbilityInfo(int[] abilityInfo)
     {
         this.abilityInfo = abilityInfo;
     }
@@ -128,16 +128,16 @@ abstract public class CommonUser : MonoBehaviour , NPC
         this.waitFlag = waitFlag;
     }
 
-   
+
 
     private GuangBoAction gba;
 
     public void defaultAction()
     {
-       
+
     }
 
-    public virtual  void roundStart()
+    public virtual void roundStart()
     {
         Debug.Log("run common roundStart");
     }
@@ -151,7 +151,7 @@ abstract public class CommonUser : MonoBehaviour , NPC
     {
         Vector3 temPos;
         this.xyz = nextRoomXYZ;
-       
+
 
         if (xyz[2] == RoomConstant.ROOM_Z_UP)
         {
@@ -176,11 +176,12 @@ abstract public class CommonUser : MonoBehaviour , NPC
         this.actionPoint = actionPoint;
     }
 
-   
+
 
     private bool crazyFlag;
 
-    public void setCrazyFlag(bool crazyFlag) {
+    public void setCrazyFlag(bool crazyFlag)
+    {
         this.crazyFlag = crazyFlag;
     }
 
@@ -226,7 +227,7 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
     public void setBag(Bag bag)
     {
-         this.bag = bag;
+        this.bag = bag;
     }
 
     public Bag getBag()
@@ -278,7 +279,7 @@ abstract public class CommonUser : MonoBehaviour , NPC
         return tmp;
     }
 
-   
+
 
     public string getLiHuiURL()
     {
@@ -294,7 +295,7 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
     public void sendMessageToPlayer(string[] message)
     {
-       listener.insert(this, message);
+        listener.insert(this, message);
     }
 
     private bool isFollowGuangBoActionFlag;
@@ -318,7 +319,7 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
     public GuangBoAction getGuangBoAction()
     {
-       return  this.guangBoAction;
+        return this.guangBoAction;
     }
 
     public bool checkItem(string itemCode)
@@ -333,7 +334,7 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
     public void setTargetChara(List<string> targetChara)
     {
-         this.targetChara = targetChara;
+        this.targetChara = targetChara;
     }
 
     private string desc;
@@ -367,7 +368,11 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
     void Start()
     {
-       
+
     }
 
+    public bool isPlayerServant()
+    {
+        return false;
+    }
 }

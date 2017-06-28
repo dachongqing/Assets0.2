@@ -369,7 +369,12 @@ public class Player : MonoBehaviour, NPC
     }
     private bool locked;
 
-    public void setTargetRoomLocked(string roomType)
+    public void checkTargetRoomLocked(string roomType)
+    {
+        locked = false;
+    }
+
+    public void setTargetRoomLocked(bool roomType)
     {
         locked = false;
     }

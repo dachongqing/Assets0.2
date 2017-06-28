@@ -51,42 +51,8 @@ public class Nolan :  CommonUser
                 Debug.Log("随便找个房间看看");
                 this.targetRoomList.Enqueue(roomContraller.getRandomRoom());
             }
-            RoomInterface target = this.targetRoomList.Peek();
-            Debug.Log("targetRoom is " + target.getXYZ()[0] +","+ target.getXYZ()[1] + "," + target.getXYZ()[2]);
-            if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, target.getXYZ()))
-            {
-                Debug.Log("reached the targetRoom is " + target.getXYZ()[0] + "," + target.getXYZ()[1] + "," + target.getXYZ()[2]);
-                this.targetRoomList.Dequeue();
-                if (target.getRoomType() == RoomConstant.ROOM_TYPE_BOOK)
-                {
-                    BookRoom bookRoom = (BookRoom)roomContraller.findRoomByXYZ(this.getCurrentRoom()); ;
-                    Item item = bookRoom.getBox().GetComponent<Box>().getItem(this);
-                    if (item == null && !this.checkItem(ItemConstant.ITEM_CODE_SPEC_00001))
-                    {
-                        // Debug.Log("我的任务物品，已经没有了，已经是咸鱼了");
-                        this.sendMessageToPlayer(new string[] { "我的任务物品，已经没有了，已经是咸鱼了.." });
-                    }
-                    else
-                    {
-                       // Debug.Log("我的任务物品，拿到手了，我已经无敌了");
-                        this.sendMessageToPlayer(new string[] { "哈哈。。我的任务物品，拿到手了，我已经无敌了！", "所有人都得死！" });
-                        this.getBag().insertItem(item);
-                       
-                    }
-
-                    if (this.checkItem(ItemConstant.ITEM_CODE_SPEC_00001)) {
-                        
-                        guangBoController.insertGuangBo(new EveryoneGoTargetRoom(this.getName(), RoomConstant.ROOM_TYPE_BOOK, getTargetChara(), 60));
-                        waitPlan = true;
-                        this.sendMessageToPlayer(new string[] { "书房有一个好东西，大家都来看看啊"," 你一定要来啊"});
-
-                    }
-                }
-                else {
-                    this.sendMessageToPlayer(new string[] { "我已经到达目标房间 :" + target.getRoomName(), "没有什么中意的地方，我准备去其他房间看看" });
-                }
-            
-            }
+          
+           
         }
 
         endRound();
@@ -162,7 +128,7 @@ public class Nolan :  CommonUser
         targetRoomList.Enqueue(roomContraller.getRandomRoom());
         targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
         this.waitPlan = false;
-        setTargetChara(new List<string>());
+      
         getTargetChara().Add(SystemConstant.P1_NAME);
         this.setDesc("一身脏兮兮的白大褂，第一感觉是个跳大神的庸医。");
 

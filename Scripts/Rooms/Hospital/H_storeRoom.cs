@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class H_securityRoom : CommonRoom
+public class H_storeRoom : CommonRoom
 {
+    public GameObject safeCabinet;
 
-    public GameObject keysCabinet;
-
-    public GameObject getKeysCabinet() {
-        return keysCabinet;
+    public GameObject getSafeCabinet()
+    {
+        return safeCabinet;
     }
-
     // Use this for initialization
     void Start () {
 		

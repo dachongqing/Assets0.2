@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class H_securityRoom : CommonRoom
+public class H_dragRoom : CommonRoom
 {
 
-    public GameObject keysCabinet;
+    public GameObject dragTable;
 
-    public GameObject getKeysCabinet() {
-        return keysCabinet;
+    public GameObject getDragTable() {
+        return dragTable;
     }
 
     // Use this for initialization

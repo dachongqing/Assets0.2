@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class H_morgueRoom : H_securityRoom
+public class H_morgueRoom : CommonRoom
 {
+
+    public GameObject bed;
+
+    public GameObject getBed()
+    {
+        return bed;
+    }
 
 	// Use this for initialization
 	void Start () {

@@ -88,6 +88,27 @@ public class OperatingTable : MonoBehaviour {
         this.listenRoll = false;
     }
 
+    public Item getItem(Character chara)
+    {
+        if (chara.isPlayer())
+        {
+            return null;
+        }
+        else
+        {
+            if (this.isEmpty)
+            {
+                return null;
+            }
+            else
+            {
+                this.isEmpty = true;
+                return this.item;
+
+            }
+        }
+    }
+
     private Item getItem()
     {
         this.isEmpty = true;
