@@ -7,6 +7,8 @@ public class RoundController : MonoBehaviour
 
     private Queue<Character> roundList = new Queue<Character>();
 
+    private Dictionary<string,Character> charaMap = new Dictionary<string, Character>();
+
     private bool isRoundEnd;
 
     private int roundCount;
@@ -21,6 +23,10 @@ public class RoundController : MonoBehaviour
 
     private Kate kate;
 
+    private Martin martin;
+
+    private Jessie jessie;
+
     private Character playerChara; // 玩家所控制的角色
 
     public Character getNextCharecter()
@@ -32,6 +38,9 @@ public class RoundController : MonoBehaviour
     public void setEndRound(Character chara)
     {
         roundList.Enqueue(chara);
+        if (!charaMap.ContainsKey(chara.getName())) {
+            charaMap.Add(chara.getName(), chara);
+        }
     }
 
     public void endRound()
@@ -64,13 +73,19 @@ public class RoundController : MonoBehaviour
 
         //目前是写死。。后面需要改为程序控制添加 游戏人数
         player = FindObjectOfType<Player>();
-        //  nolan = FindObjectOfType<Nolan>();
-        // ben = FindObjectOfType<Ben>();
+        nolan = FindObjectOfType<Nolan>();
+        ben = FindObjectOfType<Ben>();
         kate = FindObjectOfType<Kate>();
+        martin = FindObjectOfType<Martin>();
+        jessie = FindObjectOfType<Jessie>();
+        
         setEndRound(player);
-        //  setEndRound(nolan);
-        //  setEndRound(ben);
+        setEndRound(nolan);
+        setEndRound(ben);
         setEndRound(kate);
+        setEndRound(martin);
+        setEndRound(jessie);
+
         isRoundEnd = false;
         playChara = this.getNextCharecter();
         playChara.setActionPointrolled(true);
@@ -92,6 +107,20 @@ public class RoundController : MonoBehaviour
         {
             this.playerChara = kate;
         }
+        else if (martin.isPlayer())
+        {
+            this.playerChara = martin;
+        }
+        else if (jessie.isPlayer())
+        {
+            this.playerChara = jessie;
+        }
+    }
+
+    public Character getCharaByName(string name)
+    {
+        return charaMap[name];
+
     }
 
     public Character getCurrentRoundChar()

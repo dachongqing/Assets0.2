@@ -14,6 +14,8 @@ public interface StoryInterface  {
     
     string getStoryInfo();
 
+    void initStroy(Character chara);
+
  
 
 

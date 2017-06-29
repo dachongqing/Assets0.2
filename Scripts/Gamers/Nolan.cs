@@ -51,9 +51,16 @@ public class Nolan :  CommonUser
                 Debug.Log("随便找个房间看看");
                 this.targetRoomList.Enqueue(roomContraller.getRandomRoom());
             }
-          
-           
-        }
+            RoomInterface target = this.targetRoomList.Peek();
+
+            if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, target.getXYZ()))
+            {
+
+            }
+
+
+
+            }
 
         endRound();
     }
@@ -111,7 +118,7 @@ public class Nolan :  CommonUser
         this.setName(SystemConstant.P1_NAME);
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
-        setDistance(2.5f);
+        setDistance(0.5f);
         setCurrentRoom(roomXYZ);
         setCrazyFlag(false);
         

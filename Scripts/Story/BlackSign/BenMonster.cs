@@ -18,6 +18,8 @@ public class BenMonster : CommonMonster
 
     private bool scriptEnd;
 
+    private Queue<Character> targetList = new Queue<Character>();
+
     public new bool isPlayer()
     {
         return false;
@@ -32,7 +34,15 @@ public class BenMonster : CommonMonster
 
     public new void defaultAction()
     {
-       
+        Character target = targetList.Peek();
+
+        if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, target.getCurrentRoom()))
+        {
+            battleController.fighte(this,target);
+            if (target.isDead()) {
+                targetList.Dequeue();
+            }
+        }
     }
 
    
@@ -47,7 +57,11 @@ public class BenMonster : CommonMonster
 
 
 
-
+    public void setInitRoom(int[] xyz) {
+        setCurrentRoom(xyz);
+        this.roomContraller.findRoomByXYZ(xyz).setChara(this);
+        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+    }
 
 
 
@@ -64,21 +78,42 @@ public class BenMonster : CommonMonster
         setGuangBoListener(FindObjectOfType<GuangBoListener>());
         guangBoController = FindObjectOfType<GuangBoController>();
         storyController = FindObjectOfType<StoryController>();
-        this.setName(SystemConstant.P4_NAME);
+        this.setName(SystemConstant.MONSTER1_NAME);
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
-        setDistance(1.5f);
-        setCurrentRoom(roomXYZ);
+        //int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
+        setDistance(-1.5f);
+        
         
 
-        this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
-        setAbilityInfo(new int[] { 8, 3, 6, 7 });
+       
+        setAbilityInfo(new int[] { 7, 7, 1, 1 });
 
-        setMaxAbilityInfo(new int[] { 8, 3, 6, 7 });
+        setMaxAbilityInfo(new int[] { 7, 7, 1, 1 });
         setActionPointrolled(false);
         setIsDead(false);
-        
+
+        Character martin = roundController.getCharaByName(SystemConstant.P5_NAME);
+        Character nolan = roundController.getCharaByName(SystemConstant.P1_NAME);
+        Character jessie = roundController.getCharaByName(SystemConstant.P3_NAME);
+        Character player = roundController.getCharaByName(SystemConstant.P6_NAME);
+        if (!martin.isDead()) {
+         targetList.Enqueue(martin);
+        }
+
+        if (!nolan.isDead())
+        {
+            targetList.Enqueue(martin);
+        }
+
+        if (!jessie.isDead())
+        {
+            targetList.Enqueue(jessie);
+        }
+        if (!player.isDead())
+        {
+            targetList.Enqueue(player);
+        }
+       
     }
 
     // Update is called once per frame

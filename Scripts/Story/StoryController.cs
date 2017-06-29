@@ -14,8 +14,13 @@ public class StoryController : MonoBehaviour
     private StoryInterface story;
 
 
-    public void checkStoryStartBySPEvnet(StoryInterface story,Character boss, RoundController roundController) {
-
+    public bool checkStoryStartBySPEvnet(StoryInterface story,Character boss, RoundController roundController, RoomInterface room) {
+         if (story.checkStoryStart(boss, room, roundController)) {
+            story.initStroy(boss);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Use this for initialization
@@ -41,6 +46,7 @@ public class StoryController : MonoBehaviour
 
                 Character[] charas = roundController.getAllChara();
                 this.story = room.getStartedStory();
+                story.initStroy(boss);
                 Debug.Log("UI 显示《《剧情模式已经开启： " + story.getStoryInfo());
                 boss.setScriptAction(story.getBadManScript());
                 boss.setBoss(true);

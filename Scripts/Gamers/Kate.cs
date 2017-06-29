@@ -18,6 +18,8 @@ public class Kate : CommonUser
     private Queue<RoomInterface> targetRoomList = new Queue<RoomInterface>();
     private APathManager aPathManager = new APathManager();
     private bool waitPlan;
+    public GameObject servant;
+    private BlackSignStory bss;
 
     private bool scriptEnd;
 
@@ -71,7 +73,13 @@ public class Kate : CommonUser
                             ben.sendMessageToPlayer(new string[] { "侦探疯了，他要杀死所有人！", " 大家快跑。。。", "啊。。。" });
                             ben.getAbilityInfo()[0] = 0;
                             this.getAbilityInfo()[3] = 1;
-                            // storyController.checkStoryStartBySPEvnet();
+                            if (!storyController.checkStoryStartBySPEvnet(bss, this, roundController, roomContraller.findRoomByXYZ(this.getCurrentRoom()))) {
+                                this.sendMessageToPlayer(new string[] { "啊！啊！啊！。。。","冒险家被我杀死了。。。"});
+                                this.getAbilityInfo()[3] = 3;
+                            } 
+                               
+
+
                         }
                         else {
                             this.setClickMessage(new string[] { SystemConstant.P2_NAME + ", 让我看一下你当年手术的地方吧？" });
@@ -181,11 +189,11 @@ public class Kate : CommonUser
                             Debug.Log("找路失败了");
 
                         }
-                        endRound();
                     }
                 }
             }
         }
+       endRound();
     }
 
     public override void checkTargetRoomLocked(string roomType)
@@ -255,10 +263,11 @@ public class Kate : CommonUser
         setGuangBoListener(FindObjectOfType<GuangBoListener>());
         guangBoController = FindObjectOfType<GuangBoController>();
         storyController = FindObjectOfType<StoryController>();
+        bss = new BlackSignStory();
         this.setName(SystemConstant.P4_NAME);
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
-        setDistance(1.5f);
+        setDistance(-0.5f);
         setCurrentRoom(roomXYZ);
         setCrazyFlag(false);
 

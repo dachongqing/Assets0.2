@@ -27,6 +27,8 @@ public class CharaInfoManager : MonoBehaviour {
 
     private DuiHuaUImanager duiHuaUImanager;
 
+    private BagUIManager bagUIManager;
+
     private Character chara;
 
     private string[] content;
@@ -74,6 +76,13 @@ public class CharaInfoManager : MonoBehaviour {
         battleController.fighte(roundController.getPlayerChara(), chara);
     }
 
+    public void clickUseItem()
+    {
+        UIInfoMenu.SetActive(false);
+        UIInfoMenu.transform.localPosition = hidePos;
+        bagUIManager.showBagItemUI();
+    }
+
     public void close()
     {
         UIInfoMenu.SetActive(false);
@@ -85,6 +94,7 @@ public class CharaInfoManager : MonoBehaviour {
         duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
         roundController = FindObjectOfType<RoundController>();
         battleController = FindObjectOfType<BattleController>();
+        bagUIManager = FindObjectOfType<BagUIManager>();
     }
 	
 	// Update is called once per frame
