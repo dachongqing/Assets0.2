@@ -82,7 +82,7 @@ public class initMap : MonoBehaviour
     }
 
     private void genUpMap() {
-        Debug.Log("init map begin");
+       // Debug.Log("init map begin");
         mapManager = new MapContraller();
         roomManager = GetComponent<RoomContraller>();
 
@@ -90,7 +90,7 @@ public class initMap : MonoBehaviour
         mapSpawnUpPoint = GameObject.Find("MapSpawnUpPoint").GetComponent<Transform>();
         //生成好的地图数据<房间坐标xy,门的信息>
         Dictionary<int[], int[]> map = mapManager.genMap(RoomConstant.ROOM_Z_UP, roomAmount);
-        Debug.Log("map count: " + map.Count);
+       // Debug.Log("map count: " + map.Count);
         //根据地图数据，生成新房间
         foreach (int[] key in map.Keys)
         {
@@ -114,7 +114,7 @@ public class initMap : MonoBehaviour
         genMinMap(map, RoomConstant.ROOM_Z_UP);
     }
     private void genGroundMap() {
-        Debug.Log("init map begin");
+       // Debug.Log("init map begin");
         mapManager = new MapContraller();
         roomManager = GetComponent<RoomContraller>();
 
@@ -122,7 +122,7 @@ public class initMap : MonoBehaviour
         mapSpawnPoint = GameObject.Find("MapSpawnPoint").GetComponent<Transform>();
         //生成好的地图数据<房间坐标xy,门的信息>
         Dictionary<int[], int[]> map = mapManager.genMap(RoomConstant.ROOM_Z_GROUND, roomAmount);
-        Debug.Log("map count: " + map.Count);
+      //  Debug.Log("map count: " + map.Count);
         //根据地图数据，生成新房间
         foreach (int[] key in map.Keys)
         {
@@ -147,7 +147,7 @@ public class initMap : MonoBehaviour
     }
 
     private void genDownMap() {
-        Debug.Log("init map begin");
+       // Debug.Log("init map begin");
         mapManager = new MapContraller();
         roomManager = GetComponent<RoomContraller>();
 
@@ -155,7 +155,7 @@ public class initMap : MonoBehaviour
         mapSpawnDownPoint = GameObject.Find("MapSpawnDownPoint").GetComponent<Transform>();
         //生成好的地图数据<房间坐标xy,门的信息>
         Dictionary<int[], int[]> map = mapManager.genMap(RoomConstant.ROOM_Z_DOWN, roomAmount);
-        Debug.Log("map count: " + map.Count);
+       // Debug.Log("map count: " + map.Count);
         //根据地图数据，生成新房间
         foreach (int[] key in map.Keys)
         {

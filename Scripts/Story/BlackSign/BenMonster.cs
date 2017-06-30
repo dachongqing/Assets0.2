@@ -49,7 +49,7 @@ public class BenMonster : CommonMonster
 
     public override void roundStart()
     {
-        Debug.Log("roundStart round this game");
+        Debug.Log("Monster round this game");
         startRound();
         defaultAction();
         
@@ -66,8 +66,9 @@ public class BenMonster : CommonMonster
 
 
     // Use this for initialization
-    void Start()
+    public override void init()
     {
+        Debug.Log("monster init function start begin...");
         roomContraller = FindObjectOfType<RoomContraller>();
         diceRoll = FindObjectOfType<DiceRollCtrl>();
         eventController = FindObjectOfType<EventController>();
@@ -119,6 +120,7 @@ public class BenMonster : CommonMonster
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("monster update function  begin...");
         if (getAbilityInfo()[0] <= 0 || getAbilityInfo()[1] <= 0 ||
             getAbilityInfo()[2] <= 0 || getAbilityInfo()[3] <= 0
         )

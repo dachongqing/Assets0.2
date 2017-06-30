@@ -66,7 +66,7 @@ public class RaceStory :  StoryInterface {
         return "这是一个比赛剧情，看谁速度高，跑得快。";
     }
 
-    public void initStroy(Character chara)
+    public void initStroy(Character chara, RoundController roundController)
     {
         
     }

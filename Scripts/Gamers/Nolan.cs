@@ -33,7 +33,7 @@ public class Nolan :  CommonUser
 
     public new void defaultAction()
     {
-        Debug.Log("run default aciont");
+       // Debug.Log("run default aciont");
         if (waitPlan) {
             
             if (this.getGuangBoAction().isPlanSuccess())
@@ -67,7 +67,7 @@ public class Nolan :  CommonUser
 
     public override void roundStart()
     {
-        Debug.Log("roundStart round this game");
+       // Debug.Log("roundStart round this game");
         startRound();
         scriptEnd = false;
         if (this.isPlayer())
@@ -78,7 +78,7 @@ public class Nolan :  CommonUser
             if (getScriptAciont() != null)
             {
                 getScriptAciont().scriptAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
-                Debug.Log("npc 当前回合状态是: "+ isRoundOver());
+             //   Debug.Log("npc 当前回合状态是: "+ isRoundOver());
                 scriptEnd = true;
             }
             else
@@ -113,7 +113,7 @@ public class Nolan :  CommonUser
         battleController = FindObjectOfType<BattleController>();
         //duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
         charaInfoManager = FindObjectOfType<CharaInfoManager>();
-       
+        setGuangBoListener(FindObjectOfType<GuangBoListener>());
         guangBoController = FindObjectOfType<GuangBoController>();
         this.setName(SystemConstant.P1_NAME);
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0

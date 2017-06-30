@@ -31,8 +31,19 @@ public class BagUIManager : MonoBehaviour {
 
     private RoundController roundController;
 
+    private Character usedChara;
+    private bool usedforNPC;
 
-    public void showBagItemUI()
+    public void showBagItemUI(Character chara)
+    {
+        this.usedChara = chara;
+        usedforNPC = true;
+        showBagItemUI();
+
+    }
+
+
+        public void showBagItemUI()
     {
         BagItemMenuUI.SetActive(true);
         BagItemMenuUI.transform.localPosition = showPos;
@@ -73,8 +84,16 @@ public class BagUIManager : MonoBehaviour {
         selectItem = null;
     }
 
-    public void useItem() {     
-        itemController.useItem(selectItem,(NPC)roundController.getPlayerChara());
+    public void useItem() {
+        if (usedforNPC && this.usedChara !=null) {
+            itemController.useItem(selectItem, 
+                (NPC)roundController.getPlayerChara(), this.usedChara);
+        }
+        else
+        {
+            itemController.useItem(selectItem,(NPC)roundController.getPlayerChara());
+
+        }
         this.clear();
     }
 

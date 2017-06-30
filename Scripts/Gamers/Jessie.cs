@@ -47,7 +47,7 @@ public class Jessie : CommonUser {
 
     public override void roundStart()
     {
-        Debug.Log("roundStart round this game");
+      //  Debug.Log("roundStart round this game");
         startRound();
         scriptEnd = false;
         if (this.isPlayer())
@@ -58,7 +58,7 @@ public class Jessie : CommonUser {
             if (getScriptAciont() != null)
             {
                 getScriptAciont().scriptAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
-                Debug.Log("npc 当前回合状态是: " + isRoundOver());
+            //    Debug.Log("npc 当前回合状态是: " + isRoundOver());
                 scriptEnd = true;
             }
             else

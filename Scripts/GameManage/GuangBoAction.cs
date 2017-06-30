@@ -33,4 +33,6 @@ public interface GuangBoAction  {
 
     Character getVictim();
 
+    bool isGuangBoActionEnd();
+
 }

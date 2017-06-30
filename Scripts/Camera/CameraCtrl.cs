@@ -20,7 +20,7 @@ public class CameraCtrl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log ("CamaeraCtrl.cs Start() 相机进入默认位置");
+		//Debug.Log ("CamaeraCtrl.cs Start() 相机进入默认位置");
 	}
 
 	public void setTargetPos(int[] pos)

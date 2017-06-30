@@ -31,7 +31,7 @@ public class RoundController : MonoBehaviour
 
     public Character getNextCharecter()
     {
-        Debug.Log(" Queue number is " + roundList.Count);
+        //Debug.Log(" Queue number is " + roundList.Count);
         return roundList.Dequeue();
     }
 
@@ -89,7 +89,7 @@ public class RoundController : MonoBehaviour
         isRoundEnd = false;
         playChara = this.getNextCharecter();
         playChara.setActionPointrolled(true);
-        Debug.Log(playChara.getName() + " round this game");
+       // Debug.Log(playChara.getName() + " round this game");
         roundCount = 1;
         if (player.isPlayer())
         {
@@ -159,13 +159,13 @@ public class RoundController : MonoBehaviour
             playChara = this.getNextCharecter();
             playChara.setActionPointrolled(true);
 
-            Debug.Log(playChara.getName() + " round this game");
+           // Debug.Log(playChara.getName() + " round this game");
             isRoundEnd = false;
             if (playChara.isPlayer())
             {
               
                 if (this.roundList.Count == 0) {
-                 Debug.Log("世界安静了。。。你是唯一的幸存者。。游戏结束");
+             //    Debug.Log("世界安静了。。。你是唯一的幸存者。。游戏结束");
                 }
 
                 mState = OperatorState.Player;
@@ -207,7 +207,7 @@ public class RoundController : MonoBehaviour
                         this.setEndRound(playChara);
                         isRoundEnd = true;
                         mState = OperatorState.EnemyAI;
-                        Debug.Log("wait ai move");
+                      //  Debug.Log("wait ai move");
                         //开始黑屏
                     }
 
@@ -218,7 +218,7 @@ public class RoundController : MonoBehaviour
                     {
                         // mState = OperatorState.Player;
                         //解除黑屏
-                        Debug.Log("wait player Action");
+                       // Debug.Log("wait player Action");
 
                     }
                     else
@@ -227,10 +227,10 @@ public class RoundController : MonoBehaviour
                     }
                     if (playChara.isRoundOver())
                     {
-                        Debug.Log("NPC 行动完毕了，");
+                      //  Debug.Log("NPC 行动完毕了，");
                         this.setEndRound(playChara);
                         isRoundEnd = true;
-                        Debug.Log("ai done,wait next ai move");
+                      //  Debug.Log("ai done,wait next ai move");
                     }
                     break;
             }

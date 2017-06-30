@@ -173,6 +173,7 @@ public class Player : MonoBehaviour, NPC
     // Use this for initialization
     void Start()
     {
+        
         roomContraller = FindObjectOfType<RoomContraller>();
         diceRoll = FindObjectOfType<DiceRollCtrl>();
         eventController = FindObjectOfType<EventController>();

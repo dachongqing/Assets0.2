@@ -16,7 +16,7 @@ public class SystemConstant  {
 
     public const string P6_NAME = "Heal"; //玩家
 
-    public const string MONSTER1_NAME = "被感染的冒险家"; //被感染的冒险家
+    public const string MONSTER1_NAME = "BenMonster"; //被感染的冒险家
 
     public const int UPStairActionPoint = 1; //上下楼消耗的体力值
 

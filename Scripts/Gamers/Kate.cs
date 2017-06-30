@@ -37,13 +37,16 @@ public class Kate : CommonUser
 
     public new void defaultAction()
     {
-        Debug.Log("run default aciont");
+      //  Debug.Log("run default aciont");
         if (waitPlan)
         {
 
             if (this.getGuangBoAction().isPlanSuccess())
             {
                 this.sendMessageToPlayer(new string[] { "我这里有新线索发现，都来听我分析。" });
+                if (this.getGuangBoAction().isGuangBoActionEnd()) {
+                    waitPlan = false;
+                }
             }
             else
             {
@@ -67,21 +70,29 @@ public class Kate : CommonUser
                 {
                     if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, ben.getCurrentRoom()))
                     {
-
+                        Debug.Log("kate 开始跟踪冒险家");
                         if (this.getAbilityInfo()[3] <= 1)
                         {
+                             Debug.Log("kate 疯了， 准备杀人了");
                             ben.sendMessageToPlayer(new string[] { "侦探疯了，他要杀死所有人！", " 大家快跑。。。", "啊。。。" });
                             ben.getAbilityInfo()[0] = 0;
                             this.getAbilityInfo()[3] = 1;
-                            if (!storyController.checkStoryStartBySPEvnet(bss, this, roundController, roomContraller.findRoomByXYZ(this.getCurrentRoom()))) {
-                                this.sendMessageToPlayer(new string[] { "啊！啊！啊！。。。","冒险家被我杀死了。。。"});
+                            
+                            if (storyController.checkStoryStartBySPEvnet(bss, this, roundController, roomContraller.findRoomByXYZ(this.getCurrentRoom())))
+                            {
+                                Debug.Log(" 黑色征兆 剧本开启");
+                                this.sendMessageToPlayer(new string[] { "啊！啊！啊！。。。", "冒险家被我杀死了。。。" });
                                 this.getAbilityInfo()[3] = 3;
-                            } 
+                            }
+                            else {
+                                Debug.Log(" 剧本开启失败");
+                            }
                                
 
 
                         }
                         else {
+                            Debug.Log("kate 没疯，暗中观察");
                             this.setClickMessage(new string[] { SystemConstant.P2_NAME + ", 让我看一下你当年手术的地方吧？" });
                         }
                     }
@@ -90,7 +101,9 @@ public class Kate : CommonUser
             else { 
 
                 RoomInterface target = this.targetRoomList.Peek();
-
+                if (target == null ) {
+                    Debug.Log("target is null !!!!error");
+                }
                 if (target.getRoomType() == RoomConstant.ROOM_TYPE_HOSPITAIL_TRI_OPERATION && isTargetRoomLocked())
                 {
 
@@ -124,10 +137,10 @@ public class Kate : CommonUser
                 }
                 else
                 {
-                    Debug.Log("targetRoom is " + target.getXYZ()[0] + "," + target.getXYZ()[1] + "," + target.getXYZ()[2]);
+                   // Debug.Log("targetRoom is " + target.getXYZ()[0] + "," + target.getXYZ()[1] + "," + target.getXYZ()[2]);
                     if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, target.getXYZ()))
                     {
-                        Debug.Log("reached the targetRoom is " + target.getXYZ()[0] + "," + target.getXYZ()[1] + "," + target.getXYZ()[2]);
+                      //  Debug.Log("reached the targetRoom is " + target.getXYZ()[0] + "," + target.getXYZ()[1] + "," + target.getXYZ()[2]);
                         this.targetRoomList.Dequeue();
                         if (target.getRoomType() == RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY)
                         {
@@ -157,18 +170,21 @@ public class Kate : CommonUser
                             }
                             else
                             {
+                                Debug.Log("这个解剖手术太奇怪了，我一定错过了什么。我要好好检查下。");
                                 this.sendMessageToPlayer(new string[] { "这个解剖手术太奇怪了，我一定错过了什么。", "我要好好检查下。" });
                             }
 
                         }
                         else if (target.getRoomType() == RoomConstant.ROOM_TYPE_HOSPITAIL_MORGUE)
                         {
+                            Debug.Log("到达停尸房");
                             this.sendMessageToPlayer(new string[] { "这里有好多尸体都标明了实验失败的标签", "而且实验人全是写的你医生的名字", "大家把医生抓住啊，他有重大嫌疑！" });
                         }
                         else if (target.getRoomType() == RoomConstant.ROOM_TYPE_HOSPITAIL_STORE)
                         {
+                            Debug.Log("到达储藏室");
                             H_storeRoom storeRoom = (H_storeRoom)roomContraller.findRoomByXYZ(this.getCurrentRoom());
-                            Item item = storeRoom.getSafeCabinet().GetComponent<BookTable>().getItem(this);
+                            Item item = storeRoom.getSafeCabinet().GetComponent<SafeCabinet>().getItem(this);
                             if (item != null)
                             {
                                 this.getBag().insertItem(item);
@@ -213,7 +229,7 @@ public class Kate : CommonUser
 
     public override void roundStart()
     {
-        Debug.Log("roundStart round this game");
+     //   Debug.Log("roundStart round this game");
         startRound();
         scriptEnd = false;
         if (this.isPlayer())
@@ -224,7 +240,7 @@ public class Kate : CommonUser
             if (getScriptAciont() != null)
             {
                 getScriptAciont().scriptAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
-                Debug.Log("npc 当前回合状态是: " + isRoundOver());
+              //  Debug.Log("npc 当前回合状态是: " + isRoundOver());
                 scriptEnd = true;
             }
             else
@@ -273,7 +289,7 @@ public class Kate : CommonUser
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
-        setAbilityInfo(new int[] { 8, 3, 6, 7 });
+        setAbilityInfo(new int[] { 8, 1, 6, 7 });
 
         setMaxAbilityInfo(new int[] { 8, 3, 6, 7 });
         setActionPointrolled(false);
@@ -312,6 +328,8 @@ public class Kate : CommonUser
         }
         if (getAbilityInfo()[3] <= 3)
         {
+            //发疯后行动力加强
+            this.getAbilityInfo()[1] = this.getAbilityInfo()[1] + 3;
             setCrazyFlag(true);
         }
         if (!isRoundOver())
@@ -330,9 +348,14 @@ public class Kate : CommonUser
         if (!SystemUtil.IsTouchedUI())
         {
 
-           
+
             // duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
-            charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+            if (this.isCrazy() || this.isBoss()) {
+                battleController.fighte(this,roundController.getPlayerChara());
+            } else
+            {
+                charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+            }
         }
         else
         {

@@ -101,10 +101,14 @@ public class BlackSignGoodScript : StoryScript
        RoundController roundController, BattleController battleController)
     {
         Character  monster= roundController.getCharaByName(SystemConstant.MONSTER1_NAME);
-        string roomType = P1TargetRooms.Peek();
+
+        Debug.Log("error: this.P1TargetRooms " + this.P1TargetRooms);
+        Debug.Log("error: Count " + this.P1TargetRooms.Count);
+        string roomType;
         NPC npc = (NPC)chara;
-        if (P1TargetRooms.Count >= 1)
+        if (this.P1TargetRooms.Count >= 1)
         {
+            roomType = this.P1TargetRooms.Peek();
             if (P1Message.Count > 0 ) {
                  npc.sendMessageToPlayer(P1Message.Dequeue());
             }
@@ -128,11 +132,11 @@ public class BlackSignGoodScript : StoryScript
                 roomType = roomContraller.findRoomByXYZ(monster.getCurrentRoom()).getRoomType();
 
             }
-            P1TargetRooms.Enqueue(roomType);
+            this.P1TargetRooms.Enqueue(roomType);
         }
         if (AutoMoveManager.move(chara, roomContraller,
             eventController, diceRoll, aPathManager, roomContraller.findRoomByRoomType(roomType).getXYZ())) {
-            P1TargetRooms.Dequeue();
+            this.P1TargetRooms.Dequeue();
 
             if (roomType == RoomConstant.ROOM_TYPE_HOSPITAIL_DEAN)
             {
@@ -182,10 +186,11 @@ public class BlackSignGoodScript : StoryScript
       RoundController roundController, BattleController battleController)
     {
         Character monster = roundController.getCharaByName(SystemConstant.MONSTER1_NAME);
-        string roomType = P5TargetRooms.Peek();
+        string roomType;
         NPC npc = (NPC)chara;
-        if (P5TargetRooms.Count >= 1)
+        if (this.P5TargetRooms.Count >= 1)
         {
+            roomType = this.P5TargetRooms.Peek();
             if (P5Message.Count > 0)
             {
                 npc.sendMessageToPlayer(P5Message.Dequeue());
@@ -212,12 +217,12 @@ public class BlackSignGoodScript : StoryScript
                 roomType = roomContraller.findRoomByXYZ(monster.getCurrentRoom()).getRoomType();
 
             }
-            P5TargetRooms.Enqueue(roomType);
+            this.P5TargetRooms.Enqueue(roomType);
         }
         if (AutoMoveManager.move(chara, roomContraller,
             eventController, diceRoll, aPathManager, roomContraller.findRoomByRoomType(roomType).getXYZ()))
         {
-            P5TargetRooms.Dequeue();
+            this.P5TargetRooms.Dequeue();
 
             if (roomType == RoomConstant.ROOM_TYPE_HOSPITAIL_MINITOR)
             {

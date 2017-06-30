@@ -36,7 +36,7 @@ public class Ben : CommonUser
     public new void defaultAction()
     {
 
-        Debug.Log("随便找个房间看看");
+      //  Debug.Log("随便找个房间看看");
         AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, roomContraller.getRandomRoom().getXYZ());
         endRound();
     }
@@ -48,7 +48,7 @@ public class Ben : CommonUser
 
     public override void roundStart()
     {
-        Debug.Log("roundStart round this game");
+      //  Debug.Log("roundStart round this game");
         startRound();
         scriptEnd = false;
         if (this.isPlayer())
@@ -59,7 +59,7 @@ public class Ben : CommonUser
             if (getScriptAciont() != null)
             {
                 getScriptAciont().scriptAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
-                Debug.Log("npc 当前回合状态是: " + isRoundOver());
+            //    Debug.Log("npc 当前回合状态是: " + isRoundOver());
                 scriptEnd = true;
             }
             else

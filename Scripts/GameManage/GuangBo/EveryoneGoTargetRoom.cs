@@ -20,6 +20,8 @@ public class EveryoneGoTargetRoom : GuangBoAction
 
     private string targetRoomName;
 
+    private bool actionEnd;
+
     public EveryoneGoTargetRoom(string ownerName, string targetRoomType,List<string> targetNameList, int sanLimit) {
         this.targetRoomType = targetRoomType;
         this.sanLimit = sanLimit;
@@ -85,17 +87,26 @@ public class EveryoneGoTargetRoom : GuangBoAction
 
     public void guangBoAction(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager, RoundController roundController, BattleController battleController)
     {
-
+        actionEnd = false;
         Debug.Log("执行广播任务，目标是 " + this.targetRoomType);
         if (AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, this.targetRoomType)) {
             NPC npc = (NPC)chara;
             npc.setFollowGuangBoAction(false);
+            if (targetNameList.Contains(chara.getName())) {
+
+                actionEnd = true;
+            }
         };
     }
 
     public bool hasVictim()
     {
         return false;
+    }
+
+    public bool isGuangBoActionEnd()
+    {
+        return actionEnd;
     }
 
     public bool isPlanSuccess()

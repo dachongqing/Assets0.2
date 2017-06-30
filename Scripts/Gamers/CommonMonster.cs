@@ -375,4 +375,9 @@ public class CommonMonster : MonoBehaviour,Monsters {
     {
         return false;
     }
+
+    public virtual void init()
+    {
+        
+    }
 }

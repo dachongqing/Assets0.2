@@ -56,7 +56,7 @@ public class RoomContraller : MonoBehaviour
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_DRAG);
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
@@ -91,12 +91,12 @@ public class RoomContraller : MonoBehaviour
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_TRI_OPERATION);
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_MORGUE);
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");

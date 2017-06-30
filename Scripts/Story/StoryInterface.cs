@@ -14,7 +14,7 @@ public interface StoryInterface  {
     
     string getStoryInfo();
 
-    void initStroy(Character chara);
+    void initStroy(Character chara, RoundController roundController);
 
  
 

@@ -41,13 +41,16 @@ abstract public class AbsStrory : MonoBehaviour,StoryInterface
 
     public bool checkStoryStart(Character chara, RoomInterface room, RoundController roundController)
     {
+        Debug.Log("开始检查剧本开启条件");
         for (int i = 0; i < triggerConditions.Count; i++)
         {
             if (!triggerConditions[i].getConditionStatus(chara, room, roundController))
             {
+                Debug.Log("不满足条件");
                 return false;
             }
         }
+        Debug.Log("满足条件");
         return true;
     }
 
@@ -66,7 +69,7 @@ abstract public class AbsStrory : MonoBehaviour,StoryInterface
         return null;
     }
 
-    public virtual void initStroy(Character chara)
+    public virtual void initStroy(Character chara, RoundController roundController)
     {
         
     }

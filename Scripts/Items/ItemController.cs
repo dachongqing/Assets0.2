@@ -7,6 +7,42 @@ public class ItemController : MonoBehaviour {
 
     private MessageUI msg;
 
+    public void useItem(Item item, NPC chara, Character forNPCchara)
+    {
+
+        if (item == null)
+        {
+            msg.showMessage("请选择一个物品。");
+        }
+        else
+        {
+            if (item.getType() == ItemConstant.ITEM_TYPE_POTION)
+            {
+                Debug.Log("使用药水道具");
+                if (typeof(NPC).IsAssignableFrom(forNPCchara.GetType())) {
+                    useItemPotion(item, (NPC)forNPCchara);
+                    chara.getBag().removeItem(item);
+                } else {
+                    msg.showMessage("无法对怪物使用药水道具。");
+                    Debug.Log("无法对怪物使用药水道具");
+                }
+            }
+            else if (item.getType() == ItemConstant.ITEM_TYPE_TOOL)
+            {
+                //useItemTool(item, chara);
+                Debug.Log("无法使用道具");
+                msg.showMessage("无法对"+ chara.getName()+ "使用功能道具。");
+            }
+            else if (item.getType() == ItemConstant.ITEM_TYPE_SPEC)
+            {
+                if (useItemSpec(forNPCchara, item))
+                {
+                    chara.getBag().removeItem(item);
+                };
+            }
+        }
+    }
+
     public void useItem(Item item, NPC chara) {
 
         if (item == null)
@@ -17,35 +53,49 @@ public class ItemController : MonoBehaviour {
             {
                 Debug.Log("使用药水道具");
                 useItemPotion(item, chara);
+                chara.getBag().removeItem(item);
             }
             else if(item.getType() == ItemConstant.ITEM_TYPE_TOOL)
             {
                 useItemTool(item, chara);
+                chara.getBag().updateItem(item);
             }
             else if (item.getType() == ItemConstant.ITEM_TYPE_SPEC)
             {
-                useItemSpec(item);
+                if (useItemSpec(null, item)) {
+                    chara.getBag().removeItem(item);
+                };
             }
-
         }
-
-
     }
 
-    private void useItemSpec(Item item)
+    private bool useItemSpec(Character forNPCchara,Item item)
     {
-        msg.showMessage("任务物品无法使用。");
+        if (forNPCchara!=null ) {
+            if (forNPCchara.getName() == SystemConstant.P4_NAME)
+            {
+                return spItemforP4((NPC)forNPCchara, item);
+            } else if(forNPCchara.getName() == SystemConstant.MONSTER1_NAME) {
+                return spItemforM1(forNPCchara, item);
+            }
+            else
+            {
+                msg.showMessage(forNPCchara.getName() + "似乎对这个没什么兴趣。");
+                return false;
+            }
+        }else
+        {
+            msg.showMessage("任务物品无法使用。");
+            return false;
+        }
     }
 
 	private void useItemTool(Item item, NPC chara)
     {
-
 		if (item.getCode() == ItemConstant.ITEM_CODE_TOOL_10001)
 		{
 			Debug.Log("你使用了一个透明骰子的道具");
 			chara.setDiceNumberBuffer(1);
-			chara.getBag().updateItem (item);
-
 		}
     }
 
@@ -92,7 +142,7 @@ public class ItemController : MonoBehaviour {
         }
         Debug.Log("从背包里移除用掉的药水道具 " + item.getName());
 
-        chara.getBag().removeItem(item);
+        
     }
 
     // Use this for initialization
@@ -105,4 +155,54 @@ public class ItemController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private bool spItemforP4(NPC forNPCchara, Item item) {
+        if (forNPCchara.isBoss() && item.getCode() == ItemConstant.ITEM_CODE_SPEC_Y0006)
+        {
+            int san = forNPCchara.getAbilityInfo()[3];
+            if (san + 4 > forNPCchara.getMaxAbilityInfo()[3])
+            {
+                forNPCchara.getAbilityInfo()[3] = forNPCchara.getMaxAbilityInfo()[3];
+            }
+            else
+            {
+                forNPCchara.getAbilityInfo()[3] = san + 2;
+            }
+
+            return true;
+        }
+        else if (forNPCchara.isBoss()
+          && item.getCode() == ItemConstant.ITEM_CODE_SPEC_Y0007)
+        {
+            int san = forNPCchara.getAbilityInfo()[3];
+            if (san + 3 > forNPCchara.getMaxAbilityInfo()[3])
+            {
+                forNPCchara.getAbilityInfo()[3] = forNPCchara.getMaxAbilityInfo()[3];
+            }
+            else
+            {
+                forNPCchara.getAbilityInfo()[3] = san + 3;
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool spItemforM1(Character forNPCchara, Item item)
+    {
+        if (item.getCode() == ItemConstant.ITEM_CODE_SPEC_Y0005)
+        {
+            int str = forNPCchara.getAbilityInfo()[0];            
+            forNPCchara.getAbilityInfo()[3] = str - 2;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

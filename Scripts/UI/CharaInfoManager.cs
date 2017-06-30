@@ -80,7 +80,7 @@ public class CharaInfoManager : MonoBehaviour {
     {
         UIInfoMenu.SetActive(false);
         UIInfoMenu.transform.localPosition = hidePos;
-        bagUIManager.showBagItemUI();
+        bagUIManager.showBagItemUI(chara);
     }
 
     public void close()

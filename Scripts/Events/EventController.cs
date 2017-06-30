@@ -68,7 +68,7 @@ public class EventController : MonoBehaviour
         else
         {
             //为空没有事件
-            Debug.Log("没有离开事件");
+          //  Debug.Log("没有离开事件");
             return true;
         }
     }

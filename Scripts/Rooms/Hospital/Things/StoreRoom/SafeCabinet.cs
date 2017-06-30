@@ -95,7 +95,28 @@ public class SafeCabinet : MonoBehaviour {
         this.listenRoll = false;
     }
 
-        private Item getItem()
+    public Item getItem(Character chara)
+    {
+        if (chara.isPlayer())
+        {
+            return null;
+        }
+        else
+        {
+            if (this.isEmpty)
+            {
+                return null;
+            }
+            else
+            {
+                this.isEmpty = true;
+                return this.item;
+
+            }
+        }
+    }
+
+    private Item getItem()
         {
             this.isEmpty = true;
             return this.item;
