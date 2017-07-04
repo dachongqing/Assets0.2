@@ -4,145 +4,72 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Player : MonoBehaviour, NPC
+public class Player : CommonUser
 {
-	[Tooltip("房间宽度")]public float roomH=13.7f;
-	[Tooltip("房间高度")]public float roomV=11f;
-
-    [SerializeField] private int actionPoint;
-
-    private int[] abilityInfo;
-
-    private int[] maxAbilityInfo;
-
-    [SerializeField] private int[] xyz;
-
-    private String playerName;
-
-    private bool roundOver;
-
-    private bool actionPointrolled;
-
-    private bool deadFlag;
-
-    private APathManager aPathManager = new APathManager();
-
     private RoomContraller roomContraller;
-
-    private EventController eventController;
-
-    private RoundController roundController;
-
-    private BattleController battleController;
-
     private DiceRollCtrl diceRoll;
-
-    private StoryScript ss;
-
-    private bool bossFlag;
-
-    private Bag bag;
-
-    //private DuiHuaUImanager duiHuaUImanager;
+    private EventController eventController;
+    private RoundController roundController;
+    private BattleController battleController;
     private CharaInfoManager charaInfoManager;
+    private GuangBoController guangBoController;
+    private StoryController storyController;
+    private Queue<RoomInterface> targetRoomList = new Queue<RoomInterface>();
+    private APathManager aPathManager = new APathManager();
+    private bool waitPlan;
+    public GameObject servant;
+    private BlackSignStory bss;
 
-    private GuangBoListener guangBoListener;
+    private bool scriptEnd;
 
-    List<string> targetChara;
-
-    public int getActionPoint()
-    {
-        return actionPoint;
-    }
-
-    public int[] getAbilityInfo()
-    {
-        return abilityInfo;
-    }
-
-    public int[] getCurrentRoom()
-    {
-        return xyz;
-    }
-
-    public void setCurrentRoom(int[] xyz)
-    {
-        Vector3 temPos;
-        this.xyz = xyz;
-        //		Debug.Log ("玩家进入新房间: ");
-
-        if (xyz[2] == RoomConstant.ROOM_Z_UP)
-        {
-            temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_UP + (xyz[1] * roomV), 0);
-        }
-        else if(xyz[2] == RoomConstant.ROOM_Z_GROUND)
-        {
-             temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_GROUND + (xyz[1] * roomV), 0);
-        } else 
-        {
-            temPos = new Vector3(xyz[0] * roomH, RoomConstant.ROOM_Y_DOWN + (xyz[1] * roomV), 0);
-        }
-		
-
-		this.transform.position = temPos;
-    }
-
-    public string getName()
-    {
-        return playerName;
-    }
-
-    public bool isDead()
-    {
-        return deadFlag;
-    }
-
-    public bool isPlayer()
+    public override bool isPlayer()
     {
         return true;
     }
 
-    public bool isRoundOver()
+    public new string getLiHuiURL()
     {
-      
-        return roundOver;
+        return "lihui/ren_wu_1";
     }
 
-    public void endRound()
+    public new string getDeitalPic()
     {
-        this.roundOver = true;
-        guangBoListener.cleanQuere();
+        return "detail/kate_detail01";
     }
 
-    public bool isWaitPlayer()
+    public new string getProfilePic()
     {
-        return waitFlag;
+        return "detail/9";
     }
 
-    private bool waitFlag;
-    public void setWaitPlayer(bool waitFlag)
+    public new void defaultAction()
     {
-        this.waitFlag = waitFlag;
+
     }
 
-    public void roundStart()
+    public override void roundStart()
     {
 
-        roundOver = false;
+        // Debug.Log("roundStart round this game");
+        startRound();
+        scriptEnd = false;
         if (this.isPlayer())
         {
         }
         else
         {
-            if (ss != null)
+            if (getScriptAciont() != null)
             {
-                ss.scriptAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController,battleController);
+                getScriptAciont().scriptAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
+                //   Debug.Log("npc 当前回合状态是: " + isRoundOver());
+                scriptEnd = true;
             }
             else
             {
                 if (this.isFollowGuangBoAction())
                 {
-                    this.guangBoAction.guangBoAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
+                    getGuangBoAction().guangBoAction(this, roomContraller, eventController, diceRoll, aPathManager, roundController, battleController);
+                    scriptEnd = true;
                 }
                 else
                 {
@@ -154,234 +81,89 @@ public class Player : MonoBehaviour, NPC
 
     }
 
-    public void updateActionPoint(int actionPoint)
-    {
-        this.actionPoint = actionPoint;
-    }
 
-    public bool ActionPointrolled()
-    {
-        return actionPointrolled;
-    }
-
-    public void setActionPointrolled(bool actionPointrolled)
-    {
-        this.actionPointrolled = actionPointrolled;
-    }
 
 
     // Use this for initialization
     void Start()
     {
-        
+
         roomContraller = FindObjectOfType<RoomContraller>();
         diceRoll = FindObjectOfType<DiceRollCtrl>();
         eventController = FindObjectOfType<EventController>();
-        battleController = FindObjectOfType<BattleController>();
         roundController = FindObjectOfType<RoundController>();
-        //	duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        battleController = FindObjectOfType<BattleController>();
+        //duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
         charaInfoManager = FindObjectOfType<CharaInfoManager>();
-            guangBoListener = FindObjectOfType<GuangBoListener>();
+        setGuangBoListener(FindObjectOfType<GuangBoListener>());
+        guangBoController = FindObjectOfType<GuangBoController>();
+        storyController = FindObjectOfType<StoryController>();
+        bss = new BlackSignStory();
+        this.setName(SystemConstant.P6_NAME);
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        playerName = SystemConstant.P6_NAME;
         int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
+        setDistance(0);
         setCurrentRoom(roomXYZ);
+        setCrazyFlag(false);
+
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(roomXYZ).setPenable(this.getName(), true);
-        abilityInfo = new int[] { 7,4,6,7};
+        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+        setAbilityInfo(new int[] { 7, 4, 6, 7 });
 
-        maxAbilityInfo = new int[] { 7, 4, 6, 7 };
-        this.deadFlag = false;
-        this.actionPointrolled = false;
-        this.waitFlag = true;
-       
-        this.bag = new Bag();
+        setMaxAbilityInfo(new int[] { 7, 4, 6, 7 });
+        setActionPointrolled(false);
+        setIsDead(false);
 
+        setBag(new Bag());
 
-      
-        crazyFlag = false;
+        this.waitPlan = false;
+
+        this.setDesc("外乡人.");
+        this.waitPlan = false;
+
+        this.setClickMessage(new string[] { "我就是来旅游的。" });
     }
 
     // Update is called once per frame
     void Update()
     {
-		if (getAbilityInfo()[0] <=0 || getAbilityInfo()[1] <=0  ||
-			getAbilityInfo()[2] <=0 || getAbilityInfo()[3] <=0  
-		) {
-            this.deadFlag = true;
+        if (getAbilityInfo()[0] <= 0 || getAbilityInfo()[1] <= 0 ||
+            getAbilityInfo()[2] <= 0 || getAbilityInfo()[3] <= 0
+        )
+        {
+            Debug.Log(this.getName() + " 已经死亡。。。");
+            setIsDead(true);
         }
         if (getAbilityInfo()[3] <= 3)
         {
-            crazyFlag = true;
+            setCrazyFlag(true);
+        }
+        if (!isRoundOver())
+        {
+
+            if (scriptEnd && !isWaitPlayer())
+            {
+                this.endRound();
+            }
         }
     }
 
-    private bool crazyFlag;
 
-    public bool isCrazy()
-    {
-        return crazyFlag;
-    }
 
-    public void defaultAction()
+    void OnMouseDown()
     {
 
-    }
-
-    public void setScriptAction(StoryScript ss)
-    {
-        this.ss = ss;
-    }
-
-    public bool isScriptWin()
-    {
-        return this.ss.getResult();
-    }
-
-    public StoryScript getScriptAciont()
-    {
-        return this.ss;
-    }
-
-    public bool isBoss()
-    {
-        return bossFlag;
-    }
-
-    public void setBoss(bool bossFlag)
-    {
-        this.bossFlag = bossFlag;
-    }
-
-    public int[] getMaxAbilityInfo()
-    {
-        return maxAbilityInfo;
-    }
-
-    public Bag getBag()
-    {
-        return this.bag;
-    }
-
-	private int diceNum;
-
-	public void setDiceNumberBuffer(int number){
-		this.diceNum = number;
-	}
-
-	public int getDiceNumberBuffer() {
-		int tmp = this.diceNum;
-		this.diceNum = 0;
-		return tmp;
-	}
-
-	private int diceValue;
-
-	public void setDiceValueBuffer(int value) {
-		this.diceValue = value;
-	}
-
-	public int getDiceValueBuffer(){
-
-		int tmp = this.diceValue;
-		this.diceValue = 0;
-		return tmp;
-	}
-
-	private int damge =1;
-
-	public void setDamgeBuffer (int damge) {
-	
-		this.damge = damge;
-	}
-
-	public int getDamgeBuffer () {
-
-		int tmp = this.damge;
-		this.damge = 1;
-		return tmp;
-	}
-
-	void OnMouseDown ()
-	{
-
-		if(!SystemUtil.IsTouchedUI()) {
-
-			string[] co = new string[] { "我是谁", "我从哪里来","我要到哪里去" };
-            // duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
-            charaInfoManager.showCharaInfoMenu(this, co);
-
+        if (!SystemUtil.IsTouchedUI())
+        {
+          //  Debug.Log("click 1");
+            charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+        }
+        else
+        {
+            Debug.Log("click ui");
         }
 
-	}
-
-    public string getLiHuiURL() {
-        return "lihui/ren_wu_1";
     }
 
-   
-    public void sendMessageToPlayer(string[] message)
-    {
 
-        
-        guangBoListener.insert(this, message);
-
-    }
-
-    private bool isFollowGuangBoActionFlag;
-
-    public bool isFollowGuangBoAction()
-    {
-        return isFollowGuangBoActionFlag;
-    }
-
-    public void setFollowGuangBoAction(bool flag)
-    {
-        this.isFollowGuangBoActionFlag = flag;
-    }
-
-    private GuangBoAction guangBoAction;
-
-    public void setGuangBoAction(GuangBoAction gb)
-    {
-        this.guangBoAction = gb;
-    }
-
-    public List<string> getTargetChara()
-    {
-        return this.targetChara;
-    }
-
-    public bool checkItem(string itemCode)
-    {
-        return this.getBag().checkItem(itemCode);
-    }
-
-    private string desc;
-
-    public void setDesc(string desc)
-    {
-        this.desc = desc;
-    }
-
-    public string getDesc()
-    {
-        return this.desc;
-    }
-    private bool locked;
-
-    public void checkTargetRoomLocked(string roomType)
-    {
-        locked = false;
-    }
-
-    public void setTargetRoomLocked(bool roomType)
-    {
-        locked = false;
-    }
-
-    public bool isTargetRoomLocked()
-    {
-        return this.locked;
-    }
 }

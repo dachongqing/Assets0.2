@@ -12,9 +12,17 @@ public class EventConstant  {
 
     public const string DOWN_EVENT = "Down"; //下落事件
 
+    public const string SANCHECK_EVENT = "SanCheck"; //神志检查事件
+
     public const string LEAVE_EVENT_SAFE = "Leave_10001";
 
     public const string LEAVE_EVENT_BAD = "Leave_10002";
 
     public const string LEAVE_EVENT_SHIT = "Leave_10003";
+
+    public const string SANCHECK_EVENT_SAFE = "SanCheck_10001";
+
+    public const string SANCHECK_EVENT_BAD = "SanCheck_10002";
+
+    public const string SANCHECK_EVENT_SHIT = "SanCheck_10003";
 }

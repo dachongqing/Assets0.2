@@ -8,6 +8,8 @@ public class EventController : MonoBehaviour
     
     private bool leaveExecuted;
 
+    private bool sanCheckExecuted;
+
     public MessageUI messageUI;
 
     public RollDiceUIManager uiManager;
@@ -39,6 +41,7 @@ public class EventController : MonoBehaviour
                 this.door = door;
                 phase = 1;
                 messageUI.getResult().setDone(false);
+                showMessageUi(eventI.getEventBeginInfo(), eventI.getSelectItem());
 
 
 
@@ -80,12 +83,30 @@ public class EventController : MonoBehaviour
 
 	public bool excuteEnterRoomEvent (RoomInterface ri, Character chara)
 	{
-		return false;
+        eventI = ri.getRoomEvent(EventConstant.SANCHECK_EVENT);
+        if (eventI != null) {
+            return excuteSanCheckEvent(eventI, chara);
+        }
+        return true;
 	}
 
-	public void showMessageUi (string message, Dictionary<string,string> selectItem)
+    public bool excuteSanCheckEvent(EventInterface eventI, Character chara)
+    {
+        this.eventI = eventI;
+        if(this.eventI != null)
+        {
+            sanCheckExecuted = false;          
+            this.chara = chara;
+            phase = 1;
+            messageUI.getResult().setDone(false);
+            showMessageUi(eventI.getEventBeginInfo(), eventI.getSelectItem());
+        }
+        return true;
+    }
+
+    public void showMessageUi (string[] message, Dictionary<string,string> selectItem)
 	{
-        messageUI.ShowMessge(message,1);
+        messageUI.showMessges(message);
 
     }
 
@@ -102,12 +123,7 @@ public class EventController : MonoBehaviour
         if (!leaveExecuted) {
 
 		
-            if (phase == 1 && !messageUI.getResult().getDone())
-            {
-                Debug.Log("phase =1 and " + messageUI.getResult().getDone());
-              
-                showMessageUi(eventI.getEventBeginInfo(), eventI.getSelectItem());
-            } else if(phase == 1 && messageUI.getResult().getDone())
+             if(phase == 1 && messageUI.getResult().getDone())
             {
                 Debug.Log("phase =1 and " + messageUI.getResult().getDone());
                 phase = 2;
@@ -117,15 +133,12 @@ public class EventController : MonoBehaviour
             if (phase == 2 && !uiManager.getResult().getDone() && messageUI.isClosed())
             {
                 Debug.Log("wait mesui end");
-				RollDiceParam param = new RollDiceParam(chara.getAbilityInfo()[1] +chara.getDiceNumberBuffer());
-                uiManager.setRollDiceParam(param);
-                uiManager.showRollDice();
-               
-            } else if (phase == 2 && uiManager.getResult().getDone()) {
-				rollVaue = uiManager.getResult().getResult() +chara.getDiceValueBuffer();
-               // uiManager.closeRollPlane();
+				RollDiceParam param = new RollDiceParam(chara.getAbilityInfo()[1] +chara.getDiceNumberBuffer());            
+                rollVaue = uiManager.showRollDiceImmediately(param);
                 phase = 3;
-            }
+              
+               
+            } 
            
             if (phase == 3 && !uiManager.isClosedPlane()) {
                 result = eventI.excute(chara, messageUI.getResult().getResult(), rollVaue);
@@ -138,6 +151,45 @@ public class EventController : MonoBehaviour
             {
                 this.door.playerOpenDoorResult(result.getStatus());
                 leaveExecuted = true;
+            }
+        }
+
+        if(!this.sanCheckExecuted)
+        {
+            if (phase == 1 && messageUI.getResult().getDone())
+            {
+                Debug.Log("phase =1 and " + messageUI.getResult().getDone());
+                phase = 2;
+
+            }
+
+            if (phase == 2 && !uiManager.getResult().getDone() && messageUI.isClosed())
+            {
+                Debug.Log("wait mesui end");
+                RollDiceParam param = new RollDiceParam(chara.getAbilityInfo()[3] + chara.getDiceNumberBuffer());
+                rollVaue = uiManager.showRollDiceImmediately(param);
+                phase = 3;
+
+
+            }
+
+            if (phase == 3 && !uiManager.isClosedPlane())
+            {
+                result = eventI.excute(chara, messageUI.getResult().getResult(), rollVaue);
+                Debug.Log("event result is " + result);
+                showMessageUi(eventI.getEventEndInfo(result.getResultCode()), null);
+                phase = 4;
+            }
+
+            else if (phase == 4 && messageUI.getResult().getDone())
+            {
+                if(result.getResultCode() == EventConstant.SANCHECK_EVENT_BAD)
+                {
+                    RollDiceParam param = new RollDiceParam(1);
+                    rollVaue = uiManager.showRollDiceImmediately(param);
+                    chara.getAbilityInfo()[3] = chara.getAbilityInfo()[3] - rollVaue;
+                }
+                sanCheckExecuted = true;
             }
         }
     }

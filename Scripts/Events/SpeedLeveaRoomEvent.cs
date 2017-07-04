@@ -6,9 +6,8 @@ using UnityEngine;
 public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
 {
 
-    public String eventBeginInfo;
-    public String eventEndInfo;
-
+    private String[] eventBeginInfo; 
+    private Dictionary<string, string[]> endInfoMap;
 
    
     private int minSpeedPoint;
@@ -49,10 +48,7 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
 			Debug.Log ("事件判定 你的结果为 "+dicePoint);
 
         }
-        else {
-			
-				
-		
+        else {	
 			int speed = character.getAbilityInfo()[1] + character.getDiceNumberBuffer();
 
 				dicePoint = diceRoll.calculateDice(speed);
@@ -86,30 +82,18 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
         throw new NotImplementedException();
     }
 
-    public string getEventBeginInfo()
+    public string[] getEventBeginInfo()
 
     {
-        eventBeginInfo = "你约到了一个人要跟你谈心， 看看 你速度能否跟上他";
+        //eventBeginInfo = "你约到了一个人要跟你谈心， 看看 你速度能否跟上他";
         return eventBeginInfo;
     }
 
-    public string getEventEndInfo(string resultCode)
+    public string[] getEventEndInfo(string resultCode)
     {
         Debug.Log("resultCode " + resultCode);
-        if (resultCode == EventConstant.LEAVE_EVENT_SAFE) {
-            eventEndInfo = "太好了， 你安全的离开了房间。";
-        }
-
-        if (resultCode == EventConstant.LEAVE_EVENT_BAD) {
-            eventEndInfo = "很遗憾， 你没能离开房间。";
-
-        }
-        if (resultCode == EventConstant.LEAVE_EVENT_SHIT)
-        {
-            eventEndInfo = "很遗憾， 你没能离开房间，而且受到了伤害。";
-
-        }
-        return eventEndInfo;
+        
+        return endInfoMap[resultCode];
     }
 
    
@@ -122,5 +106,15 @@ public class SpeedLeveaRoomEvent : MonoBehaviour, EventInterface
     public string getEventType()
     {
         return eventType;
+    }
+
+    public void setEventBeginInfo(string[] infos)
+    {
+        this.eventBeginInfo = infos;
+    }
+
+    public void setEventEndInfo(Dictionary<string, string[]> endMap)
+    {
+        this.endInfoMap = endMap;
     }
 }

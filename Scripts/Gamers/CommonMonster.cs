@@ -380,4 +380,14 @@ public class CommonMonster : MonoBehaviour,Monsters {
     {
         
     }
+
+    public string getDeitalPic()
+    {
+        return null;
+    }
+
+    public string getProfilePic()
+    {
+        return null;
+    }
 }

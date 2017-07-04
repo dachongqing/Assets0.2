@@ -78,4 +78,8 @@ public interface Character
 
     bool isCrazy();
 
+    string getDeitalPic();
+
+    string getProfilePic();
+
 }

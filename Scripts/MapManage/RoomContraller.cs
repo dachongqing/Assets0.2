@@ -112,6 +112,12 @@ public class RoomContraller : MonoBehaviour
     private void genRoomEvent()
     {
         EventInterface ei = new SpeedLeveaRoomEvent();
+        ei.setEventBeginInfo(new string[] { "11111", "2222", "3333" });
+        Dictionary<string, string[]> map = new Dictionary<string, string[]>();
+        map.Add(EventConstant.LEAVE_EVENT_SAFE, new string[] { "ccc", "cc", "ccc" });
+        map.Add(EventConstant.LEAVE_EVENT_BAD, new string[] { "qqqz", "qqq", "qqqq" });
+        map.Add(EventConstant.LEAVE_EVENT_SHIT, new string[] { "www", "www", "ww" });
+        ei.setEventEndInfo(map);
         events.Add(ei);
 
     }
@@ -134,9 +140,10 @@ public class RoomContraller : MonoBehaviour
 
     private void setRoomEvents(RoomInterface room)
     {
-
+        /**
+         * 
         //只有30%的概率房间会生成事件
-        if (6 == random.Next(0, 3))
+        if (6 == random.Next(0, 1))
         {
 
             //判定房间是处于什么位置 楼上 地面 楼下， 不能出现 有冲突的事件， 比如楼下不能出现掉落事件
@@ -157,7 +164,7 @@ public class RoomContraller : MonoBehaviour
                 //地下事件
             }
         }
-
+        */
     }
 
     private void setRoomStory(RoomInterface room)
@@ -228,7 +235,7 @@ public class RoomContraller : MonoBehaviour
 
             //随机生成事件
 
-            setRoomEvents(ri);
+            //setRoomEvents(ri);
 
             setRoomStory(ri);
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DuihuaClickManager : MonoBehaviour, IPointerClickHandler
+public class DuihuaClickManager : MonoBehaviour, IPointerDownHandler
 {
 
     public DuiHuaUImanager duiHuaUImanager;
@@ -20,7 +20,7 @@ public class DuihuaClickManager : MonoBehaviour, IPointerClickHandler
 	}
 
   //  int clickCount;
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
 
         duiHuaUImanager.getNextContent(clickCount);
@@ -29,6 +29,10 @@ public class DuihuaClickManager : MonoBehaviour, IPointerClickHandler
 
     public void startDuihua(int i ) {
         clickCount = i;
+    }
+
+    public void clear() {
+        this.clickCount = 0;
     }
 
 }

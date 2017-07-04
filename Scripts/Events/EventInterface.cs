@@ -4,7 +4,9 @@ using UnityEngine;
 
 public interface EventInterface  {
 
-    string getEventBeginInfo();
+    string[] getEventBeginInfo();
+
+    void setEventBeginInfo(string[] infos);
        
     string getEventType();
 
@@ -14,7 +16,9 @@ public interface EventInterface  {
 
     Dictionary<string,string> getSelectItem();
 
-    string getEventEndInfo(string resultCode);
+    string[] getEventEndInfo(string resultCode);
+
+    void setEventEndInfo(Dictionary<string, string[]> endMap);
 
 
 }

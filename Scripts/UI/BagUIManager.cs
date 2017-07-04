@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,23 @@ public class BagUIManager : MonoBehaviour {
     private RoundController roundController;
 
     private Character usedChara;
+
+    private Character enemy;
+
+    private Character player;
+
+    private BattleMenuUI battleMenuUI;
+
+
+
+    public void showBagItemUI(Character chara, Character enemy, BattleMenuUI battleMenuUI)
+    {
+        this.enemy = enemy;
+        this.battleMenuUI = battleMenuUI;
+        this.player = chara;
+        showBagItemUI();
+    }
+
     private bool usedforNPC;
 
     public void showBagItemUI(Character chara)
@@ -79,6 +97,12 @@ public class BagUIManager : MonoBehaviour {
 
     public void closeBagItemUI()
     {
+        if (battleMenuUI != null ) {
+            Debug.Log("player 1" + player);
+            Debug.Log("enemy 1" + enemy);
+            battleMenuUI.showBattleUI(player, enemy, battleMenuUI.isFighter);
+            battleMenuUI = null;
+        }
         BagItemMenuUI.SetActive(false);
         BagItemMenuUI.transform.localPosition = hidePos;
         selectItem = null;

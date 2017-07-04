@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class SpeedfallRoomEvent : MonoBehaviour , EventInterface
 {
-    public String eventBeginInfo;
+    public String[] eventBeginInfo;
 
-    public String eventEndInfo;
+    public Dictionary<string, String[]> endInfoMap;
 
     private int minSpeedPoint;
 
@@ -61,24 +61,16 @@ public class SpeedfallRoomEvent : MonoBehaviour , EventInterface
         throw new NotImplementedException();
     }
 
-    public string getEventBeginInfo()
+    public string[] getEventBeginInfo()
     {
         return eventBeginInfo;
     }
 
-    public string getEventEndInfo(string resultCode)
+    public string[] getEventEndInfo(string resultCode)
     {
 
-        if (resultCode == EventConstant.LEAVE_EVENT_SAFE)
-        {
-            eventEndInfo = "太好了， 你安全的通过了房间。";
-        }
-
-        if (resultCode == EventConstant.LEAVE_EVENT_BAD)
-        {
-            eventEndInfo = "很遗憾， 你没能通过，下落到另一个房间，而且受到了伤害。";
-        }
-        return eventEndInfo;
+       
+        return endInfoMap[resultCode];
     }
 
 
@@ -91,5 +83,15 @@ public class SpeedfallRoomEvent : MonoBehaviour , EventInterface
     public string getEventType()
     {
         return eventType;
+    }
+
+    public void setEventBeginInfo(string[] infos)
+    {
+        this.eventBeginInfo = infos;
+    }
+
+    public void setEventEndInfo(Dictionary<string, string[]> endMap)
+    {
+        this.endInfoMap = endMap;
     }
 }

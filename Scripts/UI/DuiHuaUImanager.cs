@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class DuiHuaUImanager : MonoBehaviour
 { 
 
-	private Vector3 showPos = new Vector3(69, -193, 0);
+	private Vector3 showPos = new Vector3(69, -163, 0);
 	private Vector3 hidePos = new Vector3(69, 1198, 0);
 
 	//对话界面
@@ -21,14 +21,15 @@ public class DuiHuaUImanager : MonoBehaviour
 
     private DuihuaClickManager duihuaClickManager;
 
-    public void showDuiHua(string url,string[] content) {
-		UIduihua.SetActive (true);
+    public void showDuiHua(string url,string[] content, int begin) {
+        //Debug.Log("click 3");
+        UIduihua.SetActive (true);
 		UIduihua.transform.localPosition = showPos;
 		Sprite s = 	Resources.Load (url, typeof(Sprite)) as Sprite;
 		this.content = content;
         lihui.overrideSprite = s;
         duihua.text = content[0];
-        duihuaClickManager.startDuihua(1);
+        duihuaClickManager.startDuihua(begin);
         duiHuaEndFlag = false;
 
 
@@ -73,13 +74,15 @@ public class DuiHuaUImanager : MonoBehaviour
 
     public void getNextContent(int clickCount) {
 		if (clickCount >= this.content.Length) {
-			UIduihua.SetActive (false);
+           // Debug.Log("clickCount   " + clickCount);
+            UIduihua.SetActive (false);
 			UIduihua.transform.localPosition = hidePos;
             duihua.text = "";
             duiHuaEndFlag = true;
+            duihuaClickManager.clear();
           //  return null;
         } else {
-            Debug.Log("clickCount   " + clickCount);
+           // Debug.Log("clickCount   " + clickCount);
 			duihua.text = content[clickCount];
 			clickCount++;
     	}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class RollDiceUIManager : MonoBehaviour ,IPointerClickHandler
 {
@@ -42,6 +43,26 @@ public class RollDiceUIManager : MonoBehaviour ,IPointerClickHandler
     private RollDiceResult rollDiceRs = new RollDiceResult();
 
     private RollDiceParam para;
+
+    public int showRollDiceImmediately(RollDiceParam para)
+    {
+        UIrollPlane.SetActive(true);
+        UIrollPlane.transform.localPosition = showPos;
+        int res = 0;
+        if (para.getDiceType() == "D2")
+        {
+            res = diceRoll.calculateDice(para.getDiceNum(), 0);
+        }
+        else
+        {
+            res = diceRoll.calculateDice(0, para.getDiceNum());
+        }       
+        displayDices(para.getDiceNum(), 0);       
+        StartCoroutine(ChangeDicePicture(0.5f));
+       
+        StartCoroutine(DelayColseUI(1.5f));
+        return res;
+    }
 
     public void setRollDiceParam(RollDiceParam para) {
         this.para = para;
@@ -154,7 +175,7 @@ public class RollDiceUIManager : MonoBehaviour ,IPointerClickHandler
     }
     */
 
-    /*
+    
     IEnumerator DelayColseUI(float ti)
     {
         yield return new WaitForSeconds(ti);
@@ -171,7 +192,7 @@ public class RollDiceUIManager : MonoBehaviour ,IPointerClickHandler
 
         closeRollPlane();
     }
-    */
+    
     public RollDiceResult getResult() {
        
         return this.rollDiceRs;

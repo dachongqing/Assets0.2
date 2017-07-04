@@ -106,7 +106,7 @@ abstract public class CommonUser : MonoBehaviour , NPC
         this.deadFlag = deadFlag;
     }
 
-    public bool isPlayer()
+    public virtual bool isPlayer()
     {
         return false;
     }
@@ -368,6 +368,16 @@ abstract public class CommonUser : MonoBehaviour , NPC
     void Start()
     {
        
+    }
+
+    public string getDeitalPic()
+    {
+        return null;
+    }
+
+    public string getProfilePic()
+    {
+        return null;
     }
 
 }

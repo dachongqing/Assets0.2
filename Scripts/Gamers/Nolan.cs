@@ -29,7 +29,15 @@ public class Nolan :  CommonUser
         return "lihui/ren_wu_1";
     }
 
+    public new string getDeitalPic()
+    {
+        return "detail/kate_detail01";
+    }
 
+    public new string getProfilePic()
+    {
+        return "detail/9";
+    }
 
     public new void defaultAction()
     {

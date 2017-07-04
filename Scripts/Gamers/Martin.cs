@@ -30,7 +30,15 @@ public class Martin : CommonUser {
         return "lihui/ren_wu_2";
     }
 
+    public new string getDeitalPic()
+    {
+        return "detail/kate_detail01";
+    }
 
+    public new string getProfilePic()
+    {
+        return "detail/9";
+    }
 
     public new void defaultAction()
     {
@@ -95,13 +103,13 @@ public class Martin : CommonUser {
         this.setName(SystemConstant.P5_NAME);
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
-        setDistance(-1.5f);
+        setDistance(-2.0f);
         setCurrentRoom(roomXYZ);
         setCrazyFlag(false);
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
-        setAbilityInfo(new int[] { 6, 4, 8, 4 });
+        setAbilityInfo(new int[] { 6, 4, 8, 3 });
 
         setMaxAbilityInfo(new int[] { 6, 4, 8, 4 });
         setActionPointrolled(false);
@@ -146,10 +154,11 @@ public class Martin : CommonUser {
 
         if (!SystemUtil.IsTouchedUI())
         {
-
-
+            
             // duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
-            charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+            
+                charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+         
         }
         else
         {

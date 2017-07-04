@@ -19,6 +19,11 @@ public class CharaInfoManager : MonoBehaviour {
 
     public Text NPCDesc;
 
+    public GameObject talkButton;
+
+    public GameObject useButton;
+
+    public GameObject battleButton;
 
 
     private BattleController battleController;
@@ -28,6 +33,8 @@ public class CharaInfoManager : MonoBehaviour {
     private DuiHuaUImanager duiHuaUImanager;
 
     private BagUIManager bagUIManager;
+
+    private BattleMenuUI battleMenuUI;
 
     private Character chara;
 
@@ -41,7 +48,8 @@ public class CharaInfoManager : MonoBehaviour {
 
     public void showCharaInfoMenu(Character chara, string[] content) {
         if (chara.isPlayer()) {
-            duiHuaUImanager.showDuiHua(chara.getLiHuiURL(), content);
+           // Debug.Log("click 2");
+            duiHuaUImanager.showDuiHua(chara.getLiHuiURL(), content,0);
         } else {
 
             this.chara = chara;
@@ -60,6 +68,18 @@ public class CharaInfoManager : MonoBehaviour {
             NPCName.text = this.chara.getName();
 
             NPCDesc.text = this.chara.getDesc();
+
+            if (chara.getAbilityInfo()[3] <= 3)
+            {
+                this.talkButton.SetActive(false);
+                this.useButton.SetActive(false);
+                this.battleButton.SetActive(true);
+            } else
+            {
+                this.talkButton.SetActive(true);
+                this.useButton.SetActive(true);
+                this.battleButton.SetActive(false);
+            }
         }
     }
 
@@ -67,13 +87,14 @@ public class CharaInfoManager : MonoBehaviour {
     public void clickDuiHua() {
         UIInfoMenu.SetActive(false);
         UIInfoMenu.transform.localPosition = hidePos;
-        duiHuaUImanager.showDuiHua(chara.getLiHuiURL(), content);
+        duiHuaUImanager.showDuiHua(chara.getLiHuiURL(), content,1);
     }
 
     public void clickBattle() {
         UIInfoMenu.SetActive(false);
         UIInfoMenu.transform.localPosition = hidePos;
-        battleController.fighte(roundController.getPlayerChara(), chara);
+        battleMenuUI.showBattleUI(roundController.getPlayerChara(), chara, true);
+        //battleController.fighte(roundController.getPlayerChara(), chara);
     }
 
     public void clickUseItem()
@@ -95,6 +116,7 @@ public class CharaInfoManager : MonoBehaviour {
         roundController = FindObjectOfType<RoundController>();
         battleController = FindObjectOfType<BattleController>();
         bagUIManager = FindObjectOfType<BagUIManager>();
+        battleMenuUI = FindObjectOfType<BattleMenuUI>();
     }
 	
 	// Update is called once per frame

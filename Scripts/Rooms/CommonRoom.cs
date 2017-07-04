@@ -179,5 +179,15 @@ public class CommonRoom : MonoBehaviour, RoomInterface
     {
         return true;
     }
+
+    public virtual string[] getEventBeginInfo()
+    {
+       return null;
+    }
+
+    public virtual Dictionary<string, string[]> getEventEndInfoMap()
+    {
+        return null;
+    }
 }
 

@@ -62,9 +62,11 @@ public interface RoomInterface
     GameObject getSouthDoor();
     GameObject getEastDoor();
     GameObject getWestDoor();
-
     bool isLock();
-
     bool checkOpen(Character chara);
+
+    string[] getEventBeginInfo();
+    Dictionary<string, string[]> getEventEndInfoMap();
+
 
 }

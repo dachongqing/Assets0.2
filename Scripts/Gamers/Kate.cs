@@ -350,12 +350,9 @@ public class Kate : CommonUser
 
 
             // duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
-            if (this.isCrazy() || this.isBoss()) {
-                battleController.fighte(this,roundController.getPlayerChara());
-            } else
-            {
+          
                 charaInfoManager.showCharaInfoMenu(this, getClickMessage());
-            }
+        
         }
         else
         {
@@ -364,7 +361,15 @@ public class Kate : CommonUser
 
     }
 
-   
+    public new string getDeitalPic()
+    {
+        return "detail/kate_detail01";
+    }
 
-    
+    public new string getProfilePic()
+    {
+        return "detail/9";
+    }
+
+
 }

@@ -29,6 +29,10 @@ public class H_tridOperationRoom : CommonRoom
     void Start()
     {
         setLock(true);
+        EventInterface ei = new SanCheckRoomEvent(7,7);
+        ei.setEventBeginInfo(this.getEventBeginInfo());
+        ei.setEventEndInfo(this.getEventEndInfoMap());
+        this.setRoomEvent(ei);
     }
     
 
@@ -67,4 +71,25 @@ public class H_tridOperationRoom : CommonRoom
             return true;
         }
     }
+
+    public override string[] getEventBeginInfo()
+    {
+
+        return new string[] { "当你打开门一股腐烂的气味马上传入你的鼻子里， 让你感到一阵恶心。。。"
+        ,"你注意到手术台上放着一具不知道放了多久的尸体。","你需要投一个神志检测。"};
+    }
+
+    public override Dictionary<string, string[]> getEventEndInfoMap()
+    {
+        Dictionary<string, string[]> map = new Dictionary<string, string[]>();
+        string[] good = new string[] { "你遇到太多这样的画面，所以你只是感到一阵恶心。"
+        };
+        string[] bad = new string[] { "你的眼睛一直停留在尸体上，那个手臂上的脓包让你感觉一阵寒意突然袭来"
+            ,"你需要投掷一个1D2的神志扣除。"
+        };
+        map.Add(EventConstant.LEAVE_EVENT_SAFE, good);
+        map.Add(EventConstant.LEAVE_EVENT_BAD, good);
+        return map;
+    }
+    
 }
