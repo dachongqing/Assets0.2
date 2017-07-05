@@ -146,9 +146,9 @@ public class Nolan :  CommonUser
       
         getTargetChara().Add(SystemConstant.P1_NAME);
         this.setDesc("一身脏兮兮的白大褂，第一感觉是个跳大神的庸医。");
+        this.setClickMessage(new string[] { "", "你就是犯人。" });
 
-      
-        
+
     }
 
     // Update is called once per frame
@@ -188,9 +188,9 @@ public class Nolan :  CommonUser
         if (!SystemUtil.IsTouchedUI())
         {
 
-            string[] co = new string[] { "你感觉到绝望了吗", "老实讲，我要带你飞了" };
+            //string[] co = new string[] { "你感觉到绝望了吗", "老实讲，我要带你飞了" };
            // duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
-            charaInfoManager.showCharaInfoMenu(this, co);
+            charaInfoManager.showCharaInfoMenu(this, getClickMessage());
         }
         else {
             Debug.Log("click ui");

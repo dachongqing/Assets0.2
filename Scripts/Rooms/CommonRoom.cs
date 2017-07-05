@@ -103,7 +103,15 @@ public class CommonRoom : MonoBehaviour, RoomInterface
 
         if (eventsList.Count != 0)
         {
-            return eventsList[eventType];
+            Debug.Log(eventsList.Keys);
+            if (eventsList.ContainsKey(eventType))
+            {
+                return eventsList[eventType];
+
+            } else
+            {
+                return null;
+            }
 
         }
         else
@@ -114,7 +122,7 @@ public class CommonRoom : MonoBehaviour, RoomInterface
 
     public void setRoomEvent(EventInterface ei)
     {
-        Debug.Log("set event " + ei);
+        Debug.Log("set event " + ei.getEventType());
         eventsList.Add(ei.getEventType(), ei);
 
     }

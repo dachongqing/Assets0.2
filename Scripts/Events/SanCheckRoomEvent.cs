@@ -66,6 +66,7 @@ public class SanCheckRoomEvent : EventInterface
 
     public string[] getEventEndInfo(string resultCode)
     {
+        Debug.Log("resultCode " + resultCode + this.endInfoMap.Count);
         return this.endInfoMap[resultCode];
     }
 
@@ -76,7 +77,7 @@ public class SanCheckRoomEvent : EventInterface
 
     public Dictionary<string, string> getSelectItem()
     {
-        throw new NotImplementedException();
+        return null;
     }
 
     public void setEventBeginInfo(string[] infos)

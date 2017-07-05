@@ -41,9 +41,9 @@ public class RoomContraller : MonoBehaviour
     {
         //这个队列的长度，限制了房间最大数量
         groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("UpStairEnterRoom");
         groundRoomType.Enqueue("DownStairEnterRoom");
-        groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");

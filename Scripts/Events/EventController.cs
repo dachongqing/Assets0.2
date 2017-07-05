@@ -85,8 +85,10 @@ public class EventController : MonoBehaviour
 	{
         eventI = ri.getRoomEvent(EventConstant.SANCHECK_EVENT);
         if (eventI != null) {
+            Debug.Log("san check");
             return excuteSanCheckEvent(eventI, chara);
         }
+        Debug.Log(" no san check");
         return true;
 	}
 
@@ -95,11 +97,23 @@ public class EventController : MonoBehaviour
         this.eventI = eventI;
         if(this.eventI != null)
         {
-            sanCheckExecuted = false;          
-            this.chara = chara;
-            phase = 1;
-            messageUI.getResult().setDone(false);
-            showMessageUi(eventI.getEventBeginInfo(), eventI.getSelectItem());
+            if(chara.isPlayer())
+            {
+                sanCheckExecuted = false;          
+                this.chara = chara;
+                phase = 1;
+                messageUI.getResult().setDone(false);
+                showMessageUi(eventI.getEventBeginInfo(), eventI.getSelectItem());
+            } else
+            {
+                result = eventI.excute(chara, messageUI.getResult().getResult(), 0);
+                if (result.getResultCode() == EventConstant.SANCHECK_EVENT_BAD)
+                {
+                    RollDiceParam param = new RollDiceParam(1);
+                    rollVaue = uiManager.showRollDiceImmediately(param);
+                    chara.getAbilityInfo()[3] = chara.getAbilityInfo()[3] - rollVaue;
+                }
+            }
         }
         return true;
     }

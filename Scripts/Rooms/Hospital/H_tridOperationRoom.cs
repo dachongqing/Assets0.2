@@ -50,7 +50,7 @@ public class H_tridOperationRoom : CommonRoom
                     setLock(false);
                     return true;
                 }
-                else if (npc.getName() == SystemConstant.P1_NAME)
+                else if (npc.getName() == SystemConstant.P6_NAME)
                 {
                     setLock(false);
                     return true;
@@ -87,8 +87,8 @@ public class H_tridOperationRoom : CommonRoom
         string[] bad = new string[] { "你的眼睛一直停留在尸体上，那个手臂上的脓包让你感觉一阵寒意突然袭来"
             ,"你需要投掷一个1D2的神志扣除。"
         };
-        map.Add(EventConstant.LEAVE_EVENT_SAFE, good);
-        map.Add(EventConstant.LEAVE_EVENT_BAD, good);
+        map.Add(EventConstant.SANCHECK_EVENT_SAFE, good);
+        map.Add(EventConstant.SANCHECK_EVENT_BAD, bad);
         return map;
     }
     
