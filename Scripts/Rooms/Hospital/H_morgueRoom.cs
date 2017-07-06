@@ -25,10 +25,17 @@ public class H_morgueRoom : CommonRoom
 		
 	}
 
+    public override string[] getEventBeginInfo()
+    {
+
+        return new string[] { "跟你记忆中的停尸房完全不一样，没有大柜子一样的装置来存放尸体，而是一排排的床位直接摆放着尸体。"
+        ,"你需要投一个神志检测。"};
+    }
+
     public override Dictionary<string, string[]> getEventEndInfoMap()
     {
         Dictionary<string, string[]> map = new Dictionary<string, string[]>();
-        string[] good = new string[] { "让你感到惊讶的是停尸房并不是一个大柜子，而是直接放了很多床，每个床上都放了一具尸体。","尸体都是直接暴露在床上，你虽然感受到了恐惧，但是仍然没有逃跑。"
+        string[] good = new string[] { "尸体都是直接暴露在床上，你虽然感受到了恐惧，但是仍然没有逃跑。"
         };
         string[] bad = new string[] { "庞大的房间里摆满了床位，而尸体就直接放在上面，没有任何遮掩","尸体大多数都是被解剖过的，眼前的景象让你感到恐惧，短暂的瞬间你似乎听到了一阵阵莎莎声。"
             ,"你需要投掷一个1D2的神志扣除。"

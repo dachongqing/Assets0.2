@@ -122,6 +122,14 @@ public class Player : CommonUser
         this.waitPlan = false;
 
         this.setClickMessage(new string[] { "我就是来旅游的。" });
+        /*
+        Item item1 = new ItemTask(ItemConstant.ITEM_CODE_SPEC_Y0006
+           , ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME);
+        this.getBag().insertItem(item1);
+        Item item2 = new ItemTask(ItemConstant.ITEM_CODE_SPEC_Y0007
+            , ItemDesConstant.ITEM_CODE_SPEC_Y0007_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0007_DES);
+        this.getBag().insertItem(item2);
+        */
     }
 
     // Update is called once per frame

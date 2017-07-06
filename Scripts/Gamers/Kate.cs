@@ -189,6 +189,8 @@ public class Kate : CommonUser
                             {
                                 this.getBag().insertItem(item);
                                 this.getAbilityInfo()[3] = 1;
+                                //发疯后行动力加强
+                                this.getAbilityInfo()[1] = this.getAbilityInfo()[1] + 3;
                             }
                             else
                             {
@@ -261,10 +263,7 @@ public class Kate : CommonUser
     }
 
 
-
-
-
-
+    
 
     // Use this for initialization
     void Start()
@@ -289,7 +288,7 @@ public class Kate : CommonUser
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
-        setAbilityInfo(new int[] { 8, 1, 6, 7 });
+        setAbilityInfo(new int[] { 8, 3, 6, 7 });
 
         setMaxAbilityInfo(new int[] { 8, 3, 6, 7 });
         setActionPointrolled(false);
@@ -314,6 +313,9 @@ public class Kate : CommonUser
         setTargetChara(new List<string>());
         getTargetChara().Add(SystemConstant.P2_NAME);
         this.setClickMessage(new string[] { "真相只有一个。", "你就是犯人。" });
+
+       // setBoss(true);
+        
     }
 
     // Update is called once per frame
@@ -327,9 +329,7 @@ public class Kate : CommonUser
             setIsDead(true);
         }
         if (getAbilityInfo()[3] <= 3)
-        {
-            //发疯后行动力加强
-            this.getAbilityInfo()[1] = this.getAbilityInfo()[1] + 3;
+        {           
             setCrazyFlag(true);
         }
         if (!isRoundOver())

@@ -7,6 +7,34 @@ public class ItemController : MonoBehaviour {
 
     private MessageUI msg;
 
+    private DuiHuaUImanager duiHuaUImanager;
+
+    public void useItem(Item item, NPC chara, Character forNPCchara, BattleMenuUI battleMenuUI)
+    {
+        Debug.Log("战斗中使用物品");
+        if (item == null)
+        {
+            msg.showMessage("请选择一个物品。");
+        }
+        else
+        {
+            if (item.getType() == ItemConstant.ITEM_TYPE_POTION
+                || item.getType() == ItemConstant.ITEM_TYPE_TOOL)
+            {
+                Debug.Log("对自己使用");
+                this.useItem(item, chara);
+            }        
+            else 
+            {
+                    Debug.Log("对NPC使用任务道具");
+                if (useItemSpec(forNPCchara, item, battleMenuUI))
+                {
+                    chara.getBag().removeItem(item);
+                };
+            }
+        }
+    }
+
     public void useItem(Item item, NPC chara, Character forNPCchara)
     {
 
@@ -35,7 +63,7 @@ public class ItemController : MonoBehaviour {
             }
             else if (item.getType() == ItemConstant.ITEM_TYPE_SPEC)
             {
-                if (useItemSpec(forNPCchara, item))
+                if (useItemSpec(forNPCchara,item,null))
                 {
                     chara.getBag().removeItem(item);
                 };
@@ -62,19 +90,19 @@ public class ItemController : MonoBehaviour {
             }
             else if (item.getType() == ItemConstant.ITEM_TYPE_SPEC)
             {
-                if (useItemSpec(null, item)) {
+                if (useItemSpec(null, item,null)) {
                     chara.getBag().removeItem(item);
                 };
             }
         }
     }
 
-    private bool useItemSpec(Character forNPCchara,Item item)
+    private bool useItemSpec(Character forNPCchara,Item item,BattleMenuUI battleMenuUI)
     {
         if (forNPCchara!=null ) {
             if (forNPCchara.getName() == SystemConstant.P4_NAME)
             {
-                return spItemforP4((NPC)forNPCchara, item);
+                return spItemforP4((NPC)forNPCchara, item, battleMenuUI);
             } else if(forNPCchara.getName() == SystemConstant.MONSTER1_NAME) {
                 return spItemforM1(forNPCchara, item);
             }
@@ -85,7 +113,7 @@ public class ItemController : MonoBehaviour {
             }
         }else
         {
-            msg.showMessage("任务物品无法使用。");
+            msg.showMessage("什么事情都没有发生。");
             return false;
         }
     }
@@ -148,6 +176,7 @@ public class ItemController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         msg = FindObjectOfType<MessageUI>();
+        duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
 
     }
 	
@@ -156,7 +185,8 @@ public class ItemController : MonoBehaviour {
 		
 	}
 
-    private bool spItemforP4(NPC forNPCchara, Item item) {
+    private bool spItemforP4(NPC forNPCchara, Item item, BattleMenuUI battleMenuUI) {
+        Debug.Log("使用任务道具");
         if (forNPCchara.isBoss() && item.getCode() == ItemConstant.ITEM_CODE_SPEC_Y0006)
         {
             int san = forNPCchara.getAbilityInfo()[3];
@@ -168,7 +198,10 @@ public class ItemController : MonoBehaviour {
             {
                 forNPCchara.getAbilityInfo()[3] = san + 2;
             }
-
+            Debug.Log("使用任务道具成功");
+            battleMenuUI.hidenUI(false);
+            duiHuaUImanager.showDuiHua(forNPCchara.getLiHuiURL(), new string[] { "父亲。。父亲的照片。","为什么他会在这里?" }, 1);
+         
             return true;
         }
         else if (forNPCchara.isBoss()
@@ -183,11 +216,14 @@ public class ItemController : MonoBehaviour {
             {
                 forNPCchara.getAbilityInfo()[3] = san + 3;
             }
-
+            Debug.Log("使用任务道具成功");
+            battleMenuUI.hidenUI(false);
+            duiHuaUImanager.showDuiHua(forNPCchara.getLiHuiURL(), new string[] { "医院保密文件？", "难道医生是好人？" }, 1);
             return true;
         }
         else
         {
+            Debug.Log("使用任务道具失败");
             return false;
         }
     }

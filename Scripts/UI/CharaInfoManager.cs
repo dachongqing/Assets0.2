@@ -15,6 +15,11 @@ public class CharaInfoManager : MonoBehaviour {
 
     public Slider NPCSanSlider;
 
+    public Text NPCStrText;
+    public Text NPCSpeText;
+    public Text NPCIntText;
+    public Text NPCSanText;
+
     public Text NPCName;
 
     public Text NPCDesc;
@@ -65,11 +70,16 @@ public class CharaInfoManager : MonoBehaviour {
 
             NPCSanSlider.value = this.chara.getAbilityInfo()[3];
 
+            NPCStrText.text = "力量" + this.chara.getAbilityInfo()[0] + "/" + this.chara.getMaxAbilityInfo()[0];
+            NPCSpeText.text = "速度" + this.chara.getAbilityInfo()[1] + "/" + this.chara.getMaxAbilityInfo()[1];
+            NPCIntText.text = "智力" + this.chara.getAbilityInfo()[2] + "/" + this.chara.getMaxAbilityInfo()[2];
+            NPCSanText.text = "神志" + this.chara.getAbilityInfo()[3] + "/" + this.chara.getMaxAbilityInfo()[3];
+
             NPCName.text = this.chara.getName();
 
             NPCDesc.text = this.chara.getDesc();
 
-            if (chara.getAbilityInfo()[3] <= 3)
+            if (chara.getAbilityInfo()[3] <= 3 || chara.isBoss())
             {
                 this.talkButton.SetActive(false);
                 this.useButton.SetActive(false);

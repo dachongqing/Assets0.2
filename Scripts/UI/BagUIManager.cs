@@ -33,9 +33,7 @@ public class BagUIManager : MonoBehaviour {
     private RoundController roundController;
 
     private Character usedChara;
-
-    private Character enemy;
-
+ 
     private Character player;
 
     private BattleMenuUI battleMenuUI;
@@ -44,7 +42,7 @@ public class BagUIManager : MonoBehaviour {
 
     public void showBagItemUI(Character chara, Character enemy, BattleMenuUI battleMenuUI)
     {
-        this.enemy = enemy;
+        this.usedChara = enemy;
         this.battleMenuUI = battleMenuUI;
         this.player = chara;
         showBagItemUI();
@@ -99,19 +97,27 @@ public class BagUIManager : MonoBehaviour {
     {
         if (battleMenuUI != null ) {
             Debug.Log("player 1" + player);
-            Debug.Log("enemy 1" + enemy);
-            battleMenuUI.showBattleUI(player, enemy, battleMenuUI.isFighter);
-            battleMenuUI = null;
+            Debug.Log("enemy 1" + this.usedChara);
+            if(battleMenuUI.getShowAgain())
+            {
+                 battleMenuUI.showBattleUI(player, this.usedChara, battleMenuUI.isFighter);
+            }
         }
         BagItemMenuUI.SetActive(false);
         BagItemMenuUI.transform.localPosition = hidePos;
         selectItem = null;
+        battleMenuUI = null;
     }
 
     public void useItem() {
         if (usedforNPC && this.usedChara !=null) {
             itemController.useItem(selectItem, 
                 (NPC)roundController.getPlayerChara(), this.usedChara);
+        }
+        else if(battleMenuUI != null)
+        {
+            itemController.useItem(selectItem,
+               (NPC)roundController.getPlayerChara(), this.usedChara, this.battleMenuUI);
         }
         else
         {

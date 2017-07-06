@@ -99,7 +99,7 @@ public class Computer : MonoBehaviour {
         this.listenRoll = false;
         this.phase = 1;
         uiManager = FindObjectOfType<RollDiceUIManager>();
-        item = new ItemPotion(ItemConstant.ITEM_CODE_SPEC_Y0006
+        item = new ItemTask(ItemConstant.ITEM_CODE_SPEC_Y0006
             , ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME);
 
     }

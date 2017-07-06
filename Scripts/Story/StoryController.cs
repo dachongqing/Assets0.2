@@ -13,6 +13,8 @@ public class StoryController : MonoBehaviour
 
     private StoryInterface story;
 
+    private DuiHuaUImanager duiHuaUImanager;
+
 
     public bool checkStoryStartBySPEvnet(StoryInterface story,Character boss, RoundController roundController, RoomInterface room) {
          if (story.checkStoryStart(boss, room, roundController)) {
@@ -78,18 +80,29 @@ public class StoryController : MonoBehaviour
                     Debug.Log("有人胜利了，游戏结束");
                     if (!boss.isPlayer() && boss.isBoss())
                     {
-                        Debug.Log("UI 显示《《 日了狗了，输了啊：" + player.getScriptAciont().getFailureEndInfo());
+                        if (duiHuaUImanager.isDuiHuaEnd())
+                        {
+                           
+                             Debug.Log("UI 显示《《 日了狗了，输了啊：" + player.getScriptAciont().getFailureEndInfo());
+                        }
 
                     }
                     else
                     {
                         if (player.isBoss())
                         {
-                            Debug.Log("UI 显示《《 日了狗了，输了啊：" + player.getScriptAciont().getFailureEndInfo());
+                            if (duiHuaUImanager.isDuiHuaEnd())
+                            {
+                                Debug.Log("UI 显示《《 日了狗了，输了啊：" + player.getScriptAciont().getFailureEndInfo());
+                            }
                         }
                         else
                         {
-                            Debug.Log("UI 显示《《 吊炸天，胜利了：" + boss.getScriptAciont().getWinEndInfo());
+                            if(duiHuaUImanager.isDuiHuaEnd())
+                            {
+                                 Debug.Log("UI 显示《《 吊炸天，胜利了：" + boss.getScriptAciont().getWinEndInfo());
+
+                            }
                         }
                     }
 

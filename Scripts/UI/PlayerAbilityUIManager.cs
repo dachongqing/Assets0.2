@@ -15,6 +15,11 @@ public class PlayerAbilityUIManager : MonoBehaviour {
 
     public Slider sanSlider;
 
+    public Text strText;
+    public Text speText;
+    public Text intText;
+    public Text sanText;
+
     // Use this for initialization
     void Start () {
         player = FindObjectOfType<Player>();
@@ -33,5 +38,9 @@ public class PlayerAbilityUIManager : MonoBehaviour {
 
         sanSlider.value = player.getAbilityInfo()[3];
 
+        strText.text = "力量" + player.getAbilityInfo()[0] + "/" + player.getMaxAbilityInfo()[0];
+        speText.text = "速度" + player.getAbilityInfo()[1] + "/" + player.getMaxAbilityInfo()[1];
+        intText.text = "智力" + player.getAbilityInfo()[2] + "/" + player.getMaxAbilityInfo()[2];
+        sanText.text = "神志" + player.getAbilityInfo()[3] + "/" + player.getMaxAbilityInfo()[3];
     }
 }

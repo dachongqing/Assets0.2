@@ -116,7 +116,7 @@ public class SafeBox : MonoBehaviour {
         this.listenRoll = false;
         this.phase = 1;
         uiManager = FindObjectOfType<RollDiceUIManager>();
-        item = new ItemPotion(ItemConstant.ITEM_CODE_SPEC_Y0007
+        item = new ItemTask(ItemConstant.ITEM_CODE_SPEC_Y0007
             , ItemDesConstant.ITEM_CODE_SPEC_Y0007_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0007_DES);
 
     }

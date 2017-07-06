@@ -29,6 +29,16 @@ public class BattleMenuUI : MonoBehaviour {
 
     public Slider charaStrInfo;
 
+    public Text charaStrText;
+    public Text charaSpeText;
+    public Text charaIntText;
+    public Text charaSanText;
+
+    public Text enemySpeText;
+    public Text enemyStrText;
+    public Text enemySanText;
+    public Text enemyIntText;
+
     public Image charaProfile;
 
     public Text charaNameText;
@@ -65,22 +75,38 @@ public class BattleMenuUI : MonoBehaviour {
     private int diceValue;
     private string resultMessage;
     public bool isFighter;
+    private bool showAgain;
     
+
+    public bool getShowAgain()
+    {
+        return showAgain;
+    }
 
     public void showBag() {
        // battleMenuUI.SetActive(false);
-        battleMenuUI.transform.localPosition = hidePos;
-       
+       // battleMenuUI.transform.localPosition = hidePos;
+        this.hidenUI(true);
         bagUIManager.showBagItemUI(chara, enemy,this);
         
     }
 
+    public void hidenUI(bool showAgain)
+    {
+        StopCoroutine("AutoAction");
+        this.showAgain = showAgain;
+        closeUI();       
+    }
 
     private void closeUI()
     {
         battleMenuUI.SetActive(false);
+        this.battleButton.SetActive(false);
         battleMenuUI.transform.localPosition = hidePos;
-    }
+        remainTime_Text.text = "";
+        charaPoint_Text.text = "";
+        enemyPointText.text = "";
+}
 
     public void rollDice()
     {
@@ -126,6 +152,7 @@ public class BattleMenuUI : MonoBehaviour {
         {
             rollDice();
         }
+        
     }
 
     public void showBattleUI(Character chara, Character enemy, bool isFighter) {
@@ -139,14 +166,11 @@ public class BattleMenuUI : MonoBehaviour {
         } else
         {
             fighte(enemy,chara);
-        }
-        StartCoroutine(AutoAction(10f));
-
-
+        }       
         battleMenuUI.SetActive(true);
-        battleMenuUI.transform.localPosition = showPos;
         this.battleButton.SetActive(true);
         this.useButton.SetActive(true);
+        battleMenuUI.transform.localPosition = showPos;
         Sprite enemyPicSprite = Resources.Load(enemy.getDeitalPic(), typeof(Sprite)) as Sprite;      
         enemyPic.overrideSprite = enemyPicSprite;
         Sprite enemyProfileSprite = Resources.Load(enemy.getProfilePic(), typeof(Sprite)) as Sprite;
@@ -156,7 +180,10 @@ public class BattleMenuUI : MonoBehaviour {
         enemySpeInfo.value = enemy.getAbilityInfo()[1];
         enemyIntInfo.value = enemy.getAbilityInfo()[2];
         enemySanInfo.value = enemy.getAbilityInfo()[3];
-
+        enemyStrText.text = "力量" + enemy.getAbilityInfo()[0] + "/" + enemy.getMaxAbilityInfo()[0];
+        enemySpeText.text = "速度" + enemy.getAbilityInfo()[1] + "/" + enemy.getMaxAbilityInfo()[1];
+        enemyIntText.text = "智力" + enemy.getAbilityInfo()[2] + "/" + enemy.getMaxAbilityInfo()[2];
+        enemySanText.text = "神志" + enemy.getAbilityInfo()[3] + "/" + enemy.getMaxAbilityInfo()[3];
 
         Sprite charaProfileSprite = Resources.Load(chara.getProfilePic(), typeof(Sprite)) as Sprite;
         charaProfile.overrideSprite = charaProfileSprite;
@@ -164,7 +191,12 @@ public class BattleMenuUI : MonoBehaviour {
         charaSpeInfo.value = chara.getAbilityInfo()[1];
         charaIntInfo.value = chara.getAbilityInfo()[2];
         charaSanInfo.value = chara.getAbilityInfo()[3];
+        charaStrText.text = "力量" + chara.getAbilityInfo()[0] + "/" + chara.getMaxAbilityInfo()[0];
+        charaSpeText.text = "速度" + chara.getAbilityInfo()[1] + "/" + chara.getMaxAbilityInfo()[1];
+        charaIntText.text = "智力" + chara.getAbilityInfo()[2] + "/" + chara.getMaxAbilityInfo()[2];
+        charaSanText.text = "神志" + chara.getAbilityInfo()[3] + "/" + chara.getMaxAbilityInfo()[3];
         charaNameText.text = chara.getName();
+        StartCoroutine(AutoAction(10f));
     }
 
 
