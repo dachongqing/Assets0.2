@@ -22,11 +22,11 @@ public class SpeedfallRoomEvent : MonoBehaviour , EventInterface
 	private RollDiceUIManager rollDUIM;
 
     public SpeedfallRoomEvent() {
-        minSpeedPoint = 3;
+        minSpeedPoint = 5;
 
-        maxSpeedPoint = 6;
+        maxSpeedPoint = 8;
 
-        badSpeedPoint = 0;
+        badSpeedPoint = 3;
 
         eventType= EventConstant.DOWN_EVENT;
     }

@@ -35,11 +35,12 @@ public class UpStairOuter : MonoBehaviour, Thing
         RoomInterface upStairBackRoom = roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_UPSTAIR);
         Character chara = roundController.getCurrentRoundChar();
         roomContraller.findRoomByXYZ(chara.getCurrentRoom()).removeChara(chara);
-        this.roomContraller.findMiniRoomByXYZ(chara.getCurrentRoom()).setPenable(this.roundController.getCurrentRoundChar().getName(), false);
+        this.roomContraller.setCharaInMiniMap(chara.getCurrentRoom(),this.roundController.getCurrentRoundChar(), false);
         upStairBackRoom.setChara(chara);
         chara.setCurrentRoom(upStairBackRoom.getXYZ());
         camCtrl.setTargetPos(upStairBackRoom.getXYZ(), RoomConstant.ROOM_Y_GROUND, true);
-        this.roomContraller.findMiniRoomByXYZ(upStairBackRoom.getXYZ()).setPenable(this.roundController.getCurrentRoundChar().getName(), true);
+        this.roomContraller.setCharaInMiniMap(upStairBackRoom.getXYZ(),this.roundController.getCurrentRoundChar(), true);
+       
         // 载入上楼图片结束。。。
     }
 

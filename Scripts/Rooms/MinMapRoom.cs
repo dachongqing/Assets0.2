@@ -17,9 +17,24 @@ public class MinMapRoom : MonoBehaviour {
     public GameObject p5;
     public GameObject p6;
 
+    public GameObject benMonster;
+
+    public GameObject minRoom;
+
     public int[] xyz;
 
+    private bool visit=false;
 
+    public bool isVisited()
+    {
+        return this.visit;
+    }
+
+    public void setVisited()
+    {
+        this.visit = true;
+        minRoom.SetActive(this.visit);
+    }
    
     public void setXYZ(int[] xyz) {
         this.xyz = xyz;

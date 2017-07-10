@@ -108,7 +108,7 @@ public class Martin : CommonUser {
         setCrazyFlag(false);
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
         setAbilityInfo(new int[] { 6, 4, 8, 3 });
 
         setMaxAbilityInfo(new int[] { 6, 4, 8, 4 });

@@ -11,14 +11,14 @@ public class H_surgeryRoom : CommonRoom
         return bookTable;
     }
     
-    public new List<string>  findSomethingNews(string charaName)
+    public new List<string>  findSomethingNews(Character chara)
     {
-        this.getGuangboMessage().Clear();
-        if (charaName == SystemConstant.P4_NAME)
+        this.getClickMessage().Clear();
+        if (chara.getName() == SystemConstant.P4_NAME)
         {
-            this.getGuangboMessage().Add("这间屋子摆放了不少人体模型，好像是个外科室。");
-            this.getGuangboMessage().Add("桌子上有不少的病人就诊资料，我仔细看看。");        
-            return this.getGuangboMessage();
+            this.getClickMessage().Add("这间屋子摆放了不少人体模型，好像是个外科室。");
+            this.getClickMessage().Add("桌子上有不少的病人就诊资料，我仔细看看。");        
+            return this.getClickMessage();
         }
 
         return null;

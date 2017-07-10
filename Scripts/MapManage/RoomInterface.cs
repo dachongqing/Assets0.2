@@ -54,7 +54,7 @@ public interface RoomInterface
     StoryInterface getStartedStory();
 
     //触发房间事件
-    List<string> findSomethingNews(string charaName);
+    List<string> findSomethingNews(Character chara);
     //
 
 
@@ -68,5 +68,8 @@ public interface RoomInterface
     string[] getEventBeginInfo();
     Dictionary<string, string[]> getEventEndInfoMap();
 
+    bool isVisited();
+
+    void setVisited();
 
 }

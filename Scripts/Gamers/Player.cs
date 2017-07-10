@@ -107,7 +107,7 @@ public class Player : CommonUser
         setCrazyFlag(false);
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
         setAbilityInfo(new int[] { 7, 4, 6, 7 });
 
         setMaxAbilityInfo(new int[] { 7, 4, 6, 7 });

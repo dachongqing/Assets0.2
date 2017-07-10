@@ -28,8 +28,6 @@ public class RoomContraller : MonoBehaviour
 
     private List<EventInterface> events = new List<EventInterface>();
 
-    private RoomConstant roomConstant;
-
     //这个队列的长度，限制了房间最大数量
     public RoomContraller()
     {
@@ -434,6 +432,35 @@ public class RoomContraller : MonoBehaviour
         return this.allRoomList[keys[0]];
     }
 
+    public RoomInterface getRandomDownRoom()
+    {        
+        keys = FunctionUnity<int[]>.orderList(keys);
+        foreach(int[] xyz in keys)
+        {
+            if(xyz[2] == RoomConstant.ROOM_Z_DOWN)
+            {
+                return getAllRoom(RoomConstant.ROOM_Z_DOWN)[xyz];
+
+            }
+        }
+        return null;
+    }
+
+    public RoomInterface getRandomGroundRoom()
+    {
+
+        keys = FunctionUnity<int[]>.orderList(keys);
+        foreach (int[] xyz in keys)
+        {
+            if (xyz[2] == RoomConstant.ROOM_Z_GROUND)
+            {
+                return getAllRoom(RoomConstant.ROOM_Z_GROUND)[xyz];
+
+            }
+        }
+        return null;
+    }
+
     public void addMiniRoomList(int[] xyz,MinMapRoom minR) {
         this.miniRoomList.Add(xyz,minR);
     }
@@ -449,5 +476,17 @@ public class RoomContraller : MonoBehaviour
         }
        // Debug.Log("没有找到小房间:" + xyz[0] + "," + xyz[1] + "," + xyz[2]);
         return null;
+    }
+
+    public void setCharaInMiniMap(int[] xyz,Character chara, bool isShow)
+    {
+        if(!chara.isBoss())
+        {
+            this.findMiniRoomByXYZ(xyz).setPenable(chara.getName(), isShow);
+            if (isShow)
+            {
+                this.findMiniRoomByXYZ(xyz).setVisited();
+            }
+        }
     }
 }

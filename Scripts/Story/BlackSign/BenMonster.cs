@@ -68,7 +68,8 @@ public class BenMonster : CommonMonster
     public void setInitRoom(int[] xyz) {
         setCurrentRoom(xyz);
         this.roomContraller.findRoomByXYZ(xyz).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+       // this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+       // this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setVisited();
     }
 
 

@@ -12,14 +12,20 @@ public class H_tridOperationRoom : CommonRoom
         return operatingTable;
     }
 
-    public override List<string> findSomethingNews(string charaName)
+    public override List<string> findSomethingNews(Character chara)
     {
-        getGuangboMessage().Clear();
-        if (charaName == SystemConstant.P1_NAME)
+        getClickMessage().Clear();
+        if (chara.getName() == SystemConstant.P4_NAME)
         {
-            getGuangboMessage().Add("啊！这里有未做完手术的尸体。");
-            getGuangboMessage().Add("尸体手臂的脓包应该还没处理干净。");         
-            return getGuangboMessage();
+            if(chara.getAbilityInfo()[3] <=6)
+            {
+                getClickMessage().Add("侦探空洞的望着那具尸体，全身在发抖。");
+            } else
+            {
+                getClickMessage().Add("看样子好像是手术没做完，出现了什么意外。");
+                getClickMessage().Add("而且照这个尸体腐烂程度，应该是有1个月了。");         
+            }
+            return getClickMessage();
 
         }
 

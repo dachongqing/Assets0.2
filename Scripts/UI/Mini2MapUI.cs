@@ -54,18 +54,19 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
 
         newDi2 = Instantiate(minRoom) as GameObject;
         newDi2.GetComponent<RectTransform>().SetParent(MinMapPlane.transform);
-       // newDi2.GetComponent<RectTransform>().localPosition = show2Pos;
-
-        newDi3 = Instantiate(minRoom) as GameObject;
+        // newDi2.GetComponent<RectTransform>().localPosition = show2Pos;
+        newDi2.SetActive(false);
+         newDi3 = Instantiate(minRoom) as GameObject;
         newDi3.GetComponent<RectTransform>().SetParent(MinMapPlane.transform);
         //newDi3.GetComponent<RectTransform>().localPosition = show1Pos;
-
+        newDi3.SetActive(false);
         newDi4 = Instantiate(minRoom) as GameObject;
         newDi4.GetComponent<RectTransform>().SetParent(MinMapPlane.transform);
-       // newDi4.GetComponent<RectTransform>().localPosition = show1Pos;
-
+        // newDi4.GetComponent<RectTransform>().localPosition = show1Pos;
+        newDi4.SetActive(false);
         newDi5 = Instantiate(minRoom) as GameObject;
         newDi5.GetComponent<RectTransform>().SetParent(MinMapPlane.transform);
+        newDi5.SetActive(false);
         // newDi5.GetComponent<RectTransform>().localPosition = show1Pos;
         east = new int[] {0,0,0 };
         west = new int[] { 0, 0, 0 };
@@ -82,8 +83,7 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
       
         if (mRoom.getEastDoorStatus())
         {
-            mmr.setEastDoorenable();
-            newDi5.SetActive(true);
+            mmr.setEastDoorenable();            
             newDi5.GetComponent<RectTransform>().localPosition = showRPos;
            
            MinMapRoom eRoom = newDi5.GetComponent<MinMapRoom>();
@@ -94,8 +94,16 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
          
            MinMapRoom eNextRoom = roomContraller.findMiniRoomByXYZ(east);
            this.checkPStatus(eNextRoom, eRoom);
-         
-       }
+            if (eNextRoom.isVisited())
+            {
+
+                newDi5.SetActive(true);
+            } else
+            {
+                newDi5.SetActive(false);
+            }
+
+        }
        else {
             
            mmr.setEastDoorDisable();
@@ -104,8 +112,9 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
        if (mRoom.getWestDoorStatus())
        {
            mmr.setWestDoorenable();
-           newDi4.SetActive(true);
-           newDi4.GetComponent<RectTransform>().localPosition = showLPos;
+           
+           
+            newDi4.GetComponent<RectTransform>().localPosition = showLPos;
            
            MinMapRoom wRoom = newDi4.GetComponent<MinMapRoom>();
             west[0] = mRoom.xyz[0];
@@ -116,7 +125,14 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
            
            MinMapRoom wNextRoom = roomContraller.findMiniRoomByXYZ(west);
            this.checkPStatus(wNextRoom, wRoom);
-         
+            if (wNextRoom.isVisited())
+            {
+                newDi4.SetActive(true);
+            }
+            else
+            {
+                newDi4.SetActive(false);
+            }
         }
         else
         {
@@ -126,7 +142,9 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
         if (mRoom.getSouthDoorStatus())
         {
             mmr.setSouthDoorenable();
-            newDi3.SetActive(true);
+           
+            
+
             newDi3.GetComponent<RectTransform>().localPosition = showDPos;
             
            MinMapRoom sRoom = newDi3.GetComponent<MinMapRoom>();
@@ -138,7 +156,14 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
          
            MinMapRoom sNextRoom = roomContraller.findMiniRoomByXYZ(south);
            this.checkPStatus(sNextRoom, sRoom);
-          
+            if (sNextRoom.isVisited())
+            {
+                newDi3.SetActive(true);
+            }
+            else
+            {
+                newDi3.SetActive(false);
+            }
         }
         else
         {
@@ -148,7 +173,8 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
         if (mRoom.getNorthDoorStatus())
         {
             mmr.setNorthDoorenable();
-            newDi2.SetActive(true);
+           
+            
             newDi2.GetComponent<RectTransform>().localPosition = showUPos;
             
                    MinMapRoom nRoom = newDi2.GetComponent<MinMapRoom>();
@@ -161,7 +187,14 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
                   
                    MinMapRoom nNextRoom = roomContraller.findMiniRoomByXYZ(north);
                    this.checkPStatus(nNextRoom, nRoom);
-                  
+            if (nNextRoom.isVisited())
+            {
+                newDi2.SetActive(true);
+            }
+            else
+            {
+                newDi2.SetActive(false);
+            }
         }
         else
         {

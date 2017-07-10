@@ -131,7 +131,7 @@ public class Nolan :  CommonUser
         setCrazyFlag(false);
         
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
         setAbilityInfo(new int[] { 8, 3, 6, 7 });
 
         setMaxAbilityInfo(new int[] { 8, 3, 6, 7 });

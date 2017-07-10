@@ -188,9 +188,9 @@ public class WoodDoor : MonoBehaviour, DoorInterface
             //当前人物坐标移动到下一个房间
             roundController.getCurrentRoundChar().setCurrentRoom(getNextRoomXYZ());
             nextRoom.setChara(this.roundController.getCurrentRoundChar());
-            this.roomContraller.findMiniRoomByXYZ(getNextRoomXYZ()).setPenable(this.roundController.getCurrentRoundChar().getName(), true);
+            this.roomContraller.setCharaInMiniMap(getNextRoomXYZ(),this.roundController.getCurrentRoundChar(), true);
             this.getRoom().removeChara(this.roundController.getCurrentRoundChar());
-            this.roomContraller.findMiniRoomByXYZ(this.getRoom().getXYZ()).setPenable(this.roundController.getCurrentRoundChar().getName(), false);
+            this.roomContraller.setCharaInMiniMap(this.getRoom().getXYZ(),this.roundController.getCurrentRoundChar(), false);
             //触发进门事件
             eventController.excuteEnterRoomEvent(nextRoom, roundController.getCurrentRoundChar());  //暂时禁用 运行时有异常
 

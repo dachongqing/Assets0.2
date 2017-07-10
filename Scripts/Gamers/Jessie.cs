@@ -108,7 +108,7 @@ public class Jessie : CommonUser {
         setCrazyFlag(false);
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
         setAbilityInfo(new int[] { 5, 2, 7, 10 });
 
         setMaxAbilityInfo(new int[] { 5, 2, 7, 10 });

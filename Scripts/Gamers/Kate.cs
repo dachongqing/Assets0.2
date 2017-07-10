@@ -173,7 +173,7 @@ public class Kate : CommonUser
                                 Debug.Log("这个解剖手术太奇怪了，我一定错过了什么。我要好好检查下。");
                                 this.sendMessageToPlayer(new string[] { "这个解剖手术太奇怪了，我一定错过了什么。", "我要好好检查下。" });
                             }
-
+                            this.setClickMessage(tridOperationRoom.findSomethingNews(this).ToArray());
                         }
                         else if (target.getRoomType() == RoomConstant.ROOM_TYPE_HOSPITAIL_MORGUE)
                         {
@@ -197,7 +197,7 @@ public class Kate : CommonUser
                                 if (!isCrazy())
                                 {
                                     //this.sendMessageToPlayer(target.findSomethingNews(this.getName()).ToArray());
-                                    this.setClickMessage(target.findSomethingNews(this.getName()).ToArray());
+                                    this.setClickMessage(target.findSomethingNews(this).ToArray());
                                 }
                             }
 
@@ -287,7 +287,7 @@ public class Kate : CommonUser
         setCrazyFlag(false);
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
         setAbilityInfo(new int[] { 8, 3, 6, 7 });
 
         setMaxAbilityInfo(new int[] { 8, 3, 6, 7 });

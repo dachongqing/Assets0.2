@@ -7,7 +7,6 @@ public class LoadingManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(loadScene());
     }
 	
 	// Update is called once per frame
@@ -15,12 +14,17 @@ public class LoadingManager : MonoBehaviour {
 		
 	}
 
+    public void loadRecord()
+    {
+        StartCoroutine(loadScene());
+    }
+
     IEnumerator loadScene()
     {
         int displayProgress = 0;
         int toProgress = 0;
         //AsyncOperation op = Application.LoadLevelAsync(Global.GetInstance().loadName);
-        AsyncOperation op = SceneManager.LoadSceneAsync("Level1");
+        AsyncOperation op = SceneManager.LoadSceneAsync("Load");
         op.allowSceneActivation = false;
         while (op.progress < 0.9f)
         {

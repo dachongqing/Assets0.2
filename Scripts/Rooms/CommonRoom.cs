@@ -23,6 +23,8 @@ public class CommonRoom : MonoBehaviour, RoomInterface
 
     private string roomType;
 
+    private bool visit;
+
     public void setRoomType(string roomType)
     {
 
@@ -159,13 +161,13 @@ public class CommonRoom : MonoBehaviour, RoomInterface
         return false;
     }
 
-    List<string> guangboMessage = new List<string>();
+    List<string> clickMessage = new List<string>();
 
-    public List<string> getGuangboMessage() {
-        return guangboMessage;
+    public List<string> getClickMessage() {
+        return clickMessage;
     }
 
-    public virtual List<string> findSomethingNews(string charaName)
+    public virtual List<string> findSomethingNews(Character chara)
     {
      
         return null;
@@ -196,6 +198,16 @@ public class CommonRoom : MonoBehaviour, RoomInterface
     public virtual Dictionary<string, string[]> getEventEndInfoMap()
     {
         return null;
+    }
+
+    public bool isVisited()
+    {
+        return this.visit;
+    }
+
+    public void setVisited()
+    {
+        this.visit = true;
     }
 }
 

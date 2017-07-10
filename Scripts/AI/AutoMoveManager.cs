@@ -255,11 +255,12 @@ public class AutoMoveManager  {
                             //离开门成功
                                 path.Pop();
                                 currentRoom.removeChara(chara);
-                                roomContraller.findMiniRoomByXYZ(chara.getCurrentRoom()).setPenable(chara.getName(), false);
+                                roomContraller.setCharaInMiniMap(chara.getCurrentRoom(),chara, false);
                                 //当前人物坐标移动到下一个房间
                                 chara.setCurrentRoom(nextRoom.xy);
                                 roomContraller.findRoomByXYZ(nextRoom.xy).setChara(chara);
-                                roomContraller.findMiniRoomByXYZ(nextRoom.xy).setPenable(chara.getName(), true);
+                                roomContraller.setCharaInMiniMap(nextRoom.xy,chara, true);
+                               
                                 //触发进门事件
                                 //	eventController.excuteEnterRoomEvent (nextRoom, roundController.getCurrentRoundChar ());  暂时禁用 运行时有异常
                         }
@@ -295,11 +296,12 @@ public class AutoMoveManager  {
                         }
 
                         targetRoom.removeChara(chara);
-                        roomContraller.findMiniRoomByXYZ(chara.getCurrentRoom()).setPenable(chara.getName(), false);
+                        roomContraller.setCharaInMiniMap(chara.getCurrentRoom(),chara, false);
                         stairRoom.setChara(chara);
                         chara.setCurrentRoom(stairRoom.getXYZ());
                         chara.updateActionPoint(chara.getActionPoint() - SystemConstant.UPStairActionPoint);
-                        roomContraller.findMiniRoomByXYZ(stairRoom.getXYZ()).setPenable(chara.getName(), true);
+                        roomContraller.setCharaInMiniMap(stairRoom.getXYZ(),chara, true);
+                       
 
                         return true;
                     }
@@ -346,12 +348,12 @@ public class AutoMoveManager  {
                         }
 
                         targetRoom.removeChara(chara);
-                        roomContraller.findMiniRoomByXYZ(chara.getCurrentRoom()).setPenable(chara.getName(), false);
+                        roomContraller.setCharaInMiniMap(chara.getCurrentRoom(),chara, false);
                         stairRoom.setChara(chara);
                         chara.setCurrentRoom(stairRoom.getXYZ());
                         chara.updateActionPoint(chara.getActionPoint() - SystemConstant.UPStairActionPoint);
-                        roomContraller.findMiniRoomByXYZ(stairRoom.getXYZ()).setPenable(chara.getName(), true);
-
+                        roomContraller.setCharaInMiniMap(stairRoom.getXYZ(),chara, true);
+                        
                         return true;
                     }
                     else {

@@ -109,7 +109,7 @@ public class Ben : CommonUser
         setCrazyFlag(false);
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.findMiniRoomByXYZ(getCurrentRoom()).setPenable(this.getName(), true);
+        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
         setAbilityInfo(new int[] { 9, 9, 4, 8 });
 
         setMaxAbilityInfo(new int[] { 9, 9, 4, 8 });
