@@ -41,6 +41,8 @@ public class initMap : MonoBehaviour
     private Dictionary<int[], int[]> mapUp;
     private Dictionary<int[], int[]> mapGround;
 
+    public bool neworLoad;
+
     private void genMinMap(Dictionary<int[], int[]> map,int z)
     {
        // MinPlane.transform.localPosition = showPos;
@@ -94,7 +96,12 @@ public class initMap : MonoBehaviour
         //在场景中搜索房间起点
         mapSpawnUpPoint = GameObject.Find("MapSpawnUpPoint").GetComponent<Transform>();
         //生成好的地图数据<房间坐标xy,门的信息>
-         mapUp = mapManager.genMap(RoomConstant.ROOM_Z_UP, roomAmount);
+        if (neworLoad) {
+             mapUp = mapManager.genMap(RoomConstant.ROOM_Z_UP, roomAmount);
+        } else
+        {
+            mapUp = genMap(Application.persistentDataPath + "/Save/SaveData1.sav");
+        }
        // Debug.Log("map count: " + map.Count);
         //根据地图数据，生成新房间
         foreach (int[] key in mapUp.Keys)
@@ -126,8 +133,15 @@ public class initMap : MonoBehaviour
         //在场景中搜索房间起点
         mapSpawnPoint = GameObject.Find("MapSpawnPoint").GetComponent<Transform>();
         //生成好的地图数据<房间坐标xy,门的信息>
-        mapGround = mapManager.genMap(RoomConstant.ROOM_Z_GROUND, roomAmount);
-      //  Debug.Log("map count: " + map.Count);
+        if (neworLoad)
+        {
+            mapGround = mapManager.genMap(RoomConstant.ROOM_Z_GROUND, roomAmount);            
+        }
+        else
+        {
+            mapGround = genMap(Application.persistentDataPath + "/Save/SaveData2.sav");
+        }
+        //  Debug.Log("map count: " + map.Count);
         //根据地图数据，生成新房间
         foreach (int[] key in mapGround.Keys)
         {
@@ -159,14 +173,22 @@ public class initMap : MonoBehaviour
         //在场景中搜索房间起点
         mapSpawnDownPoint = GameObject.Find("MapSpawnDownPoint").GetComponent<Transform>();
         //生成好的地图数据<房间坐标xy,门的信息>
-        this.mapDown = mapManager.genMap(RoomConstant.ROOM_Z_DOWN, roomAmount);
-       // Debug.Log("map count: " + map.Count);
+        if (neworLoad)
+        {
+            this.mapDown = mapManager.genMap(RoomConstant.ROOM_Z_DOWN, roomAmount);
+        }
+        else
+        {
+            this.mapDown = genMap(Application.persistentDataPath + "/Save/SaveData3.sav");
+        }
+        // Debug.Log("map count: " + map.Count);
         //根据地图数据，生成新房间
         foreach (int[] key in mapDown.Keys)
         {
             //新房间在地图中的坐标
             int[] rXYZ = new int[] { key[0], key[1], key[2] };
             //产生新房间
+          //  Debug.Log(rXYZ[0] +","+ rXYZ[1] + "," + rXYZ[2]);
             unitMap = roomManager.genRoom(rXYZ, mapDown[key]);
 
             //预备给新房间的坐标
@@ -197,6 +219,18 @@ public class initMap : MonoBehaviour
     public Dictionary<int[], int[]> getMapGroundInfo()
     {
         return this.mapGround;
+    }
+
+    private Dictionary<int[], int[]> genMap(string savePath)
+    {
+        Dictionary<int[], int[]> hashMap = new Dictionary<int[], int[]>();
+        Dictionary<string, int[]> data = (Dictionary<string, int[]>)IOHelper.GetData(savePath, typeof(Dictionary<string, int[]>));
+        foreach (string key in data.Keys)
+        {
+            string[] temp = key.Split(',');
+            hashMap.Add(new int[] { int.Parse(temp[0]), int.Parse(temp[1]), int.Parse(temp[2]) }, data[key]);
+        }
+        return hashMap;
     }
 
     // Use this for initialization

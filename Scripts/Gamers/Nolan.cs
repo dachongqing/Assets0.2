@@ -125,30 +125,38 @@ public class Nolan :  CommonUser
         guangBoController = FindObjectOfType<GuangBoController>();
         this.setName(SystemConstant.P1_NAME);
         //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
-        setDistance(0.5f);
-        setCurrentRoom(roomXYZ);
-        setCrazyFlag(false);
-        
-        this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
-        setAbilityInfo(new int[] { 8, 3, 6, 7 });
-
-        setMaxAbilityInfo(new int[] { 8, 3, 6, 7 });
-        setActionPointrolled(false);
-        setIsDead(false);
-
+        int[] roomXYZ;
         setBag(new Bag());
+        if (this.neworLoad)
+        {
+            roomXYZ = new int[] { 0, 0, RoomConstant.ROOM_Z_GROUND };
+            setCrazyFlag(false);
+            setAbilityInfo(new int[] { 8, 3, 6, 7 });
+            setMaxAbilityInfo(new int[] { 8, 3, 6, 7 });
+            setActionPointrolled(false);
+            setIsDead(false);
+           
+        
+            this.waitPlan = false;
 
-        targetRoomList.Enqueue(roomContraller.getRandomRoom());
-        targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
-        this.waitPlan = false;
-      
-        getTargetChara().Add(SystemConstant.P1_NAME);
-        this.setDesc("一身脏兮兮的白大褂，第一感觉是个跳大神的庸医。");
-        this.setClickMessage(new string[] { "", "你就是犯人。" });
-
-
+            this.setDesc("一身脏兮兮的白大褂，第一感觉是个跳大神的庸医。");
+            this.setClickMessage(new string[] { "", "你就是犯人。" });
+            targetRoomList.Enqueue(roomContraller.getRandomRoom());
+            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
+        }
+        else
+        {
+            P0 p = loadInfo(this.getName());
+            roomXYZ = p.Xyz;
+            this.waitPlan = p.WaitPlan;
+            loadInfo(this, p);
+        }
+        setDistance(0.5f);
+        setCurrentRoom(roomXYZ);             
+        this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
+        this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
+     
+        getTargetChara().Add(SystemConstant.P1_NAME);   
     }
 
     // Update is called once per frame

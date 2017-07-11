@@ -280,42 +280,42 @@ public class Kate : CommonUser
         storyController = FindObjectOfType<StoryController>();
         bss = new BlackSignStory();
         this.setName(SystemConstant.P4_NAME);
-        //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
         setDistance(-0.5f);
-        setCurrentRoom(roomXYZ);
-        setCrazyFlag(false);
-
-        this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
-        setAbilityInfo(new int[] { 8, 3, 6, 7 });
-
-        setMaxAbilityInfo(new int[] { 8, 3, 6, 7 });
-        setActionPointrolled(false);
-        setIsDead(false);
-
+        //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
+        int[] roomXYZ;
         setBag(new Bag());
+        if (this.neworLoad)
+        {
+            roomXYZ = new int[] { 0, 0, RoomConstant.ROOM_Z_GROUND };
+            setCrazyFlag(false);
+            setAbilityInfo(new int[] { 8, 3, 6, 7 });
+            setMaxAbilityInfo(new int[] { 8, 3, 6, 7 });
+            setActionPointrolled(false);
+            setIsDead(false);
+           
 
-        //targetRoomList.Enqueue(roomContraller.getRandomRoom());
-        //targetRoomList.Enqueue(roomContraller.getRandomRoom());
-        targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY));
-        //targetRoomList.Enqueue(roomContraller.getRandomRoom());
-        targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_TRI_OPERATION));
-       // targetRoomList.Enqueue(roomContraller.getRandomRoom());
-        targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_MORGUE));
-        //targetRoomList.Enqueue(roomContraller.getRandomRoom());
-       // targetRoomList.Enqueue(roomContraller.getRandomRoom());
-        targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_STORE));
-        this.waitPlan = false;
+            this.setDesc("看似小萝莉，其实是一个出名的侦探。");
+            this.waitPlan = false;
+            setTargetChara(new List<string>());
+            getTargetChara().Add(SystemConstant.P2_NAME);
+            this.setClickMessage(new string[] { "真相只有一个。", "你就是犯人。" });
+            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY));
+            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_TRI_OPERATION));
+            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_MORGUE));
+            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_STORE));
 
-        this.setDesc("看似小萝莉，其实是一个出名的侦探。");
-        this.waitPlan = false;
-        setTargetChara(new List<string>());
-        getTargetChara().Add(SystemConstant.P2_NAME);
-        this.setClickMessage(new string[] { "真相只有一个。", "你就是犯人。" });
-
-       // setBoss(true);
-        
+        }
+        else
+        {
+            P0 p = loadInfo(this.getName());
+            roomXYZ = p.Xyz;
+            this.waitPlan = p.WaitPlan;
+            loadInfo(this, p);
+        }
+        setCurrentRoom(roomXYZ);
+        this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
+        this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
+      // setBoss(true);       
     }
 
     // Update is called once per frame

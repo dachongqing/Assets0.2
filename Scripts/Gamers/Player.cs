@@ -100,28 +100,35 @@ public class Player : CommonUser
         storyController = FindObjectOfType<StoryController>();
         bss = new BlackSignStory();
         this.setName(SystemConstant.P6_NAME);
-        //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
+        int[] roomXYZ;
+        setBag(new Bag());
+        if (this.neworLoad)
+        {
+           roomXYZ = new int[]{ 0, 0, RoomConstant.ROOM_Z_GROUND };
+           setCrazyFlag(false);
+            setAbilityInfo(new int[] { 7, 4, 6, 7 });
+            setMaxAbilityInfo(new int[] { 7, 4, 6, 7 });
+            setActionPointrolled(false);
+            setIsDead(false);          
+            this.setDesc("外乡人.");
+            this.waitPlan = false;
+
+            this.setClickMessage(new string[] { "我就是来旅游的。" });
+        } else
+        {
+            P0 p = loadInfo(this.getName());
+            roomXYZ = p.Xyz;
+            this.waitPlan = p.WaitPlan;
+            loadInfo(this, p);
+        }
+            //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         setDistance(0);
         setCurrentRoom(roomXYZ);
-        setCrazyFlag(false);
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
-        setAbilityInfo(new int[] { 7, 4, 6, 7 });
-
-        setMaxAbilityInfo(new int[] { 7, 4, 6, 7 });
-        setActionPointrolled(false);
-        setIsDead(false);
-
-        setBag(new Bag());
-
-        this.waitPlan = false;
-
-        this.setDesc("外乡人.");
-        this.waitPlan = false;
-
-        this.setClickMessage(new string[] { "我就是来旅游的。" });
+        this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
+      
+       
         /*
         Item item1 = new ItemTask(ItemConstant.ITEM_CODE_SPEC_Y0006
            , ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME);

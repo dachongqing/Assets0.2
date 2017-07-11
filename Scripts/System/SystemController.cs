@@ -25,11 +25,13 @@ public class SystemController : MonoBehaviour {
 
     public void save()
     {
-        Character chara = roundController.getPlayerChara();
-
+        List<Character> charas = roundController.getAllCharaFromMap();
         SaveData data = new SaveData();
-        P6 p6 = new P6();
-        p6.PlayerName = chara.getName();
+        foreach(Character chara in charas)
+        {
+            saveCharInfo(data, chara);
+
+        }      
         //定义存档路径
         string dirpath = Application.persistentDataPath + "/Save";
         //创建存档文件夹
@@ -39,16 +41,13 @@ public class SystemController : MonoBehaviour {
         filename1 = dirpath + "/SaveData1.sav";
         filename2 = dirpath + "/SaveData2.sav";
         filename3 = dirpath + "/SaveData3.sav";
-        Debug.Log("save filename" + filename);
+       // Debug.Log("save filename" + filename);
         //保存数据
         Dictionary<int[],RoomInterface> roomsInfo =   roomContraller.getAllRoom();
         Dictionary<int[], int[]> maps =  initMapObject.getMapUpInfo();
        
 
-
-        data.P6 = p6;
-        data.Map = maps;
-        //  IOHelper.SetData(filename, data);
+        IOHelper.SetData(filename, data);
       
         IOHelper.SetData(filename1, getStringMap(maps));
         maps.Clear();
@@ -60,6 +59,60 @@ public class SystemController : MonoBehaviour {
         maps = initMapObject.getMapDownInfo();
         IOHelper.SetData(filename3, getStringMap(maps));
 
+    }
+
+    private void saveCharInfo(SaveData savaData, Character chara)
+    {
+        P0 p = new P0();
+        p.Xyz = chara.getCurrentRoom();
+        p.AbilityInfo = chara.getAbilityInfo();
+        p.MaxAbilityInfo = chara.getMaxAbilityInfo();
+        p.PlayerName = chara.getName();
+        p.LiHuiURL = chara.getLiHuiURL();
+        p.RoundOver = chara.isRoundOver();
+        p.ProfilePic = chara.getProfilePic();
+        p.CrazyFlag = chara.isCrazy();
+        p.ActionPoint = chara.getActionPoint();
+        if(typeof(NPC).IsAssignableFrom(chara.GetType()))
+        {
+            NPC npc = (NPC)chara;
+            foreach(Item i in npc.getBag().getAllItems())
+            {
+                ItemInfo ii = new ItemInfo();
+                ii.Code = i.getCode();
+                ii.Desc = i.getDesc();
+                ii.Durability = i.getDurability();
+                ii.Name = i.getName();
+                ii.Type = i.getType();
+                p.Bag.Add(ii);
+
+
+            }
+        }
+        //p.BossFlag = chara.getb
+        if (chara.getName() == SystemConstant.P1_NAME)
+        {
+            savaData.P1 = p;
+        } else if(chara.getName() == SystemConstant.P2_NAME)
+        {
+            savaData.P2 = p;
+        }
+        else if (chara.getName() == SystemConstant.P3_NAME)
+        {
+            savaData.P3 = p;
+        }
+        else if (chara.getName() == SystemConstant.P4_NAME)
+        {
+            savaData.P4 = p;
+        }
+        else if (chara.getName() == SystemConstant.P5_NAME)
+        {
+            savaData.P5 = p;
+        }
+        else if (chara.getName() == SystemConstant.P6_NAME)
+        {
+            savaData.P6 = p;
+        }
     }
 
     public void load()

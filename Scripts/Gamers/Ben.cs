@@ -101,30 +101,38 @@ public class Ben : CommonUser
         guangBoController = FindObjectOfType<GuangBoController>();
         storyController = FindObjectOfType<StoryController>();
         bss = new BlackSignStory();
-        this.setName(SystemConstant.P2_NAME);
-        //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
+        int[] roomXYZ;
+       this.setName(SystemConstant.P2_NAME);
         setDistance(1.5f);
-        setCurrentRoom(roomXYZ);
-        setCrazyFlag(false);
-
-        this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
-        setAbilityInfo(new int[] { 9, 9, 4, 8 });
-
-        setMaxAbilityInfo(new int[] { 9, 9, 4, 8 });
-        setActionPointrolled(false);
-        setIsDead(false);
-
         setBag(new Bag());
-
-        this.waitPlan = false;
-
-        this.setDesc("活力充沛，爱开玩笑的冒险家。");
-        this.waitPlan = false;
-
-        this.setClickMessage(new string[] { "这地方太神奇了。我到前面去探探路。" });
+        //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
+        if (this.neworLoad)
+        {
+            roomXYZ = new int[]{ 0, 0, RoomConstant.ROOM_Z_GROUND };          
+            setCrazyFlag(false);           
+            setAbilityInfo(new int[] { 9, 9, 4, 8 });
+            setMaxAbilityInfo(new int[] { 9, 9, 4, 8 });
+            setActionPointrolled(false);
+            setIsDead(false);
+          
+            this.waitPlan = false;
+            this.setDesc("活力充沛，爱开玩笑的冒险家。");
+            this.setClickMessage(new string[] { "这地方太神奇了。我到前面去探探路。" });
+        } else
+        {
+            P0 p = loadInfo(this.getName());
+            roomXYZ = p.Xyz;
+            this.waitPlan = p.WaitPlan;
+            loadInfo(this,p);
+        }
+        setCurrentRoom(roomXYZ);
+        this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
+        this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
+        
+       
     }
+
+   
 
     // Update is called once per frame
     void Update()

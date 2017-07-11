@@ -9,6 +9,8 @@ public class RoundController : MonoBehaviour
 
     private Dictionary<string,Character> charaMap = new Dictionary<string, Character>();
 
+    private List<Character> charaList = new List<Character>();
+
     private bool isRoundEnd;
 
     private int roundCount;
@@ -121,6 +123,15 @@ public class RoundController : MonoBehaviour
     {
         return charaMap[name];
 
+    }
+
+    public List<Character> getAllCharaFromMap() {
+        charaList.Clear();
+        foreach(string name in charaMap.Keys)
+        {
+            charaList.Add(charaMap[name]);
+        }
+        return charaList;
     }
 
     public Character getCurrentRoundChar()

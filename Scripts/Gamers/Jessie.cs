@@ -101,28 +101,37 @@ public class Jessie : CommonUser {
         storyController = FindObjectOfType<StoryController>();
         bss = new BlackSignStory();
         this.setName(SystemConstant.P3_NAME);
-        //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        int[] roomXYZ = { 0, 0, RoomConstant.ROOM_Z_GROUND };
         setDistance(2.5f);
-        setCurrentRoom(roomXYZ);
-        setCrazyFlag(false);
-
-        this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.setCharaInMiniMap(getCurrentRoom(),this, true);
-        setAbilityInfo(new int[] { 5, 2, 7, 10 });
-
-        setMaxAbilityInfo(new int[] { 5, 2, 7, 10 });
-        setActionPointrolled(false);
-        setIsDead(false);
-
         setBag(new Bag());
+        //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
+        int[] roomXYZ;
+        if (this.neworLoad)
+        {
+            roomXYZ = new int[] { 0, 0, RoomConstant.ROOM_Z_GROUND };
+            setCrazyFlag(false);
+            setAbilityInfo(new int[] { 5, 2, 7, 10 });
+            setMaxAbilityInfo(new int[] { 5, 2, 7, 10 });
+            setActionPointrolled(false);
+            setIsDead(false);
+           
 
-        this.waitPlan = false;
-
-        this.setDesc("一脸严肃的样子，不爱说笑的神父。");
-        this.waitPlan = false;
-
-        this.setClickMessage(new string[] { "神会保佑我，给我一条出路。" });
+            this.setDesc("一脸严肃的样子，不爱说笑的神父。");
+            this.waitPlan = false;
+            this.setClickMessage(new string[] { "神会保佑我，给我一条出路。" });
+            targetRoomList.Enqueue(roomContraller.getRandomRoom());
+            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
+        }
+        else
+        {
+            P0 p = loadInfo(this.getName());
+            roomXYZ = p.Xyz;
+            this.waitPlan = p.WaitPlan;
+            loadInfo(this, p);
+        }
+        setCurrentRoom(roomXYZ);
+        this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
+        this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
+      
     }
 
     // Update is called once per frame

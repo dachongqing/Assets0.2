@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class P6  {
+public class P0  {
 
     private bool waitPlan;
     private bool scriptEnd;
@@ -13,7 +13,9 @@ public class P6  {
 
     private int[] maxAbilityInfo;
 
-   private int[] xyz;
+    private int actionPoint;
+
+    private int[] xyz;
 
     private string playerName;
 
@@ -40,6 +42,10 @@ public class P6  {
     private string desc;
 
     private bool locked;
+
+    private bool isDead;
+
+    private List<ItemInfo> bag = new List<ItemInfo>();
 
     public bool Locked
     {
@@ -311,6 +317,45 @@ public class P6  {
         set
         {
             waitPlan = value;
+        }
+    }
+
+    public bool IsDead
+    {
+        get
+        {
+            return isDead;
+        }
+
+        set
+        {
+            isDead = value;
+        }
+    }
+
+    public int ActionPoint
+    {
+        get
+        {
+            return actionPoint;
+        }
+
+        set
+        {
+            actionPoint = value;
+        }
+    }
+
+    public List<ItemInfo> Bag
+    {
+        get
+        {
+            return bag;
+        }
+
+        set
+        {
+            bag = value;
         }
     }
 }

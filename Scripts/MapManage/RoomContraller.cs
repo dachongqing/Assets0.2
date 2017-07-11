@@ -59,6 +59,7 @@ public class RoomContraller : MonoBehaviour
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
+       // groundRoomType.Enqueue("LobbyRoom");
 
         //这个队列的长度，限制了房间最大数量
         upRoomType.Enqueue("UpStairOuterRoom");
@@ -81,6 +82,7 @@ public class RoomContraller : MonoBehaviour
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
+       // upRoomType.Enqueue("LobbyRoom");
         upRoomType.Enqueue("LobbyRoom");
 
         //这个队列的长度，限制了房间最大数量
@@ -104,6 +106,7 @@ public class RoomContraller : MonoBehaviour
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("LobbyRoom");
+       // downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("BookRoom");
     }
 
@@ -182,6 +185,7 @@ public class RoomContraller : MonoBehaviour
             roomType = groundRoomType.Dequeue();
 
         } else if (xyz[2] == RoomConstant.ROOM_Z_DOWN) {
+           // Debug.Log("this.downRoomType.Count: " + xyz[0]+","+xyz[1] + "," + xyz[2]);
             roomType = this.downRoomType.Dequeue();
         }
         else if (xyz[2] == RoomConstant.ROOM_Z_UP)

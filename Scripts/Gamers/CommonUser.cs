@@ -39,6 +39,8 @@ abstract public class CommonUser : MonoBehaviour , NPC
     
     private List<string> targetChara = new List<string>();
 
+    public bool neworLoad;
+
     public void setClickMessage(string[] clickMessage) {
         this.clickMessage = clickMessage;
     }
@@ -380,4 +382,55 @@ abstract public class CommonUser : MonoBehaviour , NPC
         return null;
     }
 
+
+    public P0 loadInfo(string name)
+    {
+        string datapath = Application.persistentDataPath + "/Save/SaveData0.sav";
+
+        SaveData data = (SaveData)IOHelper.GetData(datapath, typeof( SaveData));
+
+        if(name == SystemConstant.P1_NAME)
+        {
+            return data.P1;
+        } else if(name == SystemConstant.P2_NAME) 
+        {
+            return data.P2;
+        }
+        else if (name == SystemConstant.P3_NAME)
+        {
+            return data.P3;
+        }
+        else if (name == SystemConstant.P4_NAME)
+        {
+            return data.P4;
+        }
+        else if (name == SystemConstant.P5_NAME)
+        {
+            return data.P5;
+        }
+        else if (name == SystemConstant.P6_NAME)
+        {
+            return data.P6;
+        }
+        return null;
+    }
+
+    public void loadInfo(Character chara, P0 p)
+    {
+        setCrazyFlag(p.CrazyFlag);       
+        setAbilityInfo(p.AbilityInfo);
+        setMaxAbilityInfo(p.MaxAbilityInfo);
+        setActionPointrolled(p.ActionPointrolled);
+        setIsDead(p.IsDead);       
+        this.setDesc(p.Desc);
+        foreach (ItemInfo i in p.Bag)
+        {
+            if (i.Type == ItemConstant.ITEM_TYPE_POTION)
+            {
+                getBag().insertItem(new ItemPotion(i.Code, i.Name, i.Desc));
+            }
+
+        }
+        updateActionPoint(p.ActionPoint);
+    }
 }
