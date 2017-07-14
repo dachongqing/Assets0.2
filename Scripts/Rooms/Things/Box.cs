@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Box : MonoBehaviour, Thing
+public class Box : CommonThing
 {
 
 	private Item item;
 
-	private bool isEmpty;
+	
 
 	private bool listenRoll;
 
@@ -22,10 +22,10 @@ public class Box : MonoBehaviour, Thing
 
 	private RollDiceUIManager uiManager;
 
-    public void doClick()
+    public override void doClick()
     {
         Debug.Log("click a barrel");
-        if (this.isEmpty)
+        if (getIsEmpty())
         {
             messageUI.ShowMessge("里面是空的", 1);
         }
@@ -95,33 +95,47 @@ public class Box : MonoBehaviour, Thing
 		if (chara.isPlayer ()) {
 			return null;
 		} else {
-			if (this.isEmpty) {
+			if (getIsEmpty()) {
 				return null;
 			} else {
-				this.isEmpty = true;
-				return this.item;
+			   setIsEmpty(true);
+               return this.item;
 			
 			}
 		}
 	}
 
 	private Item getItem() {
-		this.isEmpty = true;
-		return this.item;
+        setIsEmpty(true);
+        return this.item;
 	}
 
-	// Use this for initialization
-	void Start () {
-		roundController = FindObjectOfType<RoundController>();
-		messageUI = FindObjectOfType<MessageUI>();
-		this.isEmpty = false;
-		this.listenRoll = false;
-		this.phase = 1;
-		uiManager = FindObjectOfType<RollDiceUIManager>();
-		item = new ItemTask(ItemConstant.ITEM_CODE_SPEC_00001
-			,"黑色的书","带血的内容：你需要用活血的几十来开始剧情");
+    public override void init(int[] xyz)
+    {
+        roundController = FindObjectOfType<RoundController>();
+        messageUI = FindObjectOfType<MessageUI>();
+        this.setRoom(xyz);
+        this.listenRoll = false;
+        this.phase = 1;
+        uiManager = FindObjectOfType<RollDiceUIManager>();
+        item = new ItemTask(ItemConstant.ITEM_CODE_SPEC_00001
+            , "黑色的书", "带血的内容：你需要用活血的几十来开始剧情");
+        this.setThingCode(ThingConstant.BOX_01_CODE);
+        if (roundController.newOrLoad)
+        {
+            setIsEmpty(false);
+        }
+        else
+        {
+            this.loadInfo();
+        }
+    }
 
-	}
+        // Use this for initialization
+        void Start () {
+		
+
+    }
 	private int rollValue;
 
 	// Update is called once per frame

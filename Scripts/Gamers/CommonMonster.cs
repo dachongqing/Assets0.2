@@ -390,4 +390,12 @@ public class CommonMonster : MonoBehaviour,Monsters {
     {
         return null;
     }
+
+    public virtual void init(P0 benMonster)
+    {
+        setAbilityInfo(benMonster.AbilityInfo);
+        setMaxAbilityInfo(benMonster.MaxAbilityInfo);
+        setActionPointrolled(benMonster.ActionPointrolled);
+        setIsDead(benMonster.IsDead);
+    }
 }

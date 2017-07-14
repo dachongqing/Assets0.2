@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SafeCabinet : MonoBehaviour {
+public class SafeCabinet : CommonThing
+{
 
     private Item item;
-
-    private bool isEmpty;
 
     private bool listenRoll;
 
@@ -21,10 +20,10 @@ public class SafeCabinet : MonoBehaviour {
 
     private RollDiceUIManager uiManager;
 
-    public void doClick()
+    public override void doClick()
     {
         Debug.Log("click a barrel");
-        if (this.isEmpty)
+        if (this.getIsEmpty())
         {
             messageUI.showMessage("安全柜子是空的。");
         }
@@ -103,13 +102,13 @@ public class SafeCabinet : MonoBehaviour {
         }
         else
         {
-            if (this.isEmpty)
+            if (this.getIsEmpty())
             {
                 return null;
             }
             else
             {
-                this.isEmpty = true;
+                setIsEmpty(true);
                 return this.item;
 
             }
@@ -118,22 +117,36 @@ public class SafeCabinet : MonoBehaviour {
 
     private Item getItem()
         {
-            this.isEmpty = true;
-            return this.item;
+        setIsEmpty(true);
+        return this.item;
         }
 
-    // Use this for initialization
-    void Start()
+    public override void init(int[] xyz)
     {
         roundController = FindObjectOfType<RoundController>();
         messageUI = FindObjectOfType<MessageUI>();
-        this.isEmpty = false;
+        this.setRoom(xyz);
+        this.setIsEmpty(false);
         this.listenRoll = false;
         this.phase = 1;
         uiManager = FindObjectOfType<RollDiceUIManager>();
         item = new ItemPotion(ItemConstant.ITEM_CODE_SPEC_Y0004
             , ItemDesConstant.ITEM_CODE_SPEC_Y0004_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0004_DES);
+        this.setThingCode(ThingConstant.SAFE_CABINET_01_CODE);
+        if (roundController.newOrLoad)
+        {
+            this.setIsEmpty(false);
+        }
+        else
+        {
+            this.loadInfo();
+        }
+    }
 
+        // Use this for initialization
+        void Start()
+    {
+      
     }
     private int rollValue;
 

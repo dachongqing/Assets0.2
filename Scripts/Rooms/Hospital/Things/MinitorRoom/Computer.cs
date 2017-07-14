@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Computer : MonoBehaviour {
+public class Computer : CommonThing
+{
 
     private Item item;
-
-    private bool isEmpty;
 
     private bool listenRoll;
 
@@ -20,10 +19,10 @@ public class Computer : MonoBehaviour {
 
     private RollDiceUIManager uiManager;
 
-    public void doClick()
+    public override void doClick()
     {
         Debug.Log("click a barrel");
-        if (this.isEmpty)
+        if (this.getIsEmpty())
         {
             messageUI.showMessage("电脑里已经没有特别的图片。");
         }
@@ -71,13 +70,13 @@ public class Computer : MonoBehaviour {
         }
         else
         {
-            if (this.isEmpty)
+            if (this.getIsEmpty())
             {
                 return null;
             }
             else
             {
-                this.isEmpty = true;
+                setIsEmpty(true);
                 return this.item;
 
             }
@@ -86,8 +85,30 @@ public class Computer : MonoBehaviour {
 
     private Item getItem()
     {
-        this.isEmpty = true;
+        setIsEmpty(true);
         return this.item;
+    }
+
+    public override void init(int[] xyz)
+    {
+        roundController = FindObjectOfType<RoundController>();
+        messageUI = FindObjectOfType<MessageUI>();
+        this.setRoom(xyz);
+        this.setIsEmpty(false);
+        this.listenRoll = false;
+        this.phase = 1;
+        uiManager = FindObjectOfType<RollDiceUIManager>();
+        item = new ItemTask(ItemConstant.ITEM_CODE_SPEC_Y0006
+            , ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME);
+        this.setThingCode(ThingConstant.COMPUTER_01_CODE);
+        if (roundController.newOrLoad)
+        {
+            this.setIsEmpty(false);
+        }
+        else
+        {
+            this.loadInfo();
+        }
     }
 
     // Use this for initialization
@@ -95,13 +116,13 @@ public class Computer : MonoBehaviour {
     {
         roundController = FindObjectOfType<RoundController>();
         messageUI = FindObjectOfType<MessageUI>();
-        this.isEmpty = false;
+        this.setIsEmpty(false);
         this.listenRoll = false;
         this.phase = 1;
         uiManager = FindObjectOfType<RollDiceUIManager>();
         item = new ItemTask(ItemConstant.ITEM_CODE_SPEC_Y0006
             , ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME);
-
+        this.setThingCode(ThingConstant.COMPUTER_01_CODE);
     }
     private int rollValue;
 

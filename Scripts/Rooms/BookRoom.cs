@@ -28,5 +28,12 @@ public class BookRoom : CommonRoom
         return null;
     }
 
-   
+
+    void Start()
+    {
+        Debug.Log("房间内物品初始化");
+        Box.GetComponent<Box>().init(getXYZ());
+       
+    }
+
 }

@@ -13,7 +13,6 @@ public class Nolan :  CommonUser
     private BattleController battleController;
     private CharaInfoManager charaInfoManager; 
     private GuangBoController guangBoController;
-    private Queue<RoomInterface> targetRoomList = new Queue<RoomInterface>();
     private APathManager aPathManager = new APathManager();
     private bool waitPlan;
     
@@ -55,11 +54,11 @@ public class Nolan :  CommonUser
 
         } else {
 
-            if (this.targetRoomList.Count<= 0 ) {
+            if (this.getTargetRoomList().Count<= 0 ) {
                 Debug.Log("随便找个房间看看");
-                this.targetRoomList.Enqueue(roomContraller.getRandomRoom());
+                this.getTargetRoomList().Enqueue(roomContraller.getRandomRoom());
             }
-            RoomInterface target = this.targetRoomList.Peek();
+            RoomInterface target = this.getTargetRoomList().Peek();
 
             if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, target.getXYZ()))
             {
@@ -141,15 +140,15 @@ public class Nolan :  CommonUser
 
             this.setDesc("一身脏兮兮的白大褂，第一感觉是个跳大神的庸医。");
             this.setClickMessage(new string[] { "", "你就是犯人。" });
-            targetRoomList.Enqueue(roomContraller.getRandomRoom());
-            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
+            getTargetRoomList().Enqueue(roomContraller.getRandomRoom());
+            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
         }
         else
         {
             P0 p = loadInfo(this.getName());
             roomXYZ = p.Xyz;
             this.waitPlan = p.WaitPlan;
-            loadInfo(this, p);
+            loadInfo(this, p, roomContraller);
         }
         setDistance(0.5f);
         setCurrentRoom(roomXYZ);             

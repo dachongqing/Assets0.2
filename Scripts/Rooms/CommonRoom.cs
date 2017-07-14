@@ -46,12 +46,12 @@ public class CommonRoom : MonoBehaviour, RoomInterface
         return this.roomType;
     }
     
-    int[] RoomInterface.getXYZ()
+    public int[] getXYZ()
     {
         return xyz;
     }
 
-    void RoomInterface.setXYZ(int[] xyz)
+    public void setXYZ(int[] xyz)
     {
         this.xyz = xyz;
     }

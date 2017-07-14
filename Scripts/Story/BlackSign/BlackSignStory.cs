@@ -15,7 +15,7 @@ public class BlackSignStory : AbsStrory
 
         BlackSignGoodScript  goodStoryScript = new BlackSignGoodScript();
         BlackSignBadScript badStoryScript = new BlackSignBadScript();
-        this.setStroryAttrs(conditions, goodStoryScript, badStoryScript);
+        this.setStroryAttrs(conditions, goodStoryScript, badStoryScript,StoryConstan.STORY_CODE_02);
     }
 
     public override void initStroy(Character chara, RoundController roundController)

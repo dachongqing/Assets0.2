@@ -13,8 +13,9 @@ public class H_securityRoom : CommonRoom
 
     // Use this for initialization
     void Start () {
-		
-	}
+        keysCabinet.GetComponent<KeysCabinet>().init(this.getXYZ());
+      
+    }
 	
 	// Update is called once per frame
 	void Update () {

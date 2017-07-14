@@ -31,6 +31,8 @@ public class RoundController : MonoBehaviour
 
     private Character playerChara; // 玩家所控制的角色
 
+    public bool newOrLoad;
+
     public Character getNextCharecter()
     {
         //Debug.Log(" Queue number is " + roundList.Count);
@@ -72,27 +74,56 @@ public class RoundController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+            player = FindObjectOfType<Player>();
+            nolan = FindObjectOfType<Nolan>();
+            ben = FindObjectOfType<Ben>();
+            kate = FindObjectOfType<Kate>();
+            martin = FindObjectOfType<Martin>();
+            jessie = FindObjectOfType<Jessie>();
+        if (newOrLoad)
+        {
+            //目前是写死。。后面需要改为程序控制添加 游戏人数
 
-        //目前是写死。。后面需要改为程序控制添加 游戏人数
-        player = FindObjectOfType<Player>();
-        nolan = FindObjectOfType<Nolan>();
-        ben = FindObjectOfType<Ben>();
-        kate = FindObjectOfType<Kate>();
-        martin = FindObjectOfType<Martin>();
-        jessie = FindObjectOfType<Jessie>();
-        
-        setEndRound(player);
-        setEndRound(nolan);
-        setEndRound(ben);
-        setEndRound(kate);
-        setEndRound(martin);
-        setEndRound(jessie);
-
-        isRoundEnd = false;
-        playChara = this.getNextCharecter();
-        playChara.setActionPointrolled(true);
+            setEndRound(nolan);
+            setEndRound(ben);
+            setEndRound(jessie);
+            setEndRound(kate);
+            setEndRound(martin);
+            setEndRound(player);
+            roundCount = 1;
+        }
+        else
+        {
+            string datapath = Application.persistentDataPath + "/Save/SaveData0.sav";
+            SaveData data = (SaveData)IOHelper.GetData(datapath, typeof(SaveData));
+            foreach (string name in data.CharaNames)
+            {
+                if(name == SystemConstant.P1_NAME)
+                {
+                    setEndRound(nolan);
+                } else if(name == SystemConstant.P2_NAME)
+                {
+                    setEndRound(ben);
+                } else if (name == SystemConstant.P3_NAME)
+                {
+                    setEndRound(jessie);
+                }
+                else if (name == SystemConstant.P4_NAME)
+                {
+                    setEndRound(kate);
+                }
+                else if (name == SystemConstant.P5_NAME)
+                {
+                    setEndRound(martin);
+                }
+                else if (name == SystemConstant.P6_NAME)
+                {
+                    setEndRound(player);
+                }
+            }
+            roundCount = data.RoundCount;
+        }
        // Debug.Log(playChara.getName() + " round this game");
-        roundCount = 1;
         if (player.isPlayer())
         {
             this.playerChara = player;
@@ -117,6 +148,10 @@ public class RoundController : MonoBehaviour
         {
             this.playerChara = jessie;
         }
+
+        isRoundEnd = false;
+        playChara = this.getPlayerChara();
+        playChara.setActionPointrolled(true);
     }
 
     public Character getCharaByName(string name)

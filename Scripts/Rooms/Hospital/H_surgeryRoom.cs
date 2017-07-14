@@ -24,5 +24,11 @@ public class H_surgeryRoom : CommonRoom
         return null;
     }
 
-   
+    void Start()
+    {
+        bookTable.GetComponent<BookTable>().init(this.getXYZ());
+      
+    }
+
+
 }

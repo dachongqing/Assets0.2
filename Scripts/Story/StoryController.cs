@@ -15,6 +15,18 @@ public class StoryController : MonoBehaviour
 
     private DuiHuaUImanager duiHuaUImanager;
 
+    public bool neworLoad;
+
+    public StoryInterface getStory()
+    {
+        return story;
+    }
+
+    public bool getIsStartStory()
+    {
+        return isStartStory;
+    }
+
 
     public bool checkStoryStartBySPEvnet(StoryInterface story,Character boss, RoundController roundController, RoomInterface room) {
          if (story.checkStoryStart(boss, room, roundController)) {
@@ -33,6 +45,40 @@ public class StoryController : MonoBehaviour
         isStartStory = false;
         roundController = FindObjectOfType<RoundController>();
         roomContraller = FindObjectOfType<RoomContraller>();
+        if (!this.neworLoad)
+        {
+            string datapath = Application.persistentDataPath + "/Save/SaveData0.sav";
+            SaveData data = (SaveData)IOHelper.GetData(datapath, typeof(SaveData));
+            if(data.StoryInfo.IsStoryStart)
+            {
+                isStartStory = true;
+                if(data.StoryInfo.StoryCode == StoryConstan.STORY_CODE_02)
+                {
+                    this.story = new BlackSignStory();
+                    string monsteUrl = "Prefabs/Monsters/BenMonster";
+                    GameObject servantObject = Instantiate(Resources.Load(monsteUrl)) as GameObject;
+                    BenMonster benMonster = servantObject.GetComponent<BenMonster>();
+                    benMonster.init();
+                    benMonster.init(data.BenMonster);
+                    benMonster.setInitRoom(data.BenMonster.Xyz);
+                    roundController.setEndRound(benMonster);
+
+
+                }
+                Character[] charas = roundController.getAllChara();
+                foreach(Character chara in charas)
+                {
+                    if(chara.isBoss())
+                    {
+                        chara.setScriptAction(this.story.getBadManScript());
+                    } else
+                    {
+                        chara.setScriptAction(this.story.getGoodManScript());
+                    }
+                }
+            }
+
+        }
     }
 
     // Update is called once per frame

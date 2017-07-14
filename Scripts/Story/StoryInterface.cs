@@ -16,6 +16,8 @@ public interface StoryInterface  {
 
     void initStroy(Character chara, RoundController roundController);
 
+    string getStoryCode();
+
  
 
 

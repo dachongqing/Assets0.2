@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SafeBox : MonoBehaviour {
+public class SafeBox : CommonThing
+{
 
     private Item item;
-
-    private bool isEmpty;
 
     private bool listenRoll;
 
@@ -20,10 +19,10 @@ public class SafeBox : MonoBehaviour {
 
     private RollDiceUIManager uiManager;
 
-    public void doClick()
+    public override void doClick()
     {
         Debug.Log("click a barrel");
-        if (this.isEmpty)
+        if (this.getIsEmpty())
         {
             messageUI.showMessage("保险箱里面没有值得注意的物品。");
         }
@@ -88,13 +87,13 @@ public class SafeBox : MonoBehaviour {
         }
         else
         {
-            if (this.isEmpty)
+            if (this.getIsEmpty())
             {
                 return null;
             }
             else
             {
-                this.isEmpty = true;
+                setIsEmpty(true);
                 return this.item;
 
             }
@@ -103,8 +102,13 @@ public class SafeBox : MonoBehaviour {
 
     private Item getItem()
     {
-        this.isEmpty = true;
+        setIsEmpty(true);
         return this.item;
+    }
+
+    public override void init(int[] xyz)
+    {
+
     }
 
     // Use this for initialization
@@ -112,13 +116,19 @@ public class SafeBox : MonoBehaviour {
     {
         roundController = FindObjectOfType<RoundController>();
         messageUI = FindObjectOfType<MessageUI>();
-        this.isEmpty = false;
+        if(roundController.newOrLoad)
+        {
+            this.setIsEmpty(false);
+        } else
+        {
+            loadInfo();
+        }
         this.listenRoll = false;
         this.phase = 1;
         uiManager = FindObjectOfType<RollDiceUIManager>();
         item = new ItemTask(ItemConstant.ITEM_CODE_SPEC_Y0007
             , ItemDesConstant.ITEM_CODE_SPEC_Y0007_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0007_DES);
-
+        this.setThingCode(ThingConstant.SAFE_BOX_01_CODE);
     }
     private int rollValue;
 

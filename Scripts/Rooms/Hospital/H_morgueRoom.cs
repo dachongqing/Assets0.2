@@ -18,6 +18,8 @@ public class H_morgueRoom : CommonRoom
         ei.setEventBeginInfo(this.getEventBeginInfo());
         ei.setEventEndInfo(this.getEventEndInfoMap());
         this.setRoomEvent(ei);
+        bed.GetComponent<Bed>().init(this.getXYZ());
+       
     }
 	
 	// Update is called once per frame

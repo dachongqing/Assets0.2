@@ -39,7 +39,14 @@ abstract public class CommonUser : MonoBehaviour , NPC
     
     private List<string> targetChara = new List<string>();
 
+    private Queue<RoomInterface> targetRoomList = new Queue<RoomInterface>();
+
     public bool neworLoad;
+
+    public Queue<RoomInterface> getTargetRoomList()
+    {
+        return targetRoomList;
+    }
 
     public void setClickMessage(string[] clickMessage) {
         this.clickMessage = clickMessage;
@@ -415,14 +422,17 @@ abstract public class CommonUser : MonoBehaviour , NPC
         return null;
     }
 
-    public void loadInfo(Character chara, P0 p)
+    public void loadInfo(Character chara, P0 p,RoomContraller roomController)
     {
+        Debug.Log("开始读取记录。。。");
         setCrazyFlag(p.CrazyFlag);       
         setAbilityInfo(p.AbilityInfo);
         setMaxAbilityInfo(p.MaxAbilityInfo);
         setActionPointrolled(p.ActionPointrolled);
         setIsDead(p.IsDead);       
         this.setDesc(p.Desc);
+        Debug.Log("读取基本信息完成。。。");
+        Debug.Log("开始读取道具信息。。。");
         foreach (ItemInfo i in p.Bag)
         {
             if (i.Type == ItemConstant.ITEM_TYPE_POTION)
@@ -431,6 +441,18 @@ abstract public class CommonUser : MonoBehaviour , NPC
             }
 
         }
+        Debug.Log("读取道具信息完成。。。");
+        Debug.Log("开始读取游戏进度信息。。。");
+        foreach (string roomType in p.TargetRoomlist)
+        {
+            this.getTargetRoomList().Enqueue(roomController.findRoomByRoomType(roomType));
+
+        }
+        Debug.Log("读取游戏进度信息完成。。。");
         updateActionPoint(p.ActionPoint);
+        if(this.isPlayer())
+        {
+            FindObjectOfType<CameraCtrl>().setTargetPos(p.Xyz);
+        }
     }
 }

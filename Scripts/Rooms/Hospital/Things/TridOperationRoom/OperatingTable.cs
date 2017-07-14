@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OperatingTable : MonoBehaviour {
+public class OperatingTable : CommonThing
+{
 
     private Item item;
-
-    private bool isEmpty;
 
     private bool listenRoll;
 
@@ -21,10 +20,10 @@ public class OperatingTable : MonoBehaviour {
 
     private RollDiceUIManager uiManager;
 
-    public void doClick()
+    public override void doClick()
     {
         Debug.Log("click a barrel");
-        if (this.isEmpty)
+        if (this.getIsEmpty())
         {
             messageUI.showMessage("尸体已经被处理干净了。");
         }
@@ -96,13 +95,13 @@ public class OperatingTable : MonoBehaviour {
         }
         else
         {
-            if (this.isEmpty)
+            if (this.getIsEmpty())
             {
                 return null;
             }
             else
             {
-                this.isEmpty = true;
+                setIsEmpty(true);
                 return this.item;
 
             }
@@ -111,22 +110,34 @@ public class OperatingTable : MonoBehaviour {
 
     private Item getItem()
     {
-        this.isEmpty = true;
+        setIsEmpty(true);
         return this.item;
     }
 
-    // Use this for initialization
-    void Start()
+    public override void init(int[] xyz)
     {
         roundController = FindObjectOfType<RoundController>();
         messageUI = FindObjectOfType<MessageUI>();
-        this.isEmpty = false;
+        this.setRoom(xyz);
         this.listenRoll = false;
         this.phase = 1;
         uiManager = FindObjectOfType<RollDiceUIManager>();
+        this.setThingCode(ThingConstant.OPERATING_TABLE_01_CODE);
         item = new ItemPotion(ItemConstant.ITEM_CODE_SPEC_Y0003
             , ItemDesConstant.ITEM_CODE_SPEC_Y0003_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0003_DES);
+        if(roundController.newOrLoad)
+        {
+            this.setIsEmpty(false);
+        }
+        else
+        {
+            this.loadInfo();
+        }
+    }
 
+        // Use this for initialization
+        void Start()
+    {
     }
     private int rollValue;
 

@@ -12,7 +12,6 @@ public class Martin : CommonUser {
     private CharaInfoManager charaInfoManager;
     private GuangBoController guangBoController;
     private StoryController storyController;
-    private Queue<RoomInterface> targetRoomList = new Queue<RoomInterface>();
     private APathManager aPathManager = new APathManager();
     private bool waitPlan;
     public GameObject servant;
@@ -118,15 +117,15 @@ public class Martin : CommonUser {
             this.setDesc("沉默寡言，不爱说话的黑客.");
             this.waitPlan = false;
             this.setClickMessage(new string[] { "谁能给我一台电脑？" });
-            targetRoomList.Enqueue(roomContraller.getRandomRoom());
-            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
+            getTargetRoomList().Enqueue(roomContraller.getRandomRoom());
+            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
         }
         else
         {
             P0 p = loadInfo(this.getName());
             roomXYZ = p.Xyz;
             this.waitPlan = p.WaitPlan;
-            loadInfo(this, p);
+            loadInfo(this, p, roomContraller);
         }
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);

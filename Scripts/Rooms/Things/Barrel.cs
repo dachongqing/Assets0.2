@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Barrel : MonoBehaviour, Thing
+public class Barrel :CommonThing
 {
 
     private Item item;
-
-    private bool isEmpty;
 
     private bool listenRoll;
 
@@ -23,9 +21,9 @@ public class Barrel : MonoBehaviour, Thing
 
     private RollDiceUIManager uiManager;
 
-    public void doClick() {
+    public override void doClick() {
         Debug.Log("click a barrel");
-        if (this.isEmpty)
+        if (this.getIsEmpty())
         {
             messageUI.ShowMessge("里面是空的", 1);
         }
@@ -84,21 +82,34 @@ public class Barrel : MonoBehaviour, Thing
     }
 
     private Item getItem() {
-        this.isEmpty = true;
+        setIsEmpty(true);
         return this.item;
     }
 
-	// Use this for initialization
-	void Start () {
+    public override void init(int[] xyz)
+    {
         roundController = FindObjectOfType<RoundController>();
         messageUI = FindObjectOfType<MessageUI>();
-        this.isEmpty = false;
+        this.setRoom(xyz);
         this.listenRoll = false;
         this.phase = 1;
         uiManager = FindObjectOfType<RollDiceUIManager>();
         item = new ItemPotion(ItemConstant.ITEM_CODE_POTION_10001
-            ,"速度回复药水","模糊的字迹写着是哈尔滨六厂生产，蓝屏的钙");
+            , "速度回复药水", "模糊的字迹写着是哈尔滨六厂生产，蓝屏的钙");
+        this.setThingCode(ThingConstant.BARREL_01_CODE);
+        if (roundController.newOrLoad)
+        {
+            setIsEmpty(false);
+        }
+        else
+        {
+            this.loadInfo();
+        }
+    }
 
+    // Use this for initialization
+    void Start () {
+       
     }
     private int rollValue;
     

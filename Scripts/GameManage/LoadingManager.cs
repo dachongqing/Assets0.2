@@ -7,6 +7,7 @@ public class LoadingManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        loadRecord();
     }
 	
 	// Update is called once per frame

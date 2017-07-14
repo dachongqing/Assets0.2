@@ -26,4 +26,6 @@ public interface NPC : Character {
 
     bool isTargetRoomLocked();
 
+    Queue<RoomInterface> getTargetRoomList();
+
 }

@@ -47,6 +47,8 @@ public class P0  {
 
     private List<ItemInfo> bag = new List<ItemInfo>();
 
+    private List<string> targetRoomlist = new List<string>();
+  
     public bool Locked
     {
         get
@@ -358,4 +360,19 @@ public class P0  {
             bag = value;
         }
     }
+
+    public List<string> TargetRoomlist
+    {
+        get
+        {
+            return targetRoomlist;
+        }
+
+        set
+        {
+            targetRoomlist = value;
+        }
+    }
+
+  
 }

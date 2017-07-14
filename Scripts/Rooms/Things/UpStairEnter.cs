@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UpStairEnter : MonoBehaviour, Thing
+public class UpStairEnter : CommonThing
 
 
 {
 
-
+   
     private RoomContraller roomContraller;
     private RoundController roundController;
 
@@ -29,7 +29,7 @@ public class UpStairEnter : MonoBehaviour, Thing
 
     }
 
-    public void doClick()
+    public override void doClick()
     {
 
 
@@ -48,6 +48,8 @@ public class UpStairEnter : MonoBehaviour, Thing
         // 载入上楼图片结束。。。
     }
 
+   
+
     // Use this for initialization
     void Start () {
         roundController = FindObjectOfType<RoundController>();
@@ -55,6 +57,7 @@ public class UpStairEnter : MonoBehaviour, Thing
         roomContraller = FindObjectOfType<RoomContraller>();
 
         camCtrl = FindObjectOfType<CameraCtrl>();
+       this.setThingCode(ThingConstant.UPSTAIR_ENTER_CODE);
     }
 	
 	// Update is called once per frame

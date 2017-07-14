@@ -13,8 +13,8 @@ public class H_deanRoom : CommonRoom
     }
     // Use this for initialization
     void Start () {
-		
-	}
+        safeBox.GetComponent<SafeBox>().init(this.getXYZ());
+    }
 	
 	// Update is called once per frame
 	void Update () {

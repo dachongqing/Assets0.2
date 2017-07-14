@@ -106,8 +106,9 @@ public class Player : CommonUser
         {
            roomXYZ = new int[]{ 0, 0, RoomConstant.ROOM_Z_GROUND };
            setCrazyFlag(false);
-            setAbilityInfo(new int[] { 7, 4, 6, 7 });
-            setMaxAbilityInfo(new int[] { 7, 4, 6, 7 });
+            //for test 4-->9
+            setAbilityInfo(new int[] { 7, 9, 6, 7 });
+            setMaxAbilityInfo(new int[] { 7, 9, 6, 7 });
             setActionPointrolled(false);
             setIsDead(false);          
             this.setDesc("外乡人.");
@@ -119,7 +120,7 @@ public class Player : CommonUser
             P0 p = loadInfo(this.getName());
             roomXYZ = p.Xyz;
             this.waitPlan = p.WaitPlan;
-            loadInfo(this, p);
+            loadInfo(this, p, roomContraller);
         }
             //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
         setDistance(0);

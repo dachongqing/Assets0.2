@@ -39,6 +39,8 @@ public class H_tridOperationRoom : CommonRoom
         ei.setEventBeginInfo(this.getEventBeginInfo());
         ei.setEventEndInfo(this.getEventEndInfoMap());
         this.setRoomEvent(ei);
+        operatingTable.GetComponent<OperatingTable>().init(this.getXYZ());
+     
     }
     
 

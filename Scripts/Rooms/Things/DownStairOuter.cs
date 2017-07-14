@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DownStairOuter : MonoBehaviour {
+public class DownStairOuter : CommonThing
+{
 
     private RoomContraller roomContraller;
     private RoundController roundController;
@@ -23,7 +24,7 @@ public class DownStairOuter : MonoBehaviour {
 
     }
 
-    public void doClick()
+    public override void doClick()
     {
 
 
@@ -49,6 +50,7 @@ public class DownStairOuter : MonoBehaviour {
         roomContraller = FindObjectOfType<RoomContraller>();
 
         camCtrl = FindObjectOfType<CameraCtrl>();
+        this.setThingCode(ThingConstant.DOWNSTAIR_OUTER_CODE);
     }
 
     // Update is called once per frame

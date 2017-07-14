@@ -12,7 +12,6 @@ public class Jessie : CommonUser {
     private CharaInfoManager charaInfoManager;
     private GuangBoController guangBoController;
     private StoryController storyController;
-    private Queue<RoomInterface> targetRoomList = new Queue<RoomInterface>();
     private APathManager aPathManager = new APathManager();
     private bool waitPlan;
     public GameObject servant;
@@ -118,15 +117,15 @@ public class Jessie : CommonUser {
             this.setDesc("一脸严肃的样子，不爱说笑的神父。");
             this.waitPlan = false;
             this.setClickMessage(new string[] { "神会保佑我，给我一条出路。" });
-            targetRoomList.Enqueue(roomContraller.getRandomRoom());
-            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
+            getTargetRoomList().Enqueue(roomContraller.getRandomRoom());
+            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
         }
         else
         {
             P0 p = loadInfo(this.getName());
             roomXYZ = p.Xyz;
             this.waitPlan = p.WaitPlan;
-            loadInfo(this, p);
+            loadInfo(this, p, roomContraller);
         }
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);

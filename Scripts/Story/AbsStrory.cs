@@ -12,11 +12,14 @@ abstract public class AbsStrory : MonoBehaviour,StoryInterface
 
     private StoryScript goodStoryScript;
 
-    public void setStroryAttrs(List<Condition> triggerConditions, StoryScript goodStoryScript, StoryScript badStoryScript )
+    private string storyCode;
+
+    public void setStroryAttrs(List<Condition> triggerConditions, StoryScript goodStoryScript, StoryScript badStoryScript,string storyCode)
     {
        this.triggerConditions = triggerConditions;       
        this.goodStoryScript= goodStoryScript;
        this.badStoryScript = badStoryScript ;
+        this.storyCode = storyCode;
     }
 
     public bool checkStoryEnd(Character chara, RoomInterface room, RoundController roundController)
@@ -72,5 +75,10 @@ abstract public class AbsStrory : MonoBehaviour,StoryInterface
     public virtual void initStroy(Character chara, RoundController roundController)
     {
         
+    }
+
+    public string getStoryCode()
+    {
+        return storyCode;
     }
 }

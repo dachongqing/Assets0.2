@@ -14,8 +14,7 @@ public class Kate : CommonUser
     private BattleController battleController;
     private CharaInfoManager charaInfoManager;
     private GuangBoController guangBoController;
-    private StoryController storyController;
-    private Queue<RoomInterface> targetRoomList = new Queue<RoomInterface>();
+    private StoryController storyController;  
     private APathManager aPathManager = new APathManager();
     private bool waitPlan;
     public GameObject servant;
@@ -57,13 +56,13 @@ public class Kate : CommonUser
         }
         else
         {
-            if (this.targetRoomList.Count <= 0)
+            if (this.getTargetRoomList().Count <= 0)
             {
                 NPC ben = (NPC)FindObjectOfType<Ben>();
                 if (ben.isDead())
                 {
                     Debug.Log("随便找个房间看看");
-                    this.targetRoomList.Enqueue(roomContraller.getRandomRoom());
+                    this.getTargetRoomList().Enqueue(roomContraller.getRandomRoom());
 
                 }
                 else
@@ -100,7 +99,7 @@ public class Kate : CommonUser
             }
             else { 
 
-                RoomInterface target = this.targetRoomList.Peek();
+                RoomInterface target = this.getTargetRoomList().Peek();
                 if (target == null ) {
                     Debug.Log("target is null !!!!error");
                 }
@@ -141,7 +140,7 @@ public class Kate : CommonUser
                     if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, target.getXYZ()))
                     {
                       //  Debug.Log("reached the targetRoom is " + target.getXYZ()[0] + "," + target.getXYZ()[1] + "," + target.getXYZ()[2]);
-                        this.targetRoomList.Dequeue();
+                        this.getTargetRoomList().Dequeue();
                         if (target.getRoomType() == RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY)
                         {
                             Debug.Log("达到外科室");
@@ -190,7 +189,8 @@ public class Kate : CommonUser
                                 this.getBag().insertItem(item);
                                 this.getAbilityInfo()[3] = 1;
                                 //发疯后行动力加强
-                                this.getAbilityInfo()[1] = this.getAbilityInfo()[1] + 3;
+                                this.getAbilityInfo()[0] = this.getAbilityInfo()[0] + 3;
+                                this.getAbilityInfo()[1] = this.getAbilityInfo()[1] + 4;
                             }
                             else
                             {
@@ -299,10 +299,10 @@ public class Kate : CommonUser
             setTargetChara(new List<string>());
             getTargetChara().Add(SystemConstant.P2_NAME);
             this.setClickMessage(new string[] { "真相只有一个。", "你就是犯人。" });
-            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY));
-            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_TRI_OPERATION));
-            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_MORGUE));
-            targetRoomList.Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_STORE));
+            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY));
+            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_TRI_OPERATION));
+            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_MORGUE));
+            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_STORE));
 
         }
         else
@@ -310,7 +310,7 @@ public class Kate : CommonUser
             P0 p = loadInfo(this.getName());
             roomXYZ = p.Xyz;
             this.waitPlan = p.WaitPlan;
-            loadInfo(this, p);
+            loadInfo(this, p, roomContraller);
         }
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);

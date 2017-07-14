@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SystemController : MonoBehaviour {
 
@@ -9,12 +10,15 @@ public class SystemController : MonoBehaviour {
     private RoomContraller roomContraller;
     private initMap initMapObject;
     private LoadingManager loadingManager;
+    private StoryController storyController;
+    private ThingController thingController;
     private string filename;
     private string filename1;
     private string filename2;
     private string filename3;
     private Dictionary<string, int[]> stringMap = new Dictionary<string, int[]>();
     private Dictionary<string, int[]> getStringMap(Dictionary<int[], int[]> map)
+
     {
         foreach (int[] key in map.Keys)
         {
@@ -25,13 +29,6 @@ public class SystemController : MonoBehaviour {
 
     public void save()
     {
-        List<Character> charas = roundController.getAllCharaFromMap();
-        SaveData data = new SaveData();
-        foreach(Character chara in charas)
-        {
-            saveCharInfo(data, chara);
-
-        }      
         //定义存档路径
         string dirpath = Application.persistentDataPath + "/Save";
         //创建存档文件夹
@@ -41,24 +38,44 @@ public class SystemController : MonoBehaviour {
         filename1 = dirpath + "/SaveData1.sav";
         filename2 = dirpath + "/SaveData2.sav";
         filename3 = dirpath + "/SaveData3.sav";
-       // Debug.Log("save filename" + filename);
-        //保存数据
-        Dictionary<int[],RoomInterface> roomsInfo =   roomContraller.getAllRoom();
-        Dictionary<int[], int[]> maps =  initMapObject.getMapUpInfo();
-       
 
+        List<Character> charas = roundController.getAllCharaFromMap();
+        SaveData data = new SaveData();
+        foreach(Character chara in charas)
+        {
+            saveCharInfo(data, chara);
+
+        }
+        foreach (Character chara in roundController.getAllChara())
+        {
+            data.CharaNames.Add(chara.getName());
+
+        }
+
+        data.StoryInfo.IsStoryStart = storyController.getIsStartStory();
+        if(storyController.getIsStartStory())
+        {
+            data.StoryInfo.StoryCode = storyController.getStory().getStoryCode();
+        }
+        data.RoundCount = roundController.getRoundCount();
+        // Debug.Log("save filename" + filename);
+
+        foreach(ThingInfo ti in thingController.getEmptyThings())
+        {        
+            data.Things.Add(ti);
+        }
         IOHelper.SetData(filename, data);
+        data.CharaNames.Clear();
+        //保存地图数据
+        Dictionary<int[],RoomInterface> roomsInfo =   roomContraller.getAllRoom();          
+        IOHelper.SetData(filename1, getStringMap(initMapObject.getMapUpInfo()));
       
-        IOHelper.SetData(filename1, getStringMap(maps));
-        maps.Clear();
+        stringMap.Clear();       
+        IOHelper.SetData(filename2, getStringMap(initMapObject.getMapGroundInfo()));
+        stringMap.Clear();  
+        IOHelper.SetData(filename3, getStringMap(initMapObject.getMapDownInfo()));
         stringMap.Clear();
-        maps = initMapObject.getMapGroundInfo();
-        IOHelper.SetData(filename2, getStringMap(maps));
-        stringMap.Clear();
-        maps.Clear();
-        maps = initMapObject.getMapDownInfo();
-        IOHelper.SetData(filename3, getStringMap(maps));
-
+       
     }
 
     private void saveCharInfo(SaveData savaData, Character chara)
@@ -73,7 +90,8 @@ public class SystemController : MonoBehaviour {
         p.ProfilePic = chara.getProfilePic();
         p.CrazyFlag = chara.isCrazy();
         p.ActionPoint = chara.getActionPoint();
-        if(typeof(NPC).IsAssignableFrom(chara.GetType()))
+        
+        if (typeof(NPC).IsAssignableFrom(chara.GetType()))
         {
             NPC npc = (NPC)chara;
             foreach(Item i in npc.getBag().getAllItems())
@@ -85,8 +103,10 @@ public class SystemController : MonoBehaviour {
                 ii.Name = i.getName();
                 ii.Type = i.getType();
                 p.Bag.Add(ii);
-
-
+            }
+            foreach(RoomInterface ri in npc.getTargetRoomList())
+            {
+                p.TargetRoomlist.Add(ri.getRoomType());
             }
         }
         //p.BossFlag = chara.getb
@@ -113,14 +133,20 @@ public class SystemController : MonoBehaviour {
         {
             savaData.P6 = p;
         }
+        else if (chara.getName() == SystemConstant.MONSTER1_NAME)
+        {
+            savaData.BenMonster = p;
+        }
     }
 
     public void load()
     {
-       // Dictionary<string, int[]> p6 = (Dictionary<string, int[]>)IOHelper.GetData(filename1, typeof(Dictionary<string, int[]>));
+        // Dictionary<string, int[]> p6 = (Dictionary<string, int[]>)IOHelper.GetData(filename1, typeof(Dictionary<string, int[]>));
 
-       // Debug.Log("p6 :" + p6.Count);
-        loadingManager.loadRecord();
+        // Debug.Log("p6 :" + p6.Count);
+        // loadingManager.loadRecord();
+        SceneManager.LoadScene("Loading");
+
 
 
     }
@@ -131,6 +157,8 @@ public class SystemController : MonoBehaviour {
         roomContraller = FindObjectOfType<RoomContraller>();
         initMapObject = FindObjectOfType<initMap>();
         loadingManager = FindObjectOfType<LoadingManager>();
+        storyController = FindObjectOfType<StoryController>();
+        thingController = FindObjectOfType<ThingController>();
 
     }
 	

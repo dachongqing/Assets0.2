@@ -13,8 +13,8 @@ public class H_minitorRoom : CommonRoom
 
     // Use this for initialization
     void Start () {
-		
-	}
+        computer.GetComponent<Computer>().init(this.getXYZ());
+    }
 	
 	// Update is called once per frame
 	void Update () {

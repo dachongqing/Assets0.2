@@ -13,7 +13,6 @@ public class Ben : CommonUser
     private CharaInfoManager charaInfoManager;
     private GuangBoController guangBoController;
     private StoryController storyController;
-    private Queue<RoomInterface> targetRoomList = new Queue<RoomInterface>();
     private APathManager aPathManager = new APathManager();
     private bool waitPlan;
     public GameObject servant;
@@ -123,7 +122,7 @@ public class Ben : CommonUser
             P0 p = loadInfo(this.getName());
             roomXYZ = p.Xyz;
             this.waitPlan = p.WaitPlan;
-            loadInfo(this,p);
+            loadInfo(this, p, roomContraller);
         }
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);

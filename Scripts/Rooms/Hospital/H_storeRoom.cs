@@ -16,6 +16,8 @@ public class H_storeRoom : CommonRoom
         ei.setEventBeginInfo(this.getEventBeginInfo());
         ei.setEventEndInfo(this.getEventEndInfoMap());
         this.setRoomEvent(ei);
+        safeCabinet.GetComponent<SafeCabinet>().init(this.getXYZ());
+      
     }
 	
 	// Update is called once per frame

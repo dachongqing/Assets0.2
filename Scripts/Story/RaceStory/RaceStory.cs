@@ -11,6 +11,8 @@ public class RaceStory :  StoryInterface {
 
     private StoryScript goodStoryScript;
 
+    private string storyCode;
+
     public RaceStory() {
         triggerConditions = new List<Condition>();
         Condition trigger = new RaceTriggerCondition();
@@ -21,6 +23,7 @@ public class RaceStory :  StoryInterface {
         triggerConditions.Add(trigger2);
         goodStoryScript = new RaceGoodScript();
         badStoryScript = new RaceBadScript();
+        storyCode = StoryConstan.CONDITION_TYPE_TRIGGER;
     }
 
     public bool checkStoryEnd(Character chara, RoomInterface room, RoundController roundController)
@@ -59,6 +62,11 @@ public class RaceStory :  StoryInterface {
     public StoryScript getGoodManScript()
     {
         return goodStoryScript;
+    }
+
+    public string getStoryCode()
+    {
+       return  storyCode;
     }
 
     public string getStoryInfo()

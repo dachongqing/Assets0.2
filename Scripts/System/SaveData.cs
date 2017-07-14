@@ -10,6 +10,15 @@ public class SaveData  {
     private P0 p4;
     private P0 p5;
     private P0 p6;
+    private P0 benMonster;
+    private int roundCount;
+    private List<string> charaNames = new List<string>();
+
+    private List<ThingInfo> things = new List<ThingInfo>();
+     
+
+
+    private StoryInfo storyInfo  = new StoryInfo();
 
     public P0 P1
     {
@@ -86,6 +95,71 @@ public class SaveData  {
         set
         {
             p6 = value;
+        }
+    }
+
+    public StoryInfo StoryInfo
+    {
+        get
+        {
+            return storyInfo;
+        }
+
+        set
+        {
+            storyInfo = value;
+        }
+    }
+
+    public P0 BenMonster
+    {
+        get
+        {
+            return benMonster;
+        }
+
+        set
+        {
+            benMonster = value;
+        }
+    }
+
+    public int RoundCount
+    {
+        get
+        {
+            return roundCount;
+        }
+
+        set
+        {
+            roundCount = value;
+        }
+    }
+
+    public List<string> CharaNames
+    {
+        get
+        {
+            return charaNames;
+        }
+
+        set
+        {
+            charaNames = value;
+        }
+    }
+
+    public List<ThingInfo> Things
+    {
+        get
+        {
+            return things;
+        }
+
+        set
+        {
+            things = value;
         }
     }
 }
