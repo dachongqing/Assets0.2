@@ -15,8 +15,8 @@ public class SaveData  {
     private List<string> charaNames = new List<string>();
 
     private List<ThingInfo> things = new List<ThingInfo>();
-     
 
+    private List<EventInfo> effectedList = new List<EventInfo>();
 
     private StoryInfo storyInfo  = new StoryInfo();
 
@@ -160,6 +160,19 @@ public class SaveData  {
         set
         {
             things = value;
+        }
+    }
+
+    public List<EventInfo> EffectedList
+    {
+        get
+        {
+            return effectedList;
+        }
+
+        set
+        {
+            effectedList = value;
         }
     }
 }

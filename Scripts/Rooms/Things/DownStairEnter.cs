@@ -10,6 +10,8 @@ public class DownStairEnter : CommonThing
 
     private CameraCtrl camCtrl;
 
+
+
     void OnMouseDown()
 
     {

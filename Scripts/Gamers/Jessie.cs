@@ -116,7 +116,7 @@ public class Jessie : CommonUser {
 
             this.setDesc("一脸严肃的样子，不爱说笑的神父。");
             this.waitPlan = false;
-            this.setClickMessage(new string[] { "神会保佑我，给我一条出路。" });
+          //  this.setClickMessage(new string[] {  });
             getTargetRoomList().Enqueue(roomContraller.getRandomRoom());
             getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
         }
@@ -130,7 +130,7 @@ public class Jessie : CommonUser {
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
-      
+        this.setClickMessage(this.roomContraller.findRoomByXYZ(roomXYZ).findSomethingNews(this).ToArray());
     }
 
     // Update is called once per frame

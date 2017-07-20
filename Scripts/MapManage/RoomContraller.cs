@@ -31,15 +31,14 @@ public class RoomContraller : MonoBehaviour
     //这个队列的长度，限制了房间最大数量
     public RoomContraller()
     {
-        genRoomType();
-        genRoomEvent();
+        genRoomType();       
     }
 
     private void genRoomType()
     {
         //这个队列的长度，限制了房间最大数量
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_REST);
         groundRoomType.Enqueue("UpStairEnterRoom");
         groundRoomType.Enqueue("DownStairEnterRoom");
         groundRoomType.Enqueue("LobbyRoom");
@@ -110,18 +109,7 @@ public class RoomContraller : MonoBehaviour
         downRoomType.Enqueue("BookRoom");
     }
 
-    private void genRoomEvent()
-    {
-        EventInterface ei = new SpeedLeveaRoomEvent();
-        ei.setEventBeginInfo(new string[] { "11111", "2222", "3333" });
-        Dictionary<string, string[]> map = new Dictionary<string, string[]>();
-        map.Add(EventConstant.LEAVE_EVENT_SAFE, new string[] { "ccc", "cc", "ccc" });
-        map.Add(EventConstant.LEAVE_EVENT_BAD, new string[] { "qqqz", "qqq", "qqqq" });
-        map.Add(EventConstant.LEAVE_EVENT_SHIT, new string[] { "www", "www", "ww" });
-        ei.setEventEndInfo(map);
-        events.Add(ei);
-
-    }
+   
 
     private EventInterface getRandomEvent(String banEventType)
     {
@@ -205,14 +193,9 @@ public class RoomContraller : MonoBehaviour
         {
             RoomInterface ri;
 
-            if (roomType == RoomConstant.ROOM_TYPE_UPSTAIR || roomType == RoomConstant.ROOM_TYPE_UPSTAIR_BACK
-                || roomType == RoomConstant.ROOM_TYPE_DOWNSTAIR || roomType == RoomConstant.ROOM_TYPE_DOWNSTAIR_BACK)
-            {
-                ri = room.GetComponent(System.Type.GetType(RoomConstant.ROOM_TYPE_COMMON)) as RoomInterface;
-            }
-            else {
-                ri = room.GetComponent(System.Type.GetType(roomType)) as RoomInterface;
-            }
+           
+            ri = room.GetComponent(System.Type.GetType(roomType)) as RoomInterface;
+     
             if (ri == null) {
                 Debug.Log("cant find type:  " + roomType);
             }

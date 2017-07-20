@@ -12,6 +12,7 @@ public class SystemController : MonoBehaviour {
     private LoadingManager loadingManager;
     private StoryController storyController;
     private ThingController thingController;
+    private EventController eventController;
     private string filename;
     private string filename1;
     private string filename2;
@@ -64,6 +65,11 @@ public class SystemController : MonoBehaviour {
         {        
             data.Things.Add(ti);
         }
+        foreach (EventInfo ei in eventController.getStayEventList())
+        {
+            data.EffectedList.Add(ei);
+        }
+        
         IOHelper.SetData(filename, data);
         data.CharaNames.Clear();
         //保存地图数据
@@ -159,7 +165,7 @@ public class SystemController : MonoBehaviour {
         loadingManager = FindObjectOfType<LoadingManager>();
         storyController = FindObjectOfType<StoryController>();
         thingController = FindObjectOfType<ThingController>();
-
+        eventController = FindObjectOfType<EventController>();
     }
 	
 	// Update is called once per frame

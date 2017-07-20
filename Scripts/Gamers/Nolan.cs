@@ -139,7 +139,7 @@ public class Nolan :  CommonUser
             this.waitPlan = false;
 
             this.setDesc("一身脏兮兮的白大褂，第一感觉是个跳大神的庸医。");
-            this.setClickMessage(new string[] { "", "你就是犯人。" });
+            //this.setClickMessage(new string[] { "", "你就是犯人。" });
             getTargetRoomList().Enqueue(roomContraller.getRandomRoom());
             getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
         }
@@ -153,9 +153,9 @@ public class Nolan :  CommonUser
         setDistance(0.5f);
         setCurrentRoom(roomXYZ);             
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
-        this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
-     
-        getTargetChara().Add(SystemConstant.P1_NAME);   
+        this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);  
+        this.setClickMessage(this.roomContraller.findRoomByXYZ(roomXYZ).findSomethingNews(this).ToArray());
+
     }
 
     // Update is called once per frame

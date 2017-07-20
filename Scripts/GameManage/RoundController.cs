@@ -31,6 +31,10 @@ public class RoundController : MonoBehaviour
 
     private Character playerChara; // 玩家所控制的角色
 
+    private RoomContraller roomContraller;
+
+    private EventController eventController;
+
     public bool newOrLoad;
 
     public Character getNextCharecter()
@@ -50,6 +54,7 @@ public class RoundController : MonoBehaviour
     public void endRound()
     {
         this.getCurrentRoundChar().updateActionPoint(0);
+        eventController.excuteStayRoomEvent(roomContraller.findRoomByXYZ(this.getCurrentRoundChar().getCurrentRoom()), this.getCurrentRoundChar());
         this.getCurrentRoundChar().endRound();
     }
 
@@ -74,6 +79,8 @@ public class RoundController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+            roomContraller = FindObjectOfType<RoomContraller>();
+            eventController = FindObjectOfType<EventController>();
             player = FindObjectOfType<Player>();
             nolan = FindObjectOfType<Nolan>();
             ben = FindObjectOfType<Ben>();

@@ -5,12 +5,10 @@ using UnityEngine;
 public interface EventInterface  {
 
     string[] getEventBeginInfo();
-
-    void setEventBeginInfo(string[] infos);
-       
+      
     string getEventType();
 
-    EventResult excute(List<Character> characters);
+    string getSubEventType();
 
     EventResult excute(Character character,string selectCode, int rollValue);
 
@@ -18,7 +16,13 @@ public interface EventInterface  {
 
     string[] getEventEndInfo(string resultCode);
 
-    void setEventEndInfo(Dictionary<string, string[]> endMap);
+    int getGoodValue();
+
+    int getNormalValue();
+
+    int getBadDiceNum();
+
+ 
 
 
 }

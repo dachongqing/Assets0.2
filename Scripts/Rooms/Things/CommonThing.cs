@@ -11,6 +11,8 @@ abstract public class CommonThing : MonoBehaviour ,Thing{
 
     private int[] xyz;
 
+    private string[] clickMessage;
+
     private void saveEmptyThing(int[] roomXYZ, string code)
     {
         FindObjectOfType<ThingController>().emptyThing(roomXYZ,code);
@@ -66,6 +68,16 @@ abstract public class CommonThing : MonoBehaviour ,Thing{
                this.isEmpty = true;
             }
         }
+    }
+
+    public void setClickMessage(string[] msg)
+    {
+        this.clickMessage = msg;
+    }
+
+    public string[] getClickMessage()
+    {
+        return this.clickMessage;
     }
 
     // Use this for initialization

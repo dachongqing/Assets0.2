@@ -116,7 +116,6 @@ public class Ben : CommonUser
           
             this.waitPlan = false;
             this.setDesc("活力充沛，爱开玩笑的冒险家。");
-            this.setClickMessage(new string[] { "这地方太神奇了。我到前面去探探路。" });
         } else
         {
             P0 p = loadInfo(this.getName());
@@ -127,6 +126,7 @@ public class Ben : CommonUser
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
+        this.setClickMessage(this.roomContraller.findRoomByXYZ(roomXYZ).findSomethingNews(this).ToArray());
         
        
     }

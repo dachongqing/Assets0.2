@@ -298,7 +298,7 @@ public class Kate : CommonUser
             this.waitPlan = false;
             setTargetChara(new List<string>());
             getTargetChara().Add(SystemConstant.P2_NAME);
-            this.setClickMessage(new string[] { "真相只有一个。", "你就是犯人。" });
+          //  this.setClickMessage(new string[] { "真相只有一个。", "你就是犯人。" });
             getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY));
             getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_TRI_OPERATION));
             getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_MORGUE));
@@ -315,7 +315,8 @@ public class Kate : CommonUser
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
-      // setBoss(true);       
+        this.setClickMessage(this.roomContraller.findRoomByXYZ(roomXYZ).findSomethingNews(this).ToArray());
+        // setBoss(true);       
     }
 
     // Update is called once per frame

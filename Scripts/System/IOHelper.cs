@@ -73,7 +73,7 @@ public static class IOHelper
         //对数据进行解密，32位解密密钥
         data = RijndaelDecrypt(data, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         streamReader.Close();
-        Debug.Log(fileName +","+ data);
+       // Debug.Log(fileName +","+ data);
         return DeserializeObject(data, pType);
     }
 

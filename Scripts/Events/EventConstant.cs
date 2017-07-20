@@ -16,13 +16,19 @@ public class EventConstant  {
 
     public const string LEAVE_EVENT_SAFE = "Leave_10001";
 
-    public const string LEAVE_EVENT_BAD = "Leave_10002";
+    public const string LEAVE_EVENT_NORMAL = "Leave_10002";
 
-    public const string LEAVE_EVENT_SHIT = "Leave_10003";
+    public const string LEAVE_EVENT_BAD = "Leave_10003";
 
-    public const string SANCHECK_EVENT_SAFE = "SanCheck_10001";
+    public const string SANCHECK_EVENT_GOOD = "SanCheck_10001";
 
-    public const string SANCHECK_EVENT_BAD = "SanCheck_10002";
+    public const string SANCHECK_EVENT_NORMAL = "SanCheck_10002";
 
-    public const string SANCHECK_EVENT_SHIT = "SanCheck_10003";
+    public const string SANCHECK_EVENT_BED = "SanCheck_10003";
+
+    public const string SAN_STAY_EVENT = "SanStay"; //回复神志事件
+
+    public const string SAN_STAY_EVENT_GOOD = "SanStay_10001"; //回复神志事件
+
+    public const string SAN_STAY_EVENT_BAD = "SanStay_10002"; //回复神志事件
 }

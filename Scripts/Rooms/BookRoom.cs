@@ -31,7 +31,7 @@ public class BookRoom : CommonRoom
 
     void Start()
     {
-        Debug.Log("房间内物品初始化");
+       // Debug.Log("房间内物品初始化");
         Box.GetComponent<Box>().init(getXYZ());
        
     }

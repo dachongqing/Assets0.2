@@ -26,6 +26,8 @@ public class EventController : MonoBehaviour
 
     private EventResult result;
 
+    private List<EventInfo> stayEventList = new List<EventInfo>();
+
     public void excuteLeaveRoomEvent (DoorInterface door, RoomInterface ri, Character chara)
 	{
 		//这个房间有没有离开事件
@@ -63,10 +65,15 @@ public class EventController : MonoBehaviour
         {
            
                 EventResult result = eventI.excute(chara, null, 0);
-
-                return result.getStatus();
-          
-
+                if (result.getResultCode() == EventConstant.LEAVE_EVENT_SAFE)
+                {
+                     return true;
+                }
+                else
+                {
+                    chara.updateActionPoint(0);               
+                    return false;
+                }       
         }
         else
         {
@@ -76,17 +83,29 @@ public class EventController : MonoBehaviour
         }
     }
 
-    public bool excuteStayRoomEvent (RoomInterface ri, Character chara)
+    public void excuteStayRoomEvent (RoomInterface ri, Character chara)
 	{
-		return false;
-	}
+    
+        this.eventI = ri.getRoomEvent(EventConstant.STAY_EVENT);
+        if (this.eventI != null)
+        {
+            EventInfo ei = new EventInfo();
+            ei.RoomXyz = ri.getXYZ();
+            ei.EffectedList.Add(chara.getName());
+            this.stayEventList.Add(ei);
+            eventI.excute(chara, null, 0);                         
+        }
+       
+    }
 
 	public bool excuteEnterRoomEvent (RoomInterface ri, Character chara)
 	{
-        eventI = ri.getRoomEvent(EventConstant.SANCHECK_EVENT);
+        eventI = ri.getRoomEvent(EventConstant.ENTER_EVENT);
         if (eventI != null) {
-            Debug.Log("san check");
-            return excuteSanCheckEvent(eventI, chara);
+            if(eventI.getSubEventType() == EventConstant.SANCHECK_EVENT)
+            {
+                return excuteSanCheckEvent(eventI, chara);
+            }
         }
         Debug.Log(" no san check");
         return true;
@@ -107,9 +126,16 @@ public class EventController : MonoBehaviour
             } else
             {
                 result = eventI.excute(chara, messageUI.getResult().getResult(), 0);
-                if (result.getResultCode() == EventConstant.SANCHECK_EVENT_BAD)
+
+                if (result.getResultCode() == EventConstant.SANCHECK_EVENT_GOOD)
                 {
-                    RollDiceParam param = new RollDiceParam(1);
+                    chara.getMaxAbilityInfo()[3] = chara.getMaxAbilityInfo()[3] + this.eventI.getGoodValue();
+                    chara.getAbilityInfo()[3] = chara.getAbilityInfo()[3] + this.eventI.getGoodValue();
+                } else if (result.getResultCode() == EventConstant.SANCHECK_EVENT_NORMAL)
+                {
+                    chara.getAbilityInfo()[3] = chara.getAbilityInfo()[3] + this.eventI.getNormalValue();
+                } else {
+                    RollDiceParam param = new RollDiceParam(this.eventI.getBadDiceNum());
                     rollVaue = uiManager.showRollDiceImmediately(param);
                     chara.getAbilityInfo()[3] = chara.getAbilityInfo()[3] - rollVaue;
                 }
@@ -126,9 +152,7 @@ public class EventController : MonoBehaviour
 
     void Start()
     {
-        leaveExecuted = true;
-
-      
+        leaveExecuted = true;  
     }
 
       private int rollVaue = 0;
@@ -163,7 +187,14 @@ public class EventController : MonoBehaviour
             
             else if (phase == 4 && messageUI.getResult().getDone())
             {
-                this.door.playerOpenDoorResult(result.getStatus());
+                if (result.getResultCode() ==EventConstant.LEAVE_EVENT_SAFE)
+                {
+                    this.door.playerOpenDoorResult(true);
+                } else
+                {
+                    chara.updateActionPoint(0);
+                    this.door.playerOpenDoorResult(false);
+                }
                 leaveExecuted = true;
             }
         }
@@ -197,14 +228,25 @@ public class EventController : MonoBehaviour
 
             else if (phase == 4 && messageUI.getResult().getDone())
             {
-                if(result.getResultCode() == EventConstant.SANCHECK_EVENT_BAD)
+                if(result.getResultCode() == EventConstant.SANCHECK_EVENT_BED)
                 {
-                    RollDiceParam param = new RollDiceParam(1);
+                    RollDiceParam param = new RollDiceParam(eventI.getBadDiceNum());
                     rollVaue = uiManager.showRollDiceImmediately(param);
                     chara.getAbilityInfo()[3] = chara.getAbilityInfo()[3] - rollVaue;
+                } else if(result.getResultCode() == EventConstant.SANCHECK_EVENT_NORMAL)
+                {
+                    chara.getAbilityInfo()[3] = chara.getAbilityInfo()[3] + eventI.getNormalValue();
+                } else
+                {
+                    chara.getAbilityInfo()[3] = chara.getAbilityInfo()[3] + eventI.getGoodValue();
                 }
                 sanCheckExecuted = true;
             }
         }
+    }
+
+    public List<EventInfo> getStayEventList()
+    {
+        return this.stayEventList;
     }
 }

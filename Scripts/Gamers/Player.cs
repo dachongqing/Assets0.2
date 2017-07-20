@@ -114,7 +114,7 @@ public class Player : CommonUser
             this.setDesc("外乡人.");
             this.waitPlan = false;
 
-            this.setClickMessage(new string[] { "我就是来旅游的。" });
+           // this.setClickMessage(new string[] { "我就是来旅游的。" });
         } else
         {
             P0 p = loadInfo(this.getName());
@@ -128,8 +128,8 @@ public class Player : CommonUser
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
-      
-       
+        this.setClickMessage(this.roomContraller.findRoomByXYZ(roomXYZ).findSomethingNews(this).ToArray());
+
         /*
         Item item1 = new ItemTask(ItemConstant.ITEM_CODE_SPEC_Y0006
            , ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME, ItemDesConstant.ITEM_CODE_SPEC_Y0006_NAME);

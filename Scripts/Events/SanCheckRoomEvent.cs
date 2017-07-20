@@ -3,31 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SanCheckRoomEvent : EventInterface
+public class SanCheckRoomEvent : CommonEvent
 {
  
-    private int goodSanCheckPoint;
-    private int badSanCheckPoint;
-
     private DiceRollCtrl diceRoll = new DiceRollCtrl();
     private int dicePoint;
 
-    public SanCheckRoomEvent(int good, int bad)
-    {      
-        goodSanCheckPoint = good;
-        badSanCheckPoint = bad;     
-    }
-
-    public String[] eventBeginInfo;
-    public Dictionary<string,string[]> endInfoMap;
-
-
-    public EventResult excute(List<Character> characters)
+    public SanCheckRoomEvent(int good, int bad,string[] eventBeginInfo, Dictionary<string, string[]> endInfoMap, string eventType, string subEventType,
+        int goodValue, int normalValue, int bedDiceNum)
+        :base(good, bad, eventBeginInfo,endInfoMap, eventType, subEventType, goodValue, normalValue, bedDiceNum)
     {
-        throw new NotImplementedException();
+      
     }
-
-    public EventResult excute(Character character, string selectCode, int rollValue)
+    
+    public override EventResult doExcute(Character character, string selectCode, int rollValue)
     {
         EventResult er = new EventResult();
         int dicePoint = 0;
@@ -44,51 +33,32 @@ public class SanCheckRoomEvent : EventInterface
 
         }
 
-        if (badSanCheckPoint > dicePoint)
+        if (dicePoint <= this.getBadCheckPoint())
         {
             er.setStatus(true);
-            er.setResultCode(EventConstant.SANCHECK_EVENT_BAD);
+            er.setResultCode(EventConstant.SANCHECK_EVENT_BED);
 
         }
-        else
+        else if (dicePoint > this.getBadCheckPoint() && dicePoint < this.getGoodCheckPoint()) 
         {
             er.setStatus(true);
-            er.setResultCode(EventConstant.SANCHECK_EVENT_SAFE);
-         }
+            er.setResultCode(EventConstant.SANCHECK_EVENT_NORMAL);
+         } else
+        {
+            er.setStatus(true);
+            er.setResultCode(EventConstant.SANCHECK_EVENT_GOOD);
+        }
            
         return er;
     }
 
-    public string[] getEventBeginInfo()
-    {
-        return eventBeginInfo;
-    }
+    
 
-    public string[] getEventEndInfo(string resultCode)
-    {
-        Debug.Log("resultCode " + resultCode + this.endInfoMap.Count);
-        return this.endInfoMap[resultCode];
-    }
+   
 
-    public string getEventType()
-    {
-        return EventConstant.SANCHECK_EVENT;
-    }
+   
 
-    public Dictionary<string, string> getSelectItem()
-    {
-        return null;
-    }
-
-    public void setEventBeginInfo(string[] infos)
-    {
-        this.eventBeginInfo = infos;
-    }
-
-    public void setEventEndInfo(Dictionary<string, string[]> endMap)
-    {
-        this.endInfoMap = endMap;
-    }
+   
 
     
 }

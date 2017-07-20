@@ -116,7 +116,7 @@ public class Martin : CommonUser {
 
             this.setDesc("沉默寡言，不爱说话的黑客.");
             this.waitPlan = false;
-            this.setClickMessage(new string[] { "谁能给我一台电脑？" });
+           // this.setClickMessage(new string[] { "谁能给我一台电脑？" });
             getTargetRoomList().Enqueue(roomContraller.getRandomRoom());
             getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
         }
@@ -130,7 +130,7 @@ public class Martin : CommonUser {
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
-      
+        this.setClickMessage(this.roomContraller.findRoomByXYZ(roomXYZ).findSomethingNews(this).ToArray());
     }
 
     // Update is called once per frame
