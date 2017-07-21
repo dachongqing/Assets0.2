@@ -31,4 +31,13 @@ public class EventConstant  {
     public const string SAN_STAY_EVENT_GOOD = "SanStay_10001"; //回复神志事件
 
     public const string SAN_STAY_EVENT_BAD = "SanStay_10002"; //回复神志事件
+
+    public const string FALL_DOWN__EVENT = "FallDownEvent"; //下落地下事件
+
+    public const string FALL_DOWN__EVENT_GOOD = "FallDown_10001"; //下落地下事件
+
+    public const string FALL_DOWN__EVENT_NORMAL = "FallDown_10002"; //下落地下事件
+
+    public const string FALL_DOWN__EVENT_BAD = "FallDown_10003"; //下落地下事件
+
 }

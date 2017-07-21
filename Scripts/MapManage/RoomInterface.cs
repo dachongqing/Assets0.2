@@ -63,6 +63,7 @@ public interface RoomInterface
     GameObject getEastDoor();
     GameObject getWestDoor();
     bool isLock();
+    void setLock(bool locked);
     bool checkOpen(Character chara);
 
     string[] getEventBeginInfo();

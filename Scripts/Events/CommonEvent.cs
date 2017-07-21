@@ -37,8 +37,7 @@ abstract public class CommonEvent : EventInterface {
     public EventResult excute(Character character, string selectCode, int rollValue)
     {
         if (this.effectedList== null || !this.effectedList.Contains(character.getName())) {
-            Debug.Log(this.effectedList);
-            Debug.Log(this.effectedList.Count);
+            
             return doExcute(character, selectCode, rollValue);
         } else
         {

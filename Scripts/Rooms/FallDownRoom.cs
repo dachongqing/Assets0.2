@@ -2,25 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class H_tridOperationRoom : CommonRoom
-{
-
-    public GameObject operatingTable;
-
-    public GameObject getOperatingTable()
-    {
-        return operatingTable;
-    }
+public class FallDownRoom : CommonRoom {
 
     public override List<string> findSomethingNews(Character chara)
     {
-       
+
         getClickMessage().Clear();
         if (chara.getName() == SystemConstant.P1_NAME)
         {
-           
+
             getClickMessage().Add("我只负责冒险家这一个病人，他现在不是好好的吗！  ");
-            
+
 
         }
         else if (chara.getName() == SystemConstant.P2_NAME)
@@ -64,72 +56,35 @@ public class H_tridOperationRoom : CommonRoom
 
     void Start()
     {
-        setLock(true);
-        EventInterface ei = new SanCheckRoomEvent(7, 5, this.getEventBeginInfo(), this.getEventEndInfoMap(),
-            EventConstant.ENTER_EVENT, EventConstant.SANCHECK_EVENT, 1, -1, 1);
+       
+        EventInterface ei = new FallRoomEvent(18, 11, this.getEventBeginInfo(), this.getEventEndInfoMap(),
+            EventConstant.ENTER_EVENT, EventConstant.FALL_DOWN__EVENT, 0, 0, 1);
         this.setRoomEvent(ei);
-        operatingTable.GetComponent<OperatingTable>().init(this.getXYZ());
-     
+       
+
     }
+
     
-
-    public override bool checkOpen(Character chara)
-    {
-        if (isLock())
-        {
-            if (typeof(NPC).IsAssignableFrom(chara.GetType()))
-            {
-
-                NPC npc = (NPC)chara;
-
-                if (npc.getBag().checkItem(ItemConstant.ITEM_CODE_SPEC_Y0002))
-                {
-                    setLock(false);
-                    return true;
-                }
-                else if (npc.getName() == SystemConstant.P1_NAME)
-                {
-                    setLock(false);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-        else {
-            return true;
-        }
-    }
 
     public override string[] getEventBeginInfo()
     {
 
-        return new string[] { "当你打开门一股腐烂的气味马上传入你的鼻子里， 让你感到一阵恶心。。。"
-        ,"你注意到手术台上放着一具不知道放了多久的尸体。","你需要投一个神志检测。"};
+        return new string[] { "哇！。摇晃的地板让你重心不稳，你需要速度判定来躲避掉下去"};
     }
 
     public override Dictionary<string, string[]> getEventEndInfoMap()
     {
         Dictionary<string, string[]> map = new Dictionary<string, string[]>();
-        string[] good = new string[] { "你遇到太多这样的画面，所以你只是感到一阵恶心。"
+        string[] good = new string[] { "你的反应很好，成功了跳过了碎裂的木板。"
         };
-        string[] normal = new string[] { "你没忍住胃的翻江倒海，你的神志下降1点。"
+        string[] normal = new string[] { "你一下踩空了木板， 但是你的反应能力让你马上调整了平衡，没有收到伤害"
         };
-        string[] bad = new string[] { "你的眼睛一直停留在尸体上，那个手臂上的脓包让你感觉一阵寒意突然袭来"
-            ,"你需要投掷一个1D2的神志扣除。"
+        string[] bad = new string[] { "你的注意完全不在脚下， 随着一声哇，你重重地摔倒了楼下房间"
+            ,"你需要投掷一个1D2的力量扣除。"
         };
-        map.Add(EventConstant.SANCHECK_EVENT_GOOD, good);
-        map.Add(EventConstant.SANCHECK_EVENT_NORMAL, normal);
-        map.Add(EventConstant.SANCHECK_EVENT_BED, bad);
+        map.Add(EventConstant.FALL_DOWN__EVENT_GOOD, good);
+        map.Add(EventConstant.FALL_DOWN__EVENT_NORMAL, normal);
+        map.Add(EventConstant.FALL_DOWN__EVENT_BAD, bad);
         return map;
     }
-    
 }

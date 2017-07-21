@@ -38,10 +38,10 @@ public class RoomContraller : MonoBehaviour
     {
         //这个队列的长度，限制了房间最大数量
         groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("FallDownRoom");
         groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_REST);
         groundRoomType.Enqueue("UpStairEnterRoom");
         groundRoomType.Enqueue("DownStairEnterRoom");
-        groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY);
