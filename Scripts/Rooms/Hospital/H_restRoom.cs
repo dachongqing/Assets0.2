@@ -9,35 +9,32 @@ public class H_restRoom : CommonRoom {
         getClickMessage().Clear();
         if (chara.getName() == SystemConstant.P1_NAME)
         {
-            getClickMessage().Add("这里好像是我的办公室，哈哈， 咦？");
-            getClickMessage().Add("没错，那个冒险家的病 被我轻松治好了。");
-
+            getClickMessage().Add("平常我都是来这里休息的，躺一会马上感觉身体充满了力量。");
+           
         }
         else if (chara.getName() == SystemConstant.P2_NAME)
         {
 
-            getClickMessage().Add("这个应该是巧合吧？我在一次地下溶洞探险的时候被 什么东西咬了一下");
-            getClickMessage().Add("咬伤而已没什么大不了。哈哈，对吧医生？");
-            getClickMessage().Add("后面医院还派了其他医生来跟踪回访呢。");
+            getClickMessage().Add("不错，沙发软软的，我要休息会了。");
+          
         }
         else if (chara.getName() == SystemConstant.P3_NAME)
         {
-            getClickMessage().Add("早知道不来这个房间了，我还有更重要的祷告要做呢。");
+            getClickMessage().Add("偶尔在这里躺一会也是不错的。");
         }
         else if (chara.getName() == SystemConstant.P4_NAME)
         {
-            this.getClickMessage().Add("这间屋子摆放了不少人体模型，好像是个外科室。");
-            this.getClickMessage().Add("桌子上有不少的病人就诊资料，我仔细看看。");
+            this.getClickMessage().Add("好困啊，只能眯会了。");
+           
         }
         else if (chara.getName() == SystemConstant.P5_NAME)
         {
-            getClickMessage().Add("这间房间没有什么特别值得注意的");
-            getClickMessage().Add("看看那边的报栏上有什么报纸新闻？");
+            getClickMessage().Add("要是再配个电脑，我都不想走出这个房间了。");       
 
         }
         else if (chara.getName() == SystemConstant.P6_NAME)
         {
-            getClickMessage().Add("不明虫子咬伤？");
+            getClickMessage().Add("安静的房间，适合休息一下。");
         }
 
         return getClickMessage();
