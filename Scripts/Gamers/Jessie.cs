@@ -140,7 +140,7 @@ public class Jessie : CommonUser {
             getAbilityInfo()[2] <= 0 || getAbilityInfo()[3] <= 0
         )
         {
-            Debug.Log(this.getName() + " 已经死亡。。。");
+          //  Debug.Log(this.getName() + " 已经死亡。。。");
             setIsDead(true);
         }
         if (getAbilityInfo()[3] <= 3)

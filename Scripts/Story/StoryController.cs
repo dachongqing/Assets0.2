@@ -45,16 +45,34 @@ public class StoryController : MonoBehaviour
         isStartStory = false;
         roundController = FindObjectOfType<RoundController>();
         roomContraller = FindObjectOfType<RoomContraller>();
+        duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
         if (!this.neworLoad)
         {
+            Debug.Log("loading  begin..");
             string datapath = Application.persistentDataPath + "/Save/SaveData0.sav";
             SaveData data = (SaveData)IOHelper.GetData(datapath, typeof(SaveData));
-            if(data.StoryInfo.IsStoryStart)
+            if (data.StoryInfo.IsStoryStart)
             {
+                Debug.Log("loading story begin..");
                 isStartStory = true;
-                if(data.StoryInfo.StoryCode == StoryConstan.STORY_CODE_02)
+                if (data.StoryInfo.StoryCode == StoryConstan.STORY_CODE_02)
                 {
                     this.story = new BlackSignStory();
+                    BlackSignBadScript bsbs = (BlackSignBadScript)this.story.getBadManScript();
+                    List<string> tempList = new List<string>();
+                    foreach (string name in bsbs.loadCheck()) {
+                       if(roundController.getCharaByName(name)!=null && !roundController.getCharaByName(name).isDead())
+                        {
+
+                            Debug.Log("loading check targetName begin.." + name + roundController.getCharaByName(name).isDead());
+                            tempList.Add(name);
+                        }
+                    }
+                    bsbs.loadCheck().Clear();
+                    foreach (string name in tempList)
+                    {
+                        bsbs.loadCheck().Enqueue(name);
+                    }
                     string monsteUrl = "Prefabs/Monsters/BenMonster";
                     GameObject servantObject = Instantiate(Resources.Load(monsteUrl)) as GameObject;
                     BenMonster benMonster = servantObject.GetComponent<BenMonster>();
@@ -66,9 +84,13 @@ public class StoryController : MonoBehaviour
 
                 }
                 Character[] charas = roundController.getAllChara();
-                foreach(Character chara in charas)
+                foreach (Character chara in charas)
                 {
-                    if(chara.isBoss())
+                    if(chara.getName() == SystemConstant.P4_NAME)
+                    {
+                        Debug.Log("chara.isBoss() :" + chara.isBoss());
+                    }
+                    if (chara.isBoss())
                     {
                         chara.setScriptAction(this.story.getBadManScript());
                     } else
@@ -76,8 +98,14 @@ public class StoryController : MonoBehaviour
                         chara.setScriptAction(this.story.getGoodManScript());
                     }
                 }
+            } else
+            {
+                Debug.Log("no need loading stroy..");
             }
 
+        }else
+        {
+            Debug.Log("no need loading ..");
         }
     }
 

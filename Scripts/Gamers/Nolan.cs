@@ -149,6 +149,7 @@ public class Nolan :  CommonUser
             roomXYZ = p.Xyz;
             this.waitPlan = p.WaitPlan;
             loadInfo(this, p, roomContraller);
+            Debug.Log(" idont kone? nolan is dead ?" + this.isDead());
         }
         setDistance(0.5f);
         setCurrentRoom(roomXYZ);             
@@ -164,7 +165,7 @@ public class Nolan :  CommonUser
 		if (getAbilityInfo()[0] <=0 || getAbilityInfo()[1] <=0  ||
 			getAbilityInfo()[2] <=0 || getAbilityInfo()[3] <=0  			
 		) {
-            Debug.Log(this.getName() + " 已经死亡。。。");
+       //     Debug.Log(this.getName() + " 已经死亡。。。");
             setIsDead(true);
 		}
         if (getAbilityInfo()[3] <= 3) {

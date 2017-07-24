@@ -45,6 +45,7 @@ public class RoundController : MonoBehaviour
 
     public void setEndRound(Character chara)
     {
+     //   Debug.Log(" set list name is " + chara.getName());
         roundList.Enqueue(chara);
         if (!charaMap.ContainsKey(chara.getName())) {
             charaMap.Add(chara.getName(), chara);
@@ -91,44 +92,31 @@ public class RoundController : MonoBehaviour
         {
             //目前是写死。。后面需要改为程序控制添加 游戏人数
 
+            setEndRound(player);
             setEndRound(nolan);
             setEndRound(ben);
             setEndRound(jessie);
             setEndRound(kate);
             setEndRound(martin);
-            setEndRound(player);
             roundCount = 1;
+            player.setActionPointrolled(true);
         }
         else
         {
+            Debug.Log( "laod  this game round begin ");
             string datapath = Application.persistentDataPath + "/Save/SaveData0.sav";
             SaveData data = (SaveData)IOHelper.GetData(datapath, typeof(SaveData));
-            foreach (string name in data.CharaNames)
-            {
-                if(name == SystemConstant.P1_NAME)
-                {
-                    setEndRound(nolan);
-                } else if(name == SystemConstant.P2_NAME)
-                {
-                    setEndRound(ben);
-                } else if (name == SystemConstant.P3_NAME)
-                {
-                    setEndRound(jessie);
-                }
-                else if (name == SystemConstant.P4_NAME)
-                {
-                    setEndRound(kate);
-                }
-                else if (name == SystemConstant.P5_NAME)
-                {
-                    setEndRound(martin);
-                }
-                else if (name == SystemConstant.P6_NAME)
-                {
-                    setEndRound(player);
-                }
-            }
+           // foreach (string name in data.CharaNames)
+           // player.setActionPointrolled(data.P6.ActionPointrolled);
+            setEndRound(player);
+            setEndRound(nolan);
+            Debug.Log("nolan is dead? " + nolan.isDead());
+            setEndRound(ben);
+            setEndRound(jessie);
+            setEndRound(kate);
+            setEndRound(martin);
             roundCount = data.RoundCount;
+            Debug.Log("laod  this game round end ");
         }
        // Debug.Log(playChara.getName() + " round this game");
         if (player.isPlayer())
@@ -157,14 +145,19 @@ public class RoundController : MonoBehaviour
         }
 
         isRoundEnd = false;
-        playChara = this.getPlayerChara();
-        playChara.setActionPointrolled(true);
+        playChara = this.getNextCharecter();
+        Debug.Log(playChara.getName() + " begin load  round this game");
+
     }
 
     public Character getCharaByName(string name)
     {
-        return charaMap[name];
-
+        if (charaMap.ContainsKey(name)) {
+            return charaMap[name];
+        } else
+        {
+            return null;
+        }
     }
 
     public List<Character> getAllCharaFromMap() {
@@ -212,7 +205,7 @@ public class RoundController : MonoBehaviour
             playChara = this.getNextCharecter();
             playChara.setActionPointrolled(true);
 
-           // Debug.Log(playChara.getName() + " round this game");
+          //  Debug.Log(playChara.getName() + " round this game");
             isRoundEnd = false;
             if (playChara.isPlayer())
             {
@@ -232,7 +225,7 @@ public class RoundController : MonoBehaviour
                
                 if (playChara.isDead())
                 {
-                    Debug.Log("npc 死了");
+                    Debug.Log(playChara.getName() + " :  死了");
                     isRoundEnd = true;
 
                 }

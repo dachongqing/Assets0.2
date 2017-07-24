@@ -22,6 +22,11 @@ public class BlackSignBadScript : StoryScript
 
     }
 
+    public Queue<string> loadCheck()
+    {
+        return targetList;
+    }
+
     public bool checkStatus(Character chara, RoomInterface room, RoundController roundController)
     {
         bool winc = true;
@@ -62,10 +67,15 @@ public class BlackSignBadScript : StoryScript
     public void scriptAction(Character chara, RoomContraller roomContraller, EventController eventController, DiceRollCtrl diceRoll, APathManager aPathManager, RoundController roundController, BattleController battleController)
     {
         Character target = roundController.getCharaByName(targetList.Peek());
-
+        Debug.Log("target name is " + target.getName());
         if (AutoMoveManager.move(chara, roomContraller, eventController, diceRoll, aPathManager, target.getCurrentRoom()))
         {
-            battleController.fighte(chara, target);
+            if (!target.isPlayer()) {
+                battleController.fighte(chara, target);
+            } else
+            {
+                battleController.showBattleUI(target, chara , false);
+            }
             if (target.isDead())
             {
                 if(target.getName() == SystemConstant.P1_NAME)
@@ -76,6 +86,9 @@ public class BlackSignBadScript : StoryScript
                 }
                 targetList.Dequeue();
             }
+        } else
+        {
+            Debug.Log("return false... finding path.");
         }
     }
 }

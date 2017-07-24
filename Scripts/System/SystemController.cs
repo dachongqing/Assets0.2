@@ -96,6 +96,8 @@ public class SystemController : MonoBehaviour {
         p.ProfilePic = chara.getProfilePic();
         p.CrazyFlag = chara.isCrazy();
         p.ActionPoint = chara.getActionPoint();
+        p.IsBoss = chara.isBoss();
+        p.IsDead = chara.isDead();
         
         if (typeof(NPC).IsAssignableFrom(chara.GetType()))
         {

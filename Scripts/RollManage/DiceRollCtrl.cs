@@ -41,20 +41,23 @@ public class DiceRollCtrl : MonoBehaviour {
     //我只想丢dic3个骰子， 不关心是几面的
     public int calculateDice(int dic3)
     {
-        int[] resD3Array = new int[dic3];
-        int _RollD3resSUM = 0;
+        if (dic3 > 0) {
 
-        for (int i = 0; i < dic3; i++)
-        {
-            Dice tem = new Dice3();
-            tem.Roll();
-            resD3Array[i] = tem.getDiceRes();
-            //            Debug.Log(tem.getDiceRes());
-            _RollD3resSUM += tem.getDiceRes();
+            int[] resD3Array = new int[dic3];
+            int _RollD3resSUM = 0;
+
+            for (int i = 0; i < dic3; i++)
+            {
+                Dice tem = new Dice3();
+                tem.Roll();
+                resD3Array[i] = tem.getDiceRes();
+                //            Debug.Log(tem.getDiceRes());
+                _RollD3resSUM += tem.getDiceRes();
+            }
+          //  Debug.Log(dic3 + " 颗三面骰子的和 " + _RollD3resSUM);
+            return _RollD3resSUM;
         }
-      //  Debug.Log(dic3 + " 颗三面骰子的和 " + _RollD3resSUM);
-        return _RollD3resSUM;
-
+        return 0;
     }
 
     /// <summary>

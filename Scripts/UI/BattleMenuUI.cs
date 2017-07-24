@@ -159,7 +159,7 @@ public class BattleMenuUI : MonoBehaviour {
         this.enemy = enemy;
         this.chara = chara;
         this.isFighter = isFighter;
-        this.second = 10;
+        this.second = 60;
         if (isFighter)
         {
             fighte(chara, enemy);
@@ -196,7 +196,7 @@ public class BattleMenuUI : MonoBehaviour {
         charaIntText.text = "智力" + chara.getAbilityInfo()[2] + "/" + chara.getMaxAbilityInfo()[2];
         charaSanText.text = "神志" + chara.getAbilityInfo()[3] + "/" + chara.getMaxAbilityInfo()[3];
         charaNameText.text = chara.getName();
-        StartCoroutine(AutoAction(10f));
+        StartCoroutine(AutoAction(60f));
     }
 
 
@@ -285,6 +285,9 @@ public class BattleMenuUI : MonoBehaviour {
                     {
                         resultMessage = "敌方受到了" + trueDamge + " 点伤害";
                     }
+                    else {
+                        resultMessage = "我方受到了" + trueDamge + " 点伤害";
+                    }
                 }
                 else if (attackValue < defendValue)
                 {
@@ -294,6 +297,9 @@ public class BattleMenuUI : MonoBehaviour {
                     if (this.isFighter)
                     {
                         resultMessage = "我方受到了" + trueDamge + " 点伤害";
+                    }
+                    else {
+                        resultMessage = "敌方受到了" + trueDamge + " 点伤害";
                     }
                 } else
                 {

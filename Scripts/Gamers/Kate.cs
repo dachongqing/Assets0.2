@@ -231,7 +231,7 @@ public class Kate : CommonUser
 
     public override void roundStart()
     {
-     //   Debug.Log("roundStart round this game");
+        Debug.Log("kate Start round this game");
         startRound();
         scriptEnd = false;
         if (this.isPlayer())

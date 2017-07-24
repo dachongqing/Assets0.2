@@ -50,7 +50,7 @@ public class Player : CommonUser
     public override void roundStart()
     {
 
-        // Debug.Log("roundStart round this game");
+         Debug.Log("player Start round this game");
         startRound();
         scriptEnd = false;
         if (this.isPlayer())

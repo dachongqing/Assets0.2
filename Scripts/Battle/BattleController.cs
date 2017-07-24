@@ -12,6 +12,8 @@ public class BattleController : MonoBehaviour {
 
     public RollDiceUIManager uiManager;
 
+    private BattleMenuUI battleMenuUI;
+
     private DiceRollCtrl diceRoll = new DiceRollCtrl();
 
     private bool fighteEnd;
@@ -36,6 +38,12 @@ public class BattleController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         uiManager = FindObjectOfType<RollDiceUIManager>();
+        battleMenuUI = FindObjectOfType<BattleMenuUI>();
+    }
+
+    public void showBattleUI(Character chara1, Character chara2, bool isF)
+    {
+        battleMenuUI.showBattleUI(chara1, chara2, isF);
     }
 
     int attackValue;

@@ -45,6 +45,8 @@ public class P0  {
 
     private bool isDead;
 
+    private bool isBoss;
+
     private List<ItemInfo> bag = new List<ItemInfo>();
 
     private List<string> targetRoomlist = new List<string>();
@@ -374,5 +376,16 @@ public class P0  {
         }
     }
 
-  
+    public bool IsBoss
+    {
+        get
+        {
+            return isBoss;
+        }
+
+        set
+        {
+            isBoss = value;
+        }
+    }
 }

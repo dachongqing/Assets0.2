@@ -14,10 +14,6 @@ public class BenMonster : CommonMonster
     private StoryController storyController;
     private Queue<RoomInterface> targetRoomList = new Queue<RoomInterface>();
     private APathManager aPathManager = new APathManager();
-    private bool waitPlan;
-
-    private bool scriptEnd;
-
     private Queue<Character> targetList = new Queue<Character>();
 
     public new bool isPlayer()
@@ -46,10 +42,19 @@ public class BenMonster : CommonMonster
 
         if (AutoMoveManager.move(this, roomContraller, eventController, diceRoll, aPathManager, target.getCurrentRoom()))
         {
-            battleController.fighte(this,target);
             if (target.isDead()) {
                 targetList.Dequeue();
+            } else
+            {
+                if(target.isPlayer())
+                {
+                    battleController.showBattleUI(target, this, false);
+                } else
+                {
+                     battleController.fighte(this,target);
+                }
             }
+
         }
     }
 
@@ -106,20 +111,20 @@ public class BenMonster : CommonMonster
         Character nolan = roundController.getCharaByName(SystemConstant.P1_NAME);
         Character jessie = roundController.getCharaByName(SystemConstant.P3_NAME);
         Character player = roundController.getCharaByName(SystemConstant.P6_NAME);
-        if (!martin.isDead()) {
+        if (martin!= null && !martin.isDead()) {
          targetList.Enqueue(martin);
         }
 
-        if (!nolan.isDead())
+        if (nolan!=null && !nolan.isDead())
         {
             targetList.Enqueue(martin);
         }
 
-        if (!jessie.isDead())
+        if (jessie != null && !jessie.isDead())
         {
             targetList.Enqueue(jessie);
         }
-        if (!player.isDead())
+        if (player != null && !player.isDead())
         {
             targetList.Enqueue(player);
         }
@@ -129,7 +134,7 @@ public class BenMonster : CommonMonster
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("monster update function  begin...");
+        //Debug.Log("monster update function  begin...");
         if (getAbilityInfo()[0] <= 0 || getAbilityInfo()[1] <= 0 ||
             getAbilityInfo()[2] <= 0 || getAbilityInfo()[3] <= 0
         )
@@ -153,7 +158,8 @@ public class BenMonster : CommonMonster
 
         if (!SystemUtil.IsTouchedUI())
         {           
-            battleController.fighte(roundController.getPlayerChara(), this);
+                battleController.showBattleUI(roundController.getPlayerChara(), this, true);
+          
         }
         else
         {
