@@ -64,9 +64,16 @@ public class Box : CommonThing
     }
 
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+        doClick();
+
+    }
+    /**
     void OnMouseDown()
 
-	{
+    {
 
         if (!SystemUtil.IsTouchedUI())
         {
@@ -75,10 +82,10 @@ public class Box : CommonThing
 
         }
 
-       
-	}
 
-	private void openEvent(int rollValue) {
+    }**/
+
+    private void openEvent(int rollValue) {
 		if (this.maxValue <= rollValue)
 		{
 			NPC chara = (NPC)roundController.getCurrentRoundChar();

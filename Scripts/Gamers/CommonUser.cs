@@ -180,6 +180,43 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
     }
 
+    public void CharaMoveByKey(String forward) {
+        Vector3 temPos;
+
+        if (forward == "L") {
+
+            temPos = new Vector3(this.transform.position.x - 1, this.transform.position.y, 0);
+
+            this.transform.position = Vector3.MoveTowards(this.transform.position, temPos, 3 * Time.deltaTime);
+        } else if (forward == "R") {
+            temPos = new Vector3(this.transform.position.x + 1, this.transform.position.y, 0);
+
+            this.transform.position = Vector3.MoveTowards(this.transform.position, temPos, 3 * Time.deltaTime);
+        }
+        else if (forward == "U")
+        {
+            temPos = new Vector3(this.transform.position.x, this.transform.position.y + 1, 0);
+
+            this.transform.position = Vector3.MoveTowards(this.transform.position, temPos, 3 * Time.deltaTime);
+        }
+        else if (forward == "D")
+        {
+            temPos = new Vector3(this.transform.position.x, this.transform.position.y - 1, 0);
+
+            this.transform.position = Vector3.MoveTowards(this.transform.position, temPos, 3 * Time.deltaTime);
+        }
+    }
+
+    public void CharaMoveByMouse(Vector3 position)
+    {
+        Debug.Log("current p:" + this.transform.position);
+        Debug.Log("target p:" + position);
+        Vector3 temPos;
+        temPos = new Vector3(position.x, position.y, 0);
+        this.transform.position = Vector3.MoveTowards(this.transform.position, temPos, 10 * Time.deltaTime);
+
+    }
+
     public void updateActionPoint(int actionPoint)
     {
         this.actionPoint = actionPoint;
@@ -459,4 +496,5 @@ abstract public class CommonUser : MonoBehaviour , NPC
        
 
     }
+
 }

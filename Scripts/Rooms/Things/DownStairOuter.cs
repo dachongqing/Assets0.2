@@ -10,6 +10,13 @@ public class DownStairOuter : CommonThing
 
     private CameraCtrl camCtrl;
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+        doClick();
+
+    }
+    /**
     void OnMouseDown()
 
     {
@@ -22,7 +29,7 @@ public class DownStairOuter : CommonThing
         }
 
 
-    }
+    }**/
 
     public override void doClick()
     {

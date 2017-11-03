@@ -58,6 +58,15 @@ public class Barrel :CommonThing
         }
     }
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+       // charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+        doClick();
+    }
+
+    /**
+
     void OnMouseDown()
     {
         if (!SystemUtil.IsTouchedUI())
@@ -66,7 +75,7 @@ public class Barrel :CommonThing
             doClick();
 
         }
-    }
+    }**/
 
     private void openEvent(int rollValue) {
         if (this.maxValue <= rollValue)

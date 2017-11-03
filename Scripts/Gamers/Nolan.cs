@@ -179,18 +179,23 @@ public class Nolan :  CommonUser
         }
     }
 
-   
-   
-   
 
 
 
-	
-	
 
-	
 
-	void OnMouseDown ()
+
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+
+    }
+
+    /**
+
+    void OnMouseDown ()
 	{
 
         if (!SystemUtil.IsTouchedUI())
@@ -204,7 +209,7 @@ public class Nolan :  CommonUser
             Debug.Log("click ui");
         }
 
-	}
+	}**/
 
    
 

@@ -342,24 +342,30 @@ public class Kate : CommonUser
             }
         }
     }
-    
-    void OnMouseDown()
+
+    /** void OnMouseDown()
+     {
+
+         if (!SystemUtil.IsTouchedUI())
+         {
+
+
+             // duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
+           
+                 charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+         
+         }
+         else
+         {
+             Debug.Log("click ui");
+         }
+
+     } **/
+
+    void OnCollisionEnter2D(Collision2D coll)
     {
-
-        if (!SystemUtil.IsTouchedUI())
-        {
-
-
-            // duiHuaUImanager.showDuiHua(getLiHuiURL(), co);
-          
-                charaInfoManager.showCharaInfoMenu(this, getClickMessage());
-        
-        }
-        else
-        {
-            Debug.Log("click ui");
-        }
-
+        Debug.Log(coll.gameObject.name);
+        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
     }
 
     public new string getDeitalPic()

@@ -157,6 +157,12 @@ public class Martin : CommonUser {
         }
     }
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+    }
+    /**
     void OnMouseDown()
     {
 
@@ -173,7 +179,7 @@ public class Martin : CommonUser {
             Debug.Log("click ui");
         }
 
-    }
+    }**/
 
 
 

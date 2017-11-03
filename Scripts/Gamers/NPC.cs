@@ -28,4 +28,6 @@ public interface NPC : Character {
 
     Queue<RoomInterface> getTargetRoomList();
 
+    void CharaMoveByMouse(Vector3 position);
+
 }

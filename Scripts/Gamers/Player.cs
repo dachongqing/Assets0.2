@@ -162,6 +162,31 @@ public class Player : CommonUser
                 this.endRound();
             }
         }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            Debug.Log(" do left ");
+            CharaMoveByKey("L");
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            Debug.Log(" do right ");
+            CharaMoveByKey("R");
+
+        }
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            Debug.Log(" do up ");
+            CharaMoveByKey("U");
+
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            Debug.Log(" do down ");
+            CharaMoveByKey("D");
+
+        }
+
     }
 
 

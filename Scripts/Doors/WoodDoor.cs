@@ -160,7 +160,7 @@ public class WoodDoor : MonoBehaviour, DoorInterface
 
     
 
-    void OnMouseDown ()
+   /** void OnMouseDown ()
 	{
         if (!SystemUtil.IsTouchedUI())
         {
@@ -171,6 +171,11 @@ public class WoodDoor : MonoBehaviour, DoorInterface
         {
             Debug.Log("click ui");
         }
+    } **/
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+        doClickDoor();
     }
 
     public void playerOpenDoorResult(bool result) {
