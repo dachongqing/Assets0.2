@@ -35,4 +35,10 @@ public interface GuangBoAction  {
 
     bool isGuangBoActionEnd();
 
+    string getGuangBoCode();
+
+    void setGuangBoCode(string code);
+
+   
+
 }

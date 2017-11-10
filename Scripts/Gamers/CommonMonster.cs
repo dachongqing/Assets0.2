@@ -295,7 +295,15 @@ public class CommonMonster : MonoBehaviour,Monsters {
 
     public void sendMessageToPlayer(string[] message)
     {
-        listener.insert(this, message);
+        sendMessageToPlayer(message,"");
+    }
+
+    public void sendMessageToPlayer(string[] message, string code)
+    {
+        GuangBoMessage gm = new GuangBoMessage();
+        gm.Massage = message;
+        gm.Code = code;
+        listener.insert(this, gm);
     }
 
     private bool isFollowGuangBoActionFlag;

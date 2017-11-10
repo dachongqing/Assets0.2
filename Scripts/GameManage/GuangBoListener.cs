@@ -6,8 +6,15 @@ public class GuangBoListener : MonoBehaviour {
 
   
     private System.Random random = new System.Random();
-    Dictionary<Character, Queue<string[]>> quere = new Dictionary<Character, Queue<string[]>>();
+    Dictionary<Character, Queue<GuangBoMessage>> quere = new Dictionary<Character, Queue<GuangBoMessage>>();
     private DuiHuaUImanager duiHuaUImanager;
+    private ConfirmManageUI confirmUI;
+    private RoundController roundController;
+
+    private GuangBoController guangBoController;
+    private bool showConfirm = false;
+    private string eventGuangBoCode = "";
+    private bool needShowConfirm = false;
 
     List<Character> keyList = new List<Character>();
 
@@ -16,13 +23,13 @@ public class GuangBoListener : MonoBehaviour {
         keyList.Clear();
     }
 
-    public void insert(Character chara, string[] msg) {
+    public void insert(Character chara, GuangBoMessage msg) {
         if (quere.ContainsKey(chara))
         {
             quere[chara].Enqueue(msg);
         }
         else {
-            Queue<string[]> content = new Queue<string[]>();
+            Queue<GuangBoMessage> content = new Queue<GuangBoMessage>();
             content.Enqueue(msg);
             quere.Add(chara, content);
             keyList.Add(chara);
@@ -33,6 +40,9 @@ public class GuangBoListener : MonoBehaviour {
     // Use this for initialization
     void Start () {
         duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        roundController = FindObjectOfType<RoundController>();
+        guangBoController = FindObjectOfType<GuangBoController>();
+        confirmUI = FindObjectOfType<ConfirmManageUI>();
 
     }
 
@@ -44,9 +54,26 @@ public class GuangBoListener : MonoBehaviour {
        
     }
 
+    IEnumerator showMessageToSelf(string msg, int pro)
+    {
+        yield return new WaitForSeconds(pro);
+
+        confirmUI.showConfirm(roundController.getPlayerChara().getLiHuiURL(), "我是不是要赶过去看一下？");
+
+    }
+
+    public void showMessageToPlay(Character chara, string[] msg)
+    {
+       
+        duiHuaUImanager.showGuangBoDuiHua(chara.getLiHuiURL(), msg);
+
+    }
+
     public void showGuangBoMessage() {
 
         if (duiHuaUImanager.isDuiHuaEnd()) {
+
+           
 
             if (quere.Count > 0)
             {
@@ -56,11 +83,20 @@ public class GuangBoListener : MonoBehaviour {
 
                 if (quere[key].Count > 0)
                 {
-                    string[] ms = quere[key].Dequeue();
-                    Debug.Log(key.getName() + " guangbo msg " + ms[0]);
+                    GuangBoMessage ms = quere[key].Dequeue();
+                    Debug.Log(key.getName() + " guangbo msg " + ms.Massage[0]);
                     duiHuaUImanager.setDuiHuaEndFalse();
-                    StartCoroutine(showMessageToPlay(key, ms, random.Next(2, 5)));
+                     StartCoroutine(showMessageToPlay(key, ms.Massage, random.Next(1, 2)));
+                    //showMessageToPlay(key, ms.Massage);
                     //  Debug.Log("guangbo quere[key].Count " + quere[key].Count);
+
+                    if (guangBoController.getEventGuangBoMap().ContainsKey(ms.Code)) {
+                        needShowConfirm = true;
+                        this.eventGuangBoCode = ms.Code;
+                       
+                        Debug.Log(duiHuaUImanager.isDuiHuaEnd());
+                       // confirmUI.showConfirm(roundController.getPlayerChara().getLiHuiURL(), "我是不是要赶过去看一下？");
+                    }
                 }
                 else
                 {
@@ -78,5 +114,24 @@ public class GuangBoListener : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (duiHuaUImanager.isDuiHuaEnd() && needShowConfirm) {
+            StartCoroutine(showMessageToSelf("", random.Next(1, 2)));
+            needShowConfirm = false;
+            showConfirm = true;
+        }
+
+        if (showConfirm && duiHuaUImanager.isDuiHuaEnd()) {
+            if (!confirmUI.isActiveAndEnabled) {
+                showConfirm = false;
+                Debug.Log(confirmUI.getResult());
+                if (confirmUI.getResult()) {
+                    // do action
+                    guangBoController.doNow(this.eventGuangBoCode);
+                }
+                guangBoController.getEventGuangBoMap().Remove(this.eventGuangBoCode);
+                needShowConfirm = false;
+            }
+        } 
+
     }
 }

@@ -48,6 +48,11 @@ public class Ben : CommonUser
         endRound();
     }
 
+    public override void findthisRoomNews(int[] nextRoomXYZ)
+    {
+        this.setClickMessage(this.roomContraller.findRoomByXYZ(nextRoomXYZ).findSomethingNews(this).ToArray());
+    }
+
     public override void checkTargetRoomLocked(string roomType)
     {
 

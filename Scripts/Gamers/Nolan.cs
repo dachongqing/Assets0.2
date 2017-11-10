@@ -38,6 +38,11 @@ public class Nolan :  CommonUser
         return "detail/9";
     }
 
+    public override void findthisRoomNews(int[] nextRoomXYZ)
+    {
+        this.setClickMessage(this.roomContraller.findRoomByXYZ(nextRoomXYZ).findSomethingNews(this).ToArray());
+    }
+
     public new void defaultAction()
     {
        // Debug.Log("run default aciont");

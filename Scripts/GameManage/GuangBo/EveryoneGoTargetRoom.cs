@@ -22,14 +22,16 @@ public class EveryoneGoTargetRoom : GuangBoAction
 
     private bool actionEnd;
 
-    public EveryoneGoTargetRoom(string ownerName, string targetRoomType,List<string> targetNameList, int sanLimit) {
+    private string code;
+
+    public EveryoneGoTargetRoom(string ownerName, string targetRoomType,List<string> targetNameList, int sanLimit, string code) {
         this.targetRoomType = targetRoomType;
         this.sanLimit = sanLimit;
         this.targetNameList = targetNameList;
         this.ownerName = ownerName;
         this.blackList = new List<string>();
         this.whiteList = new List<string>();
-
+        this.code = code;
     }
 
     public void addBlackList(string npc)
@@ -129,4 +131,14 @@ public class EveryoneGoTargetRoom : GuangBoAction
     {
         this.sanLimit = sanLimit;
     }
+
+    public void setGuangBoCode(string code) {
+        this.code = code;
+    }
+
+    public string getGuangBoCode() {
+        return this.code;
+    }
+
+  
 }

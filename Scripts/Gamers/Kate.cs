@@ -92,7 +92,7 @@ public class Kate : CommonUser
                         }
                         else {
                             Debug.Log("kate 没疯，暗中观察");
-                            this.setClickMessage(new string[] { SystemConstant.P2_NAME + ", 让我看一下你当年手术的地方吧？" });
+                            //this.setClickMessage(new string[] { SystemConstant.P2_NAME + ", 让我看一下你当年手术的地方吧？" });
                         }
                     }
                 }
@@ -148,12 +148,12 @@ public class Kate : CommonUser
                             Item item = surgeryRoom.getBookTable().GetComponent<BookTable>().getItem(this);
                             if (item != null)
                             {
-
+                                string guangBoCode = this.getName() + "_" + RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY + "_gb";
                                 getTargetChara().Add(SystemConstant.P2_NAME);
-                                setGuangBoAction(new EveryoneGoTargetRoom(this.getName(), RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY, getTargetChara(), 8));
+                                setGuangBoAction(new EveryoneGoTargetRoom(this.getName(), RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY, getTargetChara(), 8, guangBoCode));
                                 guangBoController.insertGuangBo(this.getGuangBoAction());
                                 waitPlan = true;
-                                this.sendMessageToPlayer(new string[] { SystemConstant.P2_NAME + ", 这个病例上有你的名字", " 你最好来看看" });
+                                this.sendMessageToPlayer(new string[] { SystemConstant.P2_NAME + ", 这个病例上有你的名字", " 你最好来看看" }, guangBoCode);
                                 this.getBag().insertItem(item);
                             }
                         }
@@ -172,7 +172,7 @@ public class Kate : CommonUser
                                 Debug.Log("这个解剖手术太奇怪了，我一定错过了什么。我要好好检查下。");
                                 this.sendMessageToPlayer(new string[] { "这个解剖手术太奇怪了，我一定错过了什么。", "我要好好检查下。" });
                             }
-                            this.setClickMessage(tridOperationRoom.findSomethingNews(this).ToArray());
+                          //  this.setClickMessage(tridOperationRoom.findSomethingNews(this).ToArray());
                         }
                         else if (target.getRoomType() == RoomConstant.ROOM_TYPE_HOSPITAIL_MORGUE)
                         {
@@ -197,7 +197,7 @@ public class Kate : CommonUser
                                 if (!isCrazy())
                                 {
                                     //this.sendMessageToPlayer(target.findSomethingNews(this.getName()).ToArray());
-                                    this.setClickMessage(target.findSomethingNews(this).ToArray());
+                                   // this.setClickMessage(target.findSomethingNews(this).ToArray());
                                 }
                             }
 
@@ -209,10 +209,17 @@ public class Kate : CommonUser
                         }
                     }
                 }
+                //this.setClickMessage(this.roomContraller.findRoomByXYZ(this.getCurrentRoom()).findSomethingNews(this).ToArray());
             }
         }
        endRound();
     }
+
+    public override void findthisRoomNews(int[] nextRoomXYZ)
+    {
+        this.setClickMessage(this.roomContraller.findRoomByXYZ(nextRoomXYZ).findSomethingNews(this).ToArray());
+    }
+
 
     public override void checkTargetRoomLocked(string roomType)
     {
@@ -315,7 +322,7 @@ public class Kate : CommonUser
         setCurrentRoom(roomXYZ);
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
-        this.setClickMessage(this.roomContraller.findRoomByXYZ(roomXYZ).findSomethingNews(this).ToArray());
+        //this.setClickMessage(this.roomContraller.findRoomByXYZ(roomXYZ).findSomethingNews(this).ToArray());
         // setBoss(true);       
     }
 

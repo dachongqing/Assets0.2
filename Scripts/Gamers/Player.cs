@@ -47,6 +47,11 @@ public class Player : CommonUser
 
     }
 
+    public override void findthisRoomNews(int[] nextRoomXYZ)
+    {
+        this.setClickMessage(this.roomContraller.findRoomByXYZ(nextRoomXYZ).findSomethingNews(this).ToArray());
+    }
+
     public override void roundStart()
     {
 

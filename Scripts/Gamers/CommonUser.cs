@@ -177,7 +177,14 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
 
         this.transform.position = temPos;
+        this.findthisRoomNews(nextRoomXYZ);
 
+
+    }
+
+    public virtual void findthisRoomNews(int[] nextRoomXYZ)
+    {
+        Debug.Log("run common roundStart");
     }
 
     public void CharaMoveByKey(String forward) {
@@ -340,7 +347,15 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
     public void sendMessageToPlayer(string[] message)
     {
-       listener.insert(this, message);
+        sendMessageToPlayer(message, "");
+    }
+
+    public void sendMessageToPlayer(string[] message, string code)
+    {
+        GuangBoMessage gm = new GuangBoMessage();
+        gm.Massage = message;
+        gm.Code = code;
+        listener.insert(this, gm);
     }
 
     private bool isFollowGuangBoActionFlag;
