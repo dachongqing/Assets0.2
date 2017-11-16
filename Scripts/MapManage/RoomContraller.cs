@@ -12,6 +12,8 @@ public class RoomContraller : MonoBehaviour
 
     private Queue<String> downRoomType = new Queue<String>();
 
+    private Queue<String> hiddenRoomType = new Queue<String>();
+
     private Dictionary<int[], RoomInterface> groundRoomList = new Dictionary<int[], RoomInterface>();
 
     private Dictionary<int[], RoomInterface> upRoomList = new Dictionary<int[], RoomInterface>();
@@ -38,7 +40,6 @@ public class RoomContraller : MonoBehaviour
     {
         //这个队列的长度，限制了房间最大数量
         groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("FallDownRoom");
         groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_REST);
         groundRoomType.Enqueue("UpStairEnterRoom");
         groundRoomType.Enqueue("DownStairEnterRoom");
@@ -49,6 +50,7 @@ public class RoomContraller : MonoBehaviour
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("FallDownRoom");
         groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_SECURITY);
         groundRoomType.Enqueue("LobbyRoom");
         groundRoomType.Enqueue("LobbyRoom");
@@ -107,6 +109,14 @@ public class RoomContraller : MonoBehaviour
         downRoomType.Enqueue("LobbyRoom");
        // downRoomType.Enqueue("LobbyRoom");
         downRoomType.Enqueue("BookRoom");
+
+      
+        hiddenRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_HIDDEN);
+        hiddenRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_STORE);
+        hiddenRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_STORE);
+        hiddenRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_STORE);
+        hiddenRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_STORE);
+       
     }
 
    
@@ -173,12 +183,14 @@ public class RoomContraller : MonoBehaviour
             roomType = groundRoomType.Dequeue();
 
         } else if (xyz[2] == RoomConstant.ROOM_Z_DOWN) {
-           // Debug.Log("this.downRoomType.Count: " + xyz[0]+","+xyz[1] + "," + xyz[2]);
+            // Debug.Log("this.downRoomType.Count: " + xyz[0]+","+xyz[1] + "," + xyz[2]);
             roomType = this.downRoomType.Dequeue();
         }
         else if (xyz[2] == RoomConstant.ROOM_Z_UP)
         {
             roomType = this.upRoomType.Dequeue();
+        } else if (xyz[2] == RoomConstant.ROOM_Z_X) {
+            roomType = this.hiddenRoomType.Dequeue();
         }
         string url = getPrefabUrlByRoomType(roomType);
 

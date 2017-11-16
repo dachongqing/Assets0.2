@@ -50,7 +50,13 @@ public class P0  {
     private List<ItemInfo> bag = new List<ItemInfo>();
 
     private List<string> targetRoomlist = new List<string>();
-  
+
+    private float charaTransformPositionX;
+
+    private float charaTransformPositionY;
+
+    private float charaTransformPositionZ;
+
     public bool Locked
     {
         get
@@ -386,6 +392,45 @@ public class P0  {
         set
         {
             isBoss = value;
+        }
+    }
+
+    public float CharaTransformPositionX
+    {
+        get
+        {
+            return charaTransformPositionX;
+        }
+
+        set
+        {
+            charaTransformPositionX = value;
+        }
+    }
+
+    public float CharaTransformPositionY
+    {
+        get
+        {
+            return charaTransformPositionY;
+        }
+
+        set
+        {
+            charaTransformPositionY = value;
+        }
+    }
+
+    public float CharaTransformPositionZ
+    {
+        get
+        {
+            return charaTransformPositionZ;
+        }
+
+        set
+        {
+            charaTransformPositionZ = value;
         }
     }
 }

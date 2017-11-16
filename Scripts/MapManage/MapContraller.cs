@@ -177,5 +177,54 @@ public class MapContraller  {
         return hashMap;
     }
 
+    public Dictionary<int[], int[]> genHiddenMap(int z, int roomNumb)
+    {
+
+        List<int[]> xy = new List<int[]>();
+        int[] initxy = new int[] { 0, 0, z };
+        xy.Add(initxy);
+
+        int initR = 0;
+
+        while (initR < roomNumb)
+        {
+            //xy = orderList(xy);
+            xy = FunctionUnity<int[]>.orderList(xy);
+            int[] gRoom = xy[0];
+
+            if (checkRoom(hashMap, gRoom) != null)
+            {
+                continue;
+            }
+            else
+            {
+                hashMap.Add(gRoom, new int[] { 0, 0, 0, 0 });
+                initR++;
+            }
+            int[] upR = new int[] { gRoom[0], gRoom[1], z };
+            upR[1] = upR[1] + 1;
+
+            int[] dwR = new int[] { gRoom[0], gRoom[1], z };
+            dwR[1] = dwR[1] - 1;
+
+            int[] leR = new int[] { gRoom[0], gRoom[1], z };
+            leR[0] = leR[0] + 1;
+
+            int[] riR = new int[] { gRoom[0], gRoom[1], z };
+            riR[0] = riR[0] - 1;
+
+            xy.Remove(gRoom);
+            xy.Add(upR);
+            xy.Add(dwR);
+            xy.Add(leR);
+            xy.Add(riR);
+
+        }
+
+        return hashMap;
+    }
+
     
+
+
 }

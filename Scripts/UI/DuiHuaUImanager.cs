@@ -21,8 +21,11 @@ public class DuiHuaUImanager : MonoBehaviour
 
     private DuihuaClickManager duihuaClickManager;
 
+    private MouseMoveManger mouseMoveManger;
+
     public void showDuiHua(string url,string[] content, int begin) {
         //Debug.Log("click 3");
+        mouseMoveManger.updateLock(true);
         UIduihua.SetActive (true);
 		UIduihua.transform.localPosition = showPos;
 		Sprite s = 	Resources.Load (url, typeof(Sprite)) as Sprite;
@@ -37,6 +40,7 @@ public class DuiHuaUImanager : MonoBehaviour
 
     public void showGuangBoDuiHua(string url, string[] content)
     {
+        mouseMoveManger.updateLock(true);
         UIduihua.SetActive(true);
         UIduihua.transform.localPosition = showPos;
         Sprite s = Resources.Load(url, typeof(Sprite)) as Sprite;
@@ -64,6 +68,7 @@ public class DuiHuaUImanager : MonoBehaviour
 	void Start () {
         //lihui = UIduihua.GetComponent<Image>();
         duihuaClickManager = FindObjectOfType<DuihuaClickManager>();
+        mouseMoveManger = FindObjectOfType<MouseMoveManger>();
 
     }
 	
@@ -80,7 +85,8 @@ public class DuiHuaUImanager : MonoBehaviour
             duihua.text = "";
             duiHuaEndFlag = true;
             duihuaClickManager.clear();
-          //  return null;
+            mouseMoveManger.updateLock(false);
+            //  return null;
         } else {
            // Debug.Log("clickCount   " + clickCount);
 			duihua.text = content[clickCount];

@@ -37,6 +37,21 @@ public class CameraCtrl : MonoBehaviour {
 
 	}
 
+    public void setHiddenTargetPos(int[] pos, int x)
+    {
+        
+        loadingUpPage.GetComponent<Image>().enabled = true;
+        StartCoroutine(EndLoadingPageUI(3.5f));
+        
+        targetPos.x = x + pos[0] * roomH;
+        targetPos.y = pos[1] * roomV;
+        targetPos.z = pos[2] - 10;
+        //切换场景会导致程序初始化，目前不能用
+        //SceneManager.LoadScene("Loading");
+
+    }
+
+
     public void setTargetPos(int[] pos,int y, bool showLoading)
     {
         if (showLoading) {

@@ -51,7 +51,7 @@ public class BattleMenuUI : MonoBehaviour {
     public GameObject battleButton;
     public GameObject useButton;
     public GameObject BagItemMenuUI;
-
+    private MouseMoveManger mouseMoveManger;
     private Vector3 showPos = new Vector3(4, 0, 0);
     private Vector3 hidePos = new Vector3(-1515, 10, 0);
 
@@ -100,6 +100,7 @@ public class BattleMenuUI : MonoBehaviour {
 
     private void closeUI()
     {
+        mouseMoveManger.updateLock(false);
         battleMenuUI.SetActive(false);
         this.battleButton.SetActive(false);
         battleMenuUI.transform.localPosition = hidePos;
@@ -156,6 +157,7 @@ public class BattleMenuUI : MonoBehaviour {
     }
 
     public void showBattleUI(Character chara, Character enemy, bool isFighter) {
+        mouseMoveManger.updateLock(true);
         this.enemy = enemy;
         this.chara = chara;
         this.isFighter = isFighter;
@@ -224,7 +226,7 @@ public class BattleMenuUI : MonoBehaviour {
         uiManager = FindObjectOfType<RollDiceUIManager>();
         bagUIManager = FindObjectOfType<BagUIManager>();
         messageUI = FindObjectOfType<MessageUI>();
-       
+        mouseMoveManger = FindObjectOfType<MouseMoveManger>();
     }
 
     int attackValue;

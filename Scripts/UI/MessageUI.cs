@@ -20,13 +20,13 @@ public class MessageUI : MonoBehaviour, IPointerDownHandler
     private string[] content;
 
     private int clickCount;
+    private MouseMoveManger mouseMoveManger;
 
-  
 
     // Use this for initialization
     void Start () {
 		theText = GetComponentInChildren<Text> ();
-        
+        mouseMoveManger = FindObjectOfType<MouseMoveManger>();
     }
 
     public void showMessage(string msg) {
@@ -67,15 +67,17 @@ public class MessageUI : MonoBehaviour, IPointerDownHandler
     void Update()
 	{
 		if (isShow) {
+            
             this.transform.localPosition = Vector3.Lerp (showPos,this.transform.localPosition,speed*Time.deltaTime);
 		} else {
            
-			this.transform.localPosition = Vector3.Lerp (hidPos,this.transform.localPosition,speed*Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp (hidPos,this.transform.localPosition,speed*Time.deltaTime);
 		}
 	}
 
     public void showMessges(string[] message)
     {
+        mouseMoveManger.updateLock(true);
         this.content = message;
         theText.text = this.content[0];
         this.clickCount = 1;
@@ -93,7 +95,8 @@ public class MessageUI : MonoBehaviour, IPointerDownHandler
     {
         if(this.content.Length<= this.clickCount)
         {
-		    Debug.Log ("OnPointerDown done!");
+            mouseMoveManger.updateLock(false);
+            Debug.Log ("OnPointerDown done!");
             isShow = false;
             this.messageResult.setDone(true);
             this.messageResult.setResult("你选择了1");

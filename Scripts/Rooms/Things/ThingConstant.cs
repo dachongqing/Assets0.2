@@ -19,4 +19,7 @@ public class ThingConstant  {
     public const string DRAG_TABLE_01_CODE = "DragTable01";
     public const string SAFE_BOX_01_CODE = "SafeBox01";
 
+    public const string HIDDEN_DOOR_01_CODE = "HiddenDoor01";
+    public const string HIDDEN_DOOR_BACK_01_CODE = "HiddenDoorBack01";
+
 }

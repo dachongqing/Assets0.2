@@ -30,4 +30,6 @@ public interface NPC : Character {
 
     void CharaMoveByMouse(Vector3 position);
 
+    void CharaMoveByKey(string forward);
+
 }

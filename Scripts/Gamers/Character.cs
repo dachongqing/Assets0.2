@@ -82,4 +82,8 @@ public interface Character
 
     string getProfilePic();
 
+    Vector3 getCharaTransformPosition();
+
+    void setCharaInHiddenRoom(RoomInterface room);
+
 }

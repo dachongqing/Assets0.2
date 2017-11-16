@@ -35,6 +35,8 @@ public class RoundController : MonoBehaviour
 
     private EventController eventController;
 
+    private GuangBoListener guangBoListener;
+
     public bool newOrLoad;
 
     public Character getNextCharecter()
@@ -57,6 +59,7 @@ public class RoundController : MonoBehaviour
         this.getCurrentRoundChar().updateActionPoint(0);
         eventController.excuteStayRoomEvent(roomContraller.findRoomByXYZ(this.getCurrentRoundChar().getCurrentRoom()), this.getCurrentRoundChar());
         this.getCurrentRoundChar().endRound();
+        this.guangBoListener.cleanQuere();
     }
 
     //默认操作状态为玩家操作  
@@ -82,6 +85,7 @@ public class RoundController : MonoBehaviour
     {
             roomContraller = FindObjectOfType<RoomContraller>();
             eventController = FindObjectOfType<EventController>();
+        this.guangBoListener = FindObjectOfType<GuangBoListener>();
             player = FindObjectOfType<Player>();
             nolan = FindObjectOfType<Nolan>();
             ben = FindObjectOfType<Ben>();

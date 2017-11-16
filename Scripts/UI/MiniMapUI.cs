@@ -13,10 +13,10 @@ public class MiniMapUI : MonoBehaviour {
     public GameObject MiniMapUpPlane;
      public GameObject MiniMapGroPlane;
      public GameObject MiniMapDowPlane;
+    private MouseMoveManger mouseMoveManger;
 
-   
 
-    
+
 
     public void closeMinMap() {
        // MiniMapUpPlane.SetActive(false);
@@ -25,11 +25,13 @@ public class MiniMapUI : MonoBehaviour {
         MiniMapUpPlane.transform.localPosition = hideUpPos;
         MiniMapGroPlane.transform.localPosition = hideGroPos;
         MiniMapDowPlane.transform.localPosition = hideDowPos;
+        mouseMoveManger.updateLock(false);
     }
 
 
     public void clickUpMap() {
-       // MiniMapUpPlane.SetActive(true);
+        mouseMoveManger.updateLock(true);
+        // MiniMapUpPlane.SetActive(true);
         MiniMapUpPlane.transform.localPosition = showPos;
 
       //  MiniMapGroPlane.SetActive(false);
@@ -42,7 +44,8 @@ public class MiniMapUI : MonoBehaviour {
 
     public void clickGroundMap()
     {
-      //  MiniMapUpPlane.SetActive(false);
+        mouseMoveManger.updateLock(true);
+        //  MiniMapUpPlane.SetActive(false);
         MiniMapUpPlane.transform.localPosition = hideUpPos;
 
      //   MiniMapGroPlane.SetActive(true);
@@ -54,7 +57,8 @@ public class MiniMapUI : MonoBehaviour {
 
     public void clickDownMap()
     {
-      //  MiniMapUpPlane.SetActive(false);
+        mouseMoveManger.updateLock(true);
+        //  MiniMapUpPlane.SetActive(false);
         MiniMapUpPlane.transform.localPosition = hideUpPos;
 
         //MiniMapGroPlane.SetActive(false);
@@ -66,8 +70,9 @@ public class MiniMapUI : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        mouseMoveManger = FindObjectOfType<MouseMoveManger>();
 
-        
+
     }
 	
 	// Update is called once per frame

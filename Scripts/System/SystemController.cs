@@ -98,7 +98,10 @@ public class SystemController : MonoBehaviour {
         p.ActionPoint = chara.getActionPoint();
         p.IsBoss = chara.isBoss();
         p.IsDead = chara.isDead();
-        
+        p.CharaTransformPositionX = chara.getCharaTransformPosition().x;
+        p.CharaTransformPositionY = chara.getCharaTransformPosition().y;
+        p.CharaTransformPositionZ = chara.getCharaTransformPosition().z;
+
         if (typeof(NPC).IsAssignableFrom(chara.GetType()))
         {
             NPC npc = (NPC)chara;

@@ -171,6 +171,11 @@ public class CommonMonster : MonoBehaviour,Monsters {
 
     }
 
+    public Vector3 getCharaTransformPosition()
+    {
+        return this.transform.position;
+    }
+
     public void updateActionPoint(int actionPoint)
     {
         this.actionPoint = actionPoint;
@@ -405,5 +410,11 @@ public class CommonMonster : MonoBehaviour,Monsters {
         setMaxAbilityInfo(benMonster.MaxAbilityInfo);
         setActionPointrolled(benMonster.ActionPointrolled);
         setIsDead(benMonster.IsDead);
+    }
+
+    public void setCharaInHiddenRoom(RoomInterface room)
+    {
+        this.transform.position = new Vector3(RoomConstant.ROOM_X_X + (room.getXYZ()[0] * roomH - distance), xyz[1] * roomV + distance, 0);
+
     }
 }

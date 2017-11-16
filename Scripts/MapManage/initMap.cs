@@ -19,6 +19,9 @@ public class initMap : MonoBehaviour
     private Transform mapSpawnUpPoint;
 
     private Transform mapSpawnDownPoint;
+
+    private Transform mapSpawnHiddenPoint;
+
     //地图生成器，产生房间坐标
     private MapContraller mapManager;
 	//房间生成器，生成门生成相邻房间
@@ -206,6 +209,45 @@ public class initMap : MonoBehaviour
         genMinMap(mapDown, RoomConstant.ROOM_Z_DOWN);
     }
 
+    private void genHiddenMap()
+    {
+        mapManager = new MapContraller();
+        roomManager = GetComponent<RoomContraller>();
+
+        //在场景中搜索房间起点
+        mapSpawnHiddenPoint = GameObject.Find("MapSpawnHiddenPoint").GetComponent<Transform>();
+        //生成好的地图数据<房间坐标xy,门的信息>
+        if (neworLoad)
+        {
+            this.mapDown = mapManager.genHiddenMap(RoomConstant.ROOM_Z_X, 3);
+        }
+        else
+        {
+            this.mapDown = genMap(Application.persistentDataPath + "/Save/SaveData3.sav");
+        }
+        // Debug.Log("map count: " + map.Count);
+        //根据地图数据，生成新房间
+        foreach (int[] key in mapDown.Keys)
+        {
+            //新房间在地图中的坐标
+            int[] rXYZ = new int[] { key[0], key[1], key[2] };
+            //产生新房间
+            //  Debug.Log(rXYZ[0] +","+ rXYZ[1] + "," + rXYZ[2]);
+            unitMap = roomManager.genRoom(rXYZ, mapDown[key]);
+
+            //预备给新房间的坐标
+            Vector3 newMap = mapSpawnDownPoint.position;
+            //根据房间的宽度，水平偏移
+            newMap.x = RoomConstant.ROOM_X_X + key[0] * horizonDis;
+            //根据房间的高度，竖直偏移
+            newMap.y = key[1] * vertiDis;
+            //根据房间的楼层，设定z坐标值
+            newMap.z = key[2];
+            //设置新房间在屏幕上的坐标
+            unitMap.transform.position = newMap;
+        }
+    }
+
     public Dictionary<int[], int[]> getMapDownInfo()
     {
         return this.mapDown;
@@ -242,6 +284,8 @@ public class initMap : MonoBehaviour
         this.genGroundMap();
 
         this.genDownMap();
+
+        this.genHiddenMap();
     }
 	
 	// Update is called once per frame

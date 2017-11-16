@@ -22,7 +22,7 @@ public class BagUIManager : MonoBehaviour {
     private List<Transform> positionList = new List<Transform>();
     private List<GameObject> parentPositionList = new List<GameObject>();
     private List<GameObject> profabsList = new List<GameObject>();
-
+    private MouseMoveManger mouseMoveManger;
     private ItemController itemController;
 
     private Item selectItem;
@@ -61,6 +61,7 @@ public class BagUIManager : MonoBehaviour {
 
         public void showBagItemUI()
     {
+        mouseMoveManger.updateLock(true);
         BagItemMenuUI.SetActive(true);
         BagItemMenuUI.transform.localPosition = showPos;
 
@@ -107,6 +108,7 @@ public class BagUIManager : MonoBehaviour {
         BagItemMenuUI.transform.localPosition = hidePos;
         selectItem = null;
         battleMenuUI = null;
+        mouseMoveManger.updateLock(false);
     }
 
     public void useItem() {
@@ -145,6 +147,7 @@ public class BagUIManager : MonoBehaviour {
     void Start () {
         roundController = FindObjectOfType<RoundController>();
         itemController = FindObjectOfType<ItemController>();
+        mouseMoveManger = FindObjectOfType<MouseMoveManger>();
         positionList.Add(ItemPosition1);
         parentPositionList.Add(ItemParentPosition1);
         positionList.Add(ItemPosition2);

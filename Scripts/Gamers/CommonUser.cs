@@ -224,6 +224,16 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
     }
 
+    public Vector3 getCharaTransformPosition() {
+        return this.transform.position;
+    }
+
+    public void setCharaInHiddenRoom(RoomInterface room)
+    {
+        this.transform.position = new Vector3(RoomConstant.ROOM_X_X + (room.getXYZ()[0] * roomH - distance), room.getXYZ()[1] * roomV + distance, 0);
+     
+    }
+
     public void updateActionPoint(int actionPoint)
     {
         this.actionPoint = actionPoint;
@@ -484,6 +494,8 @@ abstract public class CommonUser : MonoBehaviour , NPC
         setIsDead(p.IsDead);       
         this.setDesc(p.Desc);
         this.setBoss(p.IsBoss);
+
+        this.transform.position = new Vector3(p.CharaTransformPositionX, p.CharaTransformPositionY, p.CharaTransformPositionZ); ;
         Debug.Log("读取基本信息完成。。。");
        // Debug.Log("开始读取道具信息。。。");
         foreach (ItemInfo i in p.Bag)

@@ -41,6 +41,8 @@ public class CharaInfoManager : MonoBehaviour {
 
     private BattleMenuUI battleMenuUI;
 
+    private MouseMoveManger mouseMoveManger;
+
     private Character chara;
 
     private string[] content;
@@ -52,6 +54,7 @@ public class CharaInfoManager : MonoBehaviour {
     public GameObject UIInfoMenu;
 
     public void showCharaInfoMenu(Character chara, string[] content) {
+        mouseMoveManger.updateLock(true);
         if (chara.isPlayer()) {
            // Debug.Log("click 2");
             duiHuaUImanager.showDuiHua(chara.getLiHuiURL(), content,0);
@@ -95,22 +98,20 @@ public class CharaInfoManager : MonoBehaviour {
 
 
     public void clickDuiHua() {
-        UIInfoMenu.SetActive(false);
-        UIInfoMenu.transform.localPosition = hidePos;
+        this.close();
         duiHuaUImanager.showDuiHua(chara.getLiHuiURL(), content,1);
     }
 
     public void clickBattle() {
-        UIInfoMenu.SetActive(false);
-        UIInfoMenu.transform.localPosition = hidePos;
+        this.close();
         battleMenuUI.showBattleUI(roundController.getPlayerChara(), chara, true);
         //battleController.fighte(roundController.getPlayerChara(), chara);
     }
 
     public void clickUseItem()
     {
-        UIInfoMenu.SetActive(false);
-        UIInfoMenu.transform.localPosition = hidePos;
+       
+        this.close();
         bagUIManager.showBagItemUI(chara);
     }
 
@@ -118,6 +119,7 @@ public class CharaInfoManager : MonoBehaviour {
     {
         UIInfoMenu.SetActive(false);
         UIInfoMenu.transform.localPosition = hidePos;
+        mouseMoveManger.updateLock(false);
     }
 
     // Use this for initialization
@@ -127,6 +129,7 @@ public class CharaInfoManager : MonoBehaviour {
         battleController = FindObjectOfType<BattleController>();
         bagUIManager = FindObjectOfType<BagUIManager>();
         battleMenuUI = FindObjectOfType<BattleMenuUI>();
+        mouseMoveManger = FindObjectOfType<MouseMoveManger>();
     }
 	
 	// Update is called once per frame

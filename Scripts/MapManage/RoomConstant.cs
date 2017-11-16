@@ -27,6 +27,10 @@ public  class  RoomConstant
 
     public const int ROOM_Y_GROUND = 0;   //地面
 
+    public const int ROOM_Z_X = -2;   //隐藏
+
+    public const int ROOM_X_X = -440;   //隐藏
+
     public const int ROOM_Y_UP = 440; // 楼上
 
     public const int ROOM_Y_DOWN = -440; //地下
@@ -41,5 +45,6 @@ public  class  RoomConstant
     public const string ROOM_TYPE_HOSPITAIL_TRI_OPERATION = "H_tridOperationRoom"; //医院第3手术室
     public const string ROOM_TYPE_HOSPITAIL_DRAG = "H_dragRoom"; //医院药品室
     public const string ROOM_TYPE_HOSPITAIL_REST = "H_restRoom"; //医院休息室
+    public const string ROOM_TYPE_HOSPITAIL_HIDDEN = "H_hiddenRoom"; //医院隐藏室
 
 }

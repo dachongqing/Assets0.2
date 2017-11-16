@@ -118,18 +118,20 @@ public class Player : CommonUser
             setIsDead(false);          
             this.setDesc("外乡人.");
             this.waitPlan = false;
-
-           // this.setClickMessage(new string[] { "我就是来旅游的。" });
+            setDistance(0);
+            setCurrentRoom(roomXYZ);
+            // this.setClickMessage(new string[] { "我就是来旅游的。" });
         } else
         {
             P0 p = loadInfo(this.getName());
             roomXYZ = p.Xyz;
             this.waitPlan = p.WaitPlan;
+            setDistance(0);
+            setCurrentRoom(roomXYZ);
             loadInfo(this, p, roomContraller);
         }
             //游戏一开始 所处的房间 默认房间的坐标为 0,0,0
-        setDistance(0);
-        setCurrentRoom(roomXYZ);
+       
 
         this.roomContraller.findRoomByXYZ(roomXYZ).setChara(this);
         this.roomContraller.setCharaInMiniMap(roomXYZ, this, true);
@@ -168,29 +170,7 @@ public class Player : CommonUser
             }
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            Debug.Log(" do left ");
-            CharaMoveByKey("L");
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            Debug.Log(" do right ");
-            CharaMoveByKey("R");
-
-        }
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            Debug.Log(" do up ");
-            CharaMoveByKey("U");
-
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            Debug.Log(" do down ");
-            CharaMoveByKey("D");
-
-        }
+        
 
     }
 
