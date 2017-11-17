@@ -263,5 +263,22 @@ public class Mini2MapUI : MonoBehaviour, IPointerClickHandler
         mmr.setP6enable(true);
         checkDoorStatus(mRoom, mmr);
         checkPStatus(mRoom, mmr);
+
+        if (Input.GetKey(KeyCode.M))
+        {
+          
+            if (chara.getCurrentRoom()[2] == RoomConstant.ROOM_Z_UP)
+            {
+                miniMapUI.clickUpMap();
+            }
+            else if (chara.getCurrentRoom()[2] == RoomConstant.ROOM_Z_GROUND)
+            {
+                miniMapUI.clickGroundMap();
+            }
+            else if (chara.getCurrentRoom()[2] == RoomConstant.ROOM_Z_DOWN)
+            {
+                miniMapUI.clickDownMap();
+            }
+        }
     }
 }

@@ -12,6 +12,14 @@ public class DownStairEnter : CommonThing
 
 
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+        doClick();
+
+    }
+
+    /**
     void OnMouseDown()
 
     {
@@ -24,7 +32,7 @@ public class DownStairEnter : CommonThing
         }
 
 
-    }
+    }**/
 
     public override void doClick()
     {

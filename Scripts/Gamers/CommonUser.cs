@@ -160,8 +160,7 @@ abstract public class CommonUser : MonoBehaviour , NPC
     {
         Vector3 temPos;
         this.xyz = nextRoomXYZ;
-       
-
+     
         if (xyz[2] == RoomConstant.ROOM_Z_UP)
         {
             temPos = new Vector3(xyz[0] * roomH - distance, RoomConstant.ROOM_Y_UP + (xyz[1] * roomV + distance), 0);
@@ -174,12 +173,41 @@ abstract public class CommonUser : MonoBehaviour , NPC
         {
             temPos = new Vector3(xyz[0] * roomH - distance, RoomConstant.ROOM_Y_DOWN + (xyz[1] * roomV + distance), 0);
         }
-
-
+        
         this.transform.position = temPos;
         this.findthisRoomNews(nextRoomXYZ);
+    }
 
+    public void setCurrentRoom(RoomInterface nextRoom, string doorFrom)
+    {
+        if (!this.isPlayer())
+        {
+            setCurrentRoom(nextRoom.getXYZ());
+        }
+        else {
+            Vector3 temPos;
+            this.xyz = nextRoom.getXYZ();
+            switch (doorFrom)  {
+                case "U":
+                    temPos = new Vector3(nextRoom.getNorthDoor().transform.position.x + 0.2f, nextRoom.getNorthDoor().transform.position.y - 1.5f, 0) ;
+                    this.transform.position = temPos;
+                    break;
+                case "D":
+                    temPos = new Vector3(nextRoom.getNorthDoor().transform.position.x + 0.2f, nextRoom.getSouthDoor().transform.position.y + 1.5f, 0);
+                    this.transform.position = temPos;
+                    break;
+                case "R":
+                    temPos = new Vector3(nextRoom.getWestDoor().transform.position.x + 0.9f, nextRoom.getWestDoor().transform.position.y , 0);
+                    this.transform.position = temPos;
+                    break;
+                case "L":
+                    temPos = new Vector3(nextRoom.getEastDoor().transform.position.x - 0.9f, nextRoom.getEastDoor().transform.position.y , 0);
+                    this.transform.position = temPos;
+                    break;
 
+            }
+            this.findthisRoomNews(nextRoom.getXYZ());
+        }
     }
 
     public virtual void findthisRoomNews(int[] nextRoomXYZ)

@@ -184,6 +184,37 @@ public class WoodDoor : MonoBehaviour, DoorInterface
             //离开门成功
             Debug.Log("离开房间成功");
             //进入下一个房间
+
+            //计算朝什么方向移动
+            int[] Nxyz = getNextRoomXYZ();
+            int[] Cxyz = this.getRoom().getXYZ();
+            string nextDoor = "";
+            if (Nxyz[0] - Cxyz[0] == 0)
+            {
+                if (Nxyz[1] - Cxyz[1] == 1)
+                {
+                    // up move
+                    nextDoor = "D";
+                }
+                else
+                {
+                    //donw move
+                    nextDoor = "U";
+                }
+            }
+            else {
+                if (Nxyz[0] - Cxyz[0] == -1)
+                {
+                    // left move
+                    nextDoor = "L";
+                }
+                else
+                {
+                    //right move
+                    nextDoor = "R";
+                }
+            }
+
             RoomInterface nextRoom = roomContraller.findRoomByXYZ(getNextRoomXYZ());
 
             //摄像机移动到下一个房间坐标
@@ -191,7 +222,7 @@ public class WoodDoor : MonoBehaviour, DoorInterface
             camCtrl.setTargetPos(getNextRoomXYZ());
 
             //当前人物坐标移动到下一个房间
-            roundController.getCurrentRoundChar().setCurrentRoom(getNextRoomXYZ());
+            roundController.getCurrentRoundChar().setCurrentRoom(nextRoom, nextDoor);
             nextRoom.setChara(this.roundController.getCurrentRoundChar());
             this.roomContraller.setCharaInMiniMap(getNextRoomXYZ(),this.roundController.getCurrentRoundChar(), true);
             this.getRoom().removeChara(this.roundController.getCurrentRoundChar());

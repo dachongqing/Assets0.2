@@ -33,6 +33,8 @@ public interface Character
 
     void setCurrentRoom(int[] nextRoomXYZ);
 
+    void setCurrentRoom(RoomInterface nextRoom, string doorFrom);
+
     //获取行动力
     int getActionPoint();
 

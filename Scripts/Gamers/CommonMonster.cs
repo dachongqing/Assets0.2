@@ -171,6 +171,12 @@ public class CommonMonster : MonoBehaviour,Monsters {
 
     }
 
+    public void setCurrentRoom(RoomInterface nextRoom, string doorFrom)
+    {
+
+        setCurrentRoom(nextRoom.getXYZ());
+    }
+
     public Vector3 getCharaTransformPosition()
     {
         return this.transform.position;

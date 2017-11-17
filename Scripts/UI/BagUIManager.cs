@@ -156,13 +156,19 @@ public class BagUIManager : MonoBehaviour {
         parentPositionList.Add(ItemParentPosition3);
 
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
 
-        if (selectItem != null ) {
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+
+        if (selectItem != null)
+        {
             itemDesc.text = selectItem.getDesc();
         }
-		
-	}
+
+        if (Input.GetKey(KeyCode.B))
+        {
+            this.showBagItemUI();
+        }
+    }
 }
