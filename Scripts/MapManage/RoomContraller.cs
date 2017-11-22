@@ -254,8 +254,10 @@ public class RoomContraller : MonoBehaviour
             {
                 downRoomList.Add(ri.getXYZ(), ri);
             }
-            allRoomList.Add(ri.getXYZ(), ri);
-            keys.Add(ri.getXYZ());
+            if (xyz[2] != RoomConstant.ROOM_Z_X) {
+                allRoomList.Add(ri.getXYZ(), ri);
+                keys.Add(ri.getXYZ());
+            }
            
         }
 

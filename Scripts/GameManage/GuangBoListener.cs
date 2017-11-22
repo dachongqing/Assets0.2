@@ -15,8 +15,13 @@ public class GuangBoListener : MonoBehaviour {
     private bool showConfirm = false;
     private string eventGuangBoCode = "";
     private bool needShowConfirm = false;
+    private bool hasMsg;
 
     List<Character> keyList = new List<Character>();
+
+    public bool CheckMsg() {
+        return hasMsg;
+    }
 
     public void cleanQuere() {
         quere.Clear();
@@ -43,7 +48,7 @@ public class GuangBoListener : MonoBehaviour {
         roundController = FindObjectOfType<RoundController>();
         guangBoController = FindObjectOfType<GuangBoController>();
         confirmUI = FindObjectOfType<ConfirmManageUI>();
-
+        //recevor = GetComponent<Animator>();
     }
 
     IEnumerator showMessageToPlay(Character chara,string[] msg, int pro)
@@ -131,7 +136,13 @@ public class GuangBoListener : MonoBehaviour {
                 guangBoController.getEventGuangBoMap().Remove(this.eventGuangBoCode);
                 needShowConfirm = false;
             }
-        } 
+        }
+
+        if (quere.Count > 0) {
+            hasMsg = true;
+        } else {
+            hasMsg = false;
+        }
 
     }
 }
