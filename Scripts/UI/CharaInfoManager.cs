@@ -37,6 +37,8 @@ public class CharaInfoManager : MonoBehaviour {
 
     private DuiHuaUImanager duiHuaUImanager;
 
+    private ConfirmManageUI confirmManageUI;
+
     private BagUIManager bagUIManager;
 
     private BattleMenuUI battleMenuUI;
@@ -59,7 +61,7 @@ public class CharaInfoManager : MonoBehaviour {
            // Debug.Log("click 2");
             duiHuaUImanager.showDuiHua(chara.getLiHuiURL(), content,0);
         } else {
-
+            Debug.Log("click 2");
             this.chara = chara;
             this.content = content;
             UIInfoMenu.SetActive(true);
@@ -130,6 +132,7 @@ public class CharaInfoManager : MonoBehaviour {
         bagUIManager = FindObjectOfType<BagUIManager>();
         battleMenuUI = FindObjectOfType<BattleMenuUI>();
         mouseMoveManger = FindObjectOfType<MouseMoveManger>();
+        confirmManageUI = FindObjectOfType<ConfirmManageUI>();
     }
 	
 	// Update is called once per frame

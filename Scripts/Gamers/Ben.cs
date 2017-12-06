@@ -114,8 +114,8 @@ public class Ben : CommonUser
         {
             roomXYZ = new int[]{ 0, 0, RoomConstant.ROOM_Z_GROUND };          
             setCrazyFlag(false);           
-            setAbilityInfo(new int[] { 9, 9, 4, 8 });
-            setMaxAbilityInfo(new int[] { 9, 9, 4, 8 });
+            setAbilityInfo(new int[] { 2, 2, 4, 8 });
+            setMaxAbilityInfo(new int[] { 2, 2, 4, 8 });
             setActionPointrolled(false);
             setIsDead(false);
           
@@ -162,9 +162,9 @@ public class Ben : CommonUser
         }
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+    public override void showCharaInfoMenu()
     {
-        Debug.Log(coll.gameObject.name);
+
         charaInfoManager.showCharaInfoMenu(this, getClickMessage());
 
     }

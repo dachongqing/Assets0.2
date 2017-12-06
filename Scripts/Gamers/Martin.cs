@@ -123,7 +123,7 @@ public class Martin : CommonUser {
             this.waitPlan = false;
            // this.setClickMessage(new string[] { "谁能给我一台电脑？" });
             getTargetRoomList().Enqueue(roomContraller.getRandomRoom());
-            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
+            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_DOWNSTAIR_BACK));
         }
         else
         {
@@ -162,10 +162,11 @@ public class Martin : CommonUser {
         }
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+    public override void showCharaInfoMenu()
     {
-        Debug.Log(coll.gameObject.name);
+
         charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+
     }
     /**
     void OnMouseDown()

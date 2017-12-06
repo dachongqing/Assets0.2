@@ -369,10 +369,11 @@ public class Kate : CommonUser
 
      } **/
 
-    void OnCollisionEnter2D(Collision2D coll)
+    public override void showCharaInfoMenu()
     {
-        Debug.Log(coll.gameObject.name);
-        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+      
+      charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+        
     }
 
     public new string getDeitalPic()

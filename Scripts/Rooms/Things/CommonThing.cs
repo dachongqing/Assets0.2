@@ -82,8 +82,8 @@ abstract public class CommonThing : MonoBehaviour ,Thing{
 
     // Use this for initialization
     void Start () {
-       
 
+       
     }
 	
 	// Update is called once per frame

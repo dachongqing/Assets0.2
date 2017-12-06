@@ -34,8 +34,8 @@ public class CameraCtrl : MonoBehaviour {
         } else {
             setTargetPos(pos, RoomConstant.ROOM_Y_DOWN, false);
         }
-
-	}
+        Debug.Log("setTargetPos pos call ");
+    }
 
     public void setHiddenTargetPos(int[] pos, int x)
     {
@@ -48,7 +48,7 @@ public class CameraCtrl : MonoBehaviour {
         targetPos.z = pos[2] - 10;
         //切换场景会导致程序初始化，目前不能用
         //SceneManager.LoadScene("Loading");
-
+        Debug.Log("setHiddenTargetPos call ");
     }
 
 
@@ -63,7 +63,7 @@ public class CameraCtrl : MonoBehaviour {
         targetPos.z = pos[2] - 10;
         //切换场景会导致程序初始化，目前不能用
         //SceneManager.LoadScene("Loading");
-
+        Debug.Log("setTargetPos showLoading call ");
     }
 
     IEnumerator EndLoadingPageUI(float ti)
@@ -71,11 +71,12 @@ public class CameraCtrl : MonoBehaviour {
         yield return new WaitForSeconds(ti);
         //销毁骰子
          loadingUpPage.GetComponent<Image>().enabled = false;
-       
+        Debug.Log("EndLoadingPageUI call ");
     }
 
     // Update is called once per frame
     void LateUpdate () {
+       // Debug.Log("LateUpdate call ");
 		transform.position = Vector3.Lerp (transform.position,targetPos,lerpSpeed * Time.smoothDeltaTime);
        
     }

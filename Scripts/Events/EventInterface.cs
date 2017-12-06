@@ -12,7 +12,7 @@ public interface EventInterface  {
 
     EventResult excute(Character character,string selectCode, int rollValue);
 
-    Dictionary<string,string> getSelectItem();
+    Dictionary<string,string[]> getSelectItem();
 
     string[] getEventEndInfo(string resultCode);
 

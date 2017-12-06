@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UpStairEnterRoom : CommonRoom {
 
+    public GameObject Barrel;
+
     public override List<string> findSomethingNews(Character chara)
     {
         getClickMessage().Clear();
@@ -40,5 +42,12 @@ public class UpStairEnterRoom : CommonRoom {
         }
 
         return getClickMessage();
+    }
+
+    void Start()
+    {
+        // Debug.Log("房间内物品初始化");
+        Barrel.GetComponent<Barrel>().init(getXYZ());
+
     }
 }

@@ -15,6 +15,8 @@ public class StoryController : MonoBehaviour
 
     private DuiHuaUImanager duiHuaUImanager;
 
+    private TaskMananger taskMananger;
+
     public bool neworLoad;
 
     public StoryInterface getStory()
@@ -30,7 +32,7 @@ public class StoryController : MonoBehaviour
 
     public bool checkStoryStartBySPEvnet(StoryInterface story,Character boss, RoundController roundController, RoomInterface room) {
          if (story.checkStoryStart(boss, room, roundController)) {
-            story.initStroy(boss, roundController);
+            story.initStroy(boss, roundController, taskMananger);
             isStartStory = true;
             this.story = story;
             return true;
@@ -46,6 +48,7 @@ public class StoryController : MonoBehaviour
         roundController = FindObjectOfType<RoundController>();
         roomContraller = FindObjectOfType<RoomContraller>();
         duiHuaUImanager = FindObjectOfType<DuiHuaUImanager>();
+        taskMananger = FindObjectOfType<TaskMananger>();
         if (!this.neworLoad)
         {
             Debug.Log("loading  begin..");
@@ -124,7 +127,7 @@ public class StoryController : MonoBehaviour
 
                 Character[] charas = roundController.getAllChara();
                 this.story = room.getStartedStory();
-                story.initStroy(boss, roundController);
+                story.initStroy(boss, roundController, taskMananger);
                 Debug.Log("UI 显示《《剧情模式已经开启： " + story.getStoryInfo());
                 boss.setScriptAction(story.getBadManScript());
                 boss.setBoss(true);

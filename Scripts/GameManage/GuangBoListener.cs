@@ -76,44 +76,54 @@ public class GuangBoListener : MonoBehaviour {
 
     public void showGuangBoMessage() {
 
-        if (duiHuaUImanager.isDuiHuaEnd()) {
+        if (duiHuaUImanager.isDuiHuaEnd())
+        {
 
-           
+
 
             if (quere.Count > 0)
             {
                 // quere.g
                 Debug.Log("guangbo quere.Count " + quere.Count);
                 Character key = keyList[0];
+                Debug.Log("key is " + key.getName());
 
                 if (quere[key].Count > 0)
                 {
                     GuangBoMessage ms = quere[key].Dequeue();
                     Debug.Log(key.getName() + " guangbo msg " + ms.Massage[0]);
                     duiHuaUImanager.setDuiHuaEndFalse();
-                     StartCoroutine(showMessageToPlay(key, ms.Massage, random.Next(1, 2)));
+                    StartCoroutine(showMessageToPlay(key, ms.Massage, random.Next(1, 2)));
                     //showMessageToPlay(key, ms.Massage);
                     //  Debug.Log("guangbo quere[key].Count " + quere[key].Count);
 
-                    if (guangBoController.getEventGuangBoMap().ContainsKey(ms.Code)) {
+                    if (guangBoController.getEventGuangBoMap().ContainsKey(ms.Code))
+                    {
                         needShowConfirm = true;
                         this.eventGuangBoCode = ms.Code;
-                       
+
                         Debug.Log(duiHuaUImanager.isDuiHuaEnd());
-                       // confirmUI.showConfirm(roundController.getPlayerChara().getLiHuiURL(), "我是不是要赶过去看一下？");
+                        // confirmUI.showConfirm(roundController.getPlayerChara().getLiHuiURL(), "我是不是要赶过去看一下？");
                     }
+                    keyList.Remove(key);
+                    quere.Remove(key);
                 }
                 else
                 {
+                    Debug.Log("cant find the key in quere" + key.getName());
                     keyList.Remove(key);
                     quere.Remove(key);
                 }
 
                 // quere.Clear();
             }
-            else {
+            else
+            {
                 Debug.Log("没有广播信息了");
             }
+        }
+        else {
+            Debug.Log("还有其它UI没结束");
         }
     }
 

@@ -43,6 +43,7 @@ public class BattleController : MonoBehaviour {
 
     public void showBattleUI(Character chara1, Character chara2, bool isF)
     {
+        Debug.Log("同房间战斗");
         battleMenuUI.showBattleUI(chara1, chara2, isF);
     }
 

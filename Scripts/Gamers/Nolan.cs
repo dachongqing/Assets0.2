@@ -146,7 +146,7 @@ public class Nolan :  CommonUser
             this.setDesc("一身脏兮兮的白大褂，第一感觉是个跳大神的庸医。");
             //this.setClickMessage(new string[] { "", "你就是犯人。" });
             getTargetRoomList().Enqueue(roomContraller.getRandomRoom());
-            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_BOOK));
+            getTargetRoomList().Enqueue(roomContraller.findRoomByRoomType(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON));
         }
         else
         {
@@ -191,9 +191,9 @@ public class Nolan :  CommonUser
 
 
 
-    void OnCollisionEnter2D(Collision2D coll)
+    public override void showCharaInfoMenu()
     {
-        Debug.Log(coll.gameObject.name);
+
         charaInfoManager.showCharaInfoMenu(this, getClickMessage());
 
     }
@@ -216,19 +216,19 @@ public class Nolan :  CommonUser
 
 	}**/
 
-   
 
-  
 
-   
 
-   
 
-   
 
-   
 
-   
 
-  
+
+
+
+
+
+
+
+
 }

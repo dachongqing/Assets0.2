@@ -15,6 +15,9 @@ public class MessageUI : MonoBehaviour, IPointerDownHandler
 	private bool isShow;
 	private Text theText;
 
+    public OptionalMessageUI messageUIOptions;
+
+
     private MessageResult messageResult = new MessageResult();
 
     private string[] content;
@@ -22,11 +25,18 @@ public class MessageUI : MonoBehaviour, IPointerDownHandler
     private int clickCount;
     private MouseMoveManger mouseMoveManger;
 
+    private bool isOptionalUIShow = false;
 
     // Use this for initialization
     void Start () {
 		theText = GetComponentInChildren<Text> ();
         mouseMoveManger = FindObjectOfType<MouseMoveManger>();
+    }
+
+    public void showMessges(string msg, string[] options)
+    {
+        this.isOptionalUIShow = true;      
+        messageUIOptions.showOptionalMessage(msg, options);
     }
 
     public void showMessage(string msg) {
@@ -61,7 +71,17 @@ public class MessageUI : MonoBehaviour, IPointerDownHandler
      }
 
     public MessageResult getResult() {
-        return messageResult;
+        if (this.isOptionalUIShow)
+        {
+          
+            return messageUIOptions.getResult();
+        }
+        else
+        {
+          
+            return messageResult;
+
+        }
     }
 
     void Update()
@@ -83,29 +103,43 @@ public class MessageUI : MonoBehaviour, IPointerDownHandler
         this.clickCount = 1;
         this.messageResult.setDone(false);
         isShow = true;
+        this.isOptionalUIShow = false;
     }
 
     public bool isClosed()
     {
+        if (this.isOptionalUIShow)
+        {
+            return messageUIOptions.isClosed();
+        }
+        else {
+            return !isShow;
 
-        return !isShow;
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(this.content.Length<= this.clickCount)
-        {
-            mouseMoveManger.updateLock(false);
-            Debug.Log ("OnPointerDown done!");
-            isShow = false;
-            this.messageResult.setDone(true);
-            this.messageResult.setResult("你选择了1");
-        } else
-        {
-            Debug.Log(this.content.Length + " OnPointerDown click! " + clickCount);
-            theText.text = this.content[this.clickCount];
-            this.clickCount++;
-        }
+       
+            if (this.content.Length <= this.clickCount)
+            {
+                mouseMoveManger.updateLock(false);
+               
+                isShow = false;
+                this.messageResult.setDone(true);
+                this.messageResult.setResult("你选择了1");
+            }
+            else
+            {
+                Debug.Log(this.content.Length + " OnPointerDown click! " + clickCount);
+                theText.text = this.content[this.clickCount];
+                this.clickCount++;
+            }
+       
+        
         
     }
+
+  
+
 }

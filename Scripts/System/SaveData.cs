@@ -20,6 +20,12 @@ public class SaveData  {
 
     private StoryInfo storyInfo  = new StoryInfo();
 
+    private List<NPC> npcs = new  List<NPC>();
+
+    private List<TaskInfo> tasks = new List<TaskInfo>();
+
+    private List<TaskInfo> historyTasks;
+
     public P0 P1
     {
         get
@@ -173,6 +179,32 @@ public class SaveData  {
         set
         {
             effectedList = value;
+        }
+    }
+
+    public List<TaskInfo> Tasks
+    {
+        get
+        {
+            return tasks;
+        }
+
+        set
+        {
+            tasks = value;
+        }
+    }
+
+    public List<TaskInfo> HistoryTasks
+    {
+        get
+        {
+            return historyTasks;
+        }
+
+        set
+        {
+            historyTasks = value;
         }
     }
 }

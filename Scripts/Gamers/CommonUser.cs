@@ -189,19 +189,19 @@ abstract public class CommonUser : MonoBehaviour , NPC
             this.xyz = nextRoom.getXYZ();
             switch (doorFrom)  {
                 case "U":
-                    temPos = new Vector3(nextRoom.getNorthDoor().transform.position.x + 0.2f, nextRoom.getNorthDoor().transform.position.y - 1.5f, 0) ;
+                    temPos = new Vector3(nextRoom.getNorthDoor().transform.position.x + 0.2f, nextRoom.getNorthDoor().transform.position.y - 2.5f, 0) ;
                     this.transform.position = temPos;
                     break;
                 case "D":
-                    temPos = new Vector3(nextRoom.getNorthDoor().transform.position.x + 0.2f, nextRoom.getSouthDoor().transform.position.y + 1.5f, 0);
+                    temPos = new Vector3(nextRoom.getNorthDoor().transform.position.x + 0.2f, nextRoom.getSouthDoor().transform.position.y + 2.5f, 0);
                     this.transform.position = temPos;
                     break;
                 case "R":
-                    temPos = new Vector3(nextRoom.getWestDoor().transform.position.x + 0.9f, nextRoom.getWestDoor().transform.position.y , 0);
+                    temPos = new Vector3(nextRoom.getWestDoor().transform.position.x + 1.9f, nextRoom.getWestDoor().transform.position.y , 0);
                     this.transform.position = temPos;
                     break;
                 case "L":
-                    temPos = new Vector3(nextRoom.getEastDoor().transform.position.x - 0.9f, nextRoom.getEastDoor().transform.position.y , 0);
+                    temPos = new Vector3(nextRoom.getEastDoor().transform.position.x - 1.9f, nextRoom.getEastDoor().transform.position.y , 0);
                     this.transform.position = temPos;
                     break;
 
@@ -244,8 +244,8 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
     public void CharaMoveByMouse(Vector3 position)
     {
-        Debug.Log("current p:" + this.transform.position);
-        Debug.Log("target p:" + position);
+     //   Debug.Log("current p:" + this.transform.position);
+      //  Debug.Log("target p:" + position);
         Vector3 temPos;
         temPos = new Vector3(position.x, position.y, 0);
         this.transform.position = Vector3.MoveTowards(this.transform.position, temPos, 10 * Time.deltaTime);
@@ -454,6 +454,10 @@ abstract public class CommonUser : MonoBehaviour , NPC
         locked = false;
     }
 
+    public virtual void showCharaInfoMenu() {
+
+    }
+
     public void setTargetRoomLocked(bool locked)
     {
         this.locked = locked;
@@ -550,6 +554,15 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
        
 
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+        if (coll.gameObject.name == "Player")
+        {
+            showCharaInfoMenu();
+        }
     }
 
 }

@@ -39,24 +39,24 @@ public class MouseMoveManger : MonoBehaviour {
                  }
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
                 {
-                    Debug.Log(" do left ");
+                  //  Debug.Log(" do left ");
                     npc.CharaMoveByKey("L");
                 }
                 if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
                 {
-                    Debug.Log(" do right ");
+                   // Debug.Log(" do right ");
                     npc.CharaMoveByKey("R");
 
                 }
                 if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
                 {
-                    Debug.Log(" do up ");
+                    //Debug.Log(" do up ");
                     npc.CharaMoveByKey("U");
 
                 }
                 if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
                 {
-                    Debug.Log(" do down ");
+                   // Debug.Log(" do down ");
                     npc.CharaMoveByKey("D");
 
                 }

@@ -40,4 +40,10 @@ public class EventConstant  {
 
     public const string FALL_DOWN__EVENT_BAD = "FallDown_10003"; //下落地下事件
 
+    public const string OPTION_CODE_1 = "1";
+
+    public const string OPTION_CODE_2 = "2";
+
+    public const string OPTION_CODE_3 = "3";
+
 }

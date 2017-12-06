@@ -40,7 +40,9 @@ public class Bag  {
     }
 
     public bool checkItem(string code ) {
+       // Debug.Log("check code is " + code);
         foreach (Item item in bag) {
+           // Debug.Log("item code is " + item.getCode());
             if (item.getCode() == code) {
                 return true;
             }

@@ -17,7 +17,7 @@ abstract public class CommonEvent : EventInterface {
     private int goodValue;
     private int normalValue;
     private int badDiceNum;
-
+    private Dictionary<string, string[]> options;
     private List<string> effectedList;
 
     public CommonEvent(int good ,int bad, string[] eventBeginInfo, Dictionary<string, string[]> endInfoMap, string eventType,string subEventType,
@@ -32,6 +32,21 @@ abstract public class CommonEvent : EventInterface {
         this.goodValue = goodValue;
         this.normalValue = normalValue;
         this.badDiceNum = badDiceNum;
+    }
+
+    public CommonEvent(int good, int bad, string[] eventBeginInfo, Dictionary<string, string[]> endInfoMap, string eventType, string subEventType,
+      int goodValue, int normalValue, int badDiceNum, Dictionary<string, string[]> options)
+    {
+        this.goodCheckPoint = good;
+        this.badCheckPoint = bad;
+        this.eventBeginInfo = eventBeginInfo;
+        this.endInfoMap = endInfoMap;
+        this.eventType = eventType;
+        this.subEventType = subEventType;
+        this.goodValue = goodValue;
+        this.normalValue = normalValue;
+        this.badDiceNum = badDiceNum;
+        this.options = options;
     }
 
     public EventResult excute(Character character, string selectCode, int rollValue)
@@ -71,9 +86,9 @@ abstract public class CommonEvent : EventInterface {
         return this.subEventType;
     }
 
-    public   Dictionary<string, string> getSelectItem()
+    public Dictionary<string, string[]> getSelectItem()
     {
-        return null;
+        return options;
     }
 
     public int getGoodValue()

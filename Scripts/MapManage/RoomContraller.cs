@@ -39,76 +39,77 @@ public class RoomContraller : MonoBehaviour
     private void genRoomType()
     {
         //这个队列的长度，限制了房间最大数量
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_REST);
         groundRoomType.Enqueue("UpStairEnterRoom");
-        groundRoomType.Enqueue("DownStairEnterRoom");
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_REST);
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
         groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_SURGERY);
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("FallDownRoom");
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue("DownStairEnterRoom");
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
         groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_SECURITY);
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue("FallDownRoom");
         groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_DRAG);
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
-        groundRoomType.Enqueue("LobbyRoom");
-       // groundRoomType.Enqueue("LobbyRoom");
+        groundRoomType.Enqueue("FallDownRoomSp");
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+       // groundRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
 
         //这个队列的长度，限制了房间最大数量
         upRoomType.Enqueue("UpStairOuterRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
         upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_MINITOR);
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
         upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_DEAN);
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
-       // upRoomType.Enqueue("LobbyRoom");
-        upRoomType.Enqueue("LobbyRoom");
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+       // upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        upRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
 
         //这个队列的长度，限制了房间最大数量
         downRoomType.Enqueue("DownStairOuterRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
         downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_TRI_OPERATION);
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
         downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_MORGUE);
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
         downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_STORE);
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("LobbyRoom");
-       // downRoomType.Enqueue("LobbyRoom");
-        downRoomType.Enqueue("BookRoom");
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+       // downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
+        downRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_COMMON);
 
       
         hiddenRoomType.Enqueue(RoomConstant.ROOM_TYPE_HOSPITAIL_HIDDEN);
@@ -168,11 +169,11 @@ public class RoomContraller : MonoBehaviour
 
     private void setRoomStory(RoomInterface room)
     {
-        if (room.getRoomType() == RoomConstant.ROOM_TYPE_BOOK)
-        {
-            StoryInterface storyScript = new RaceStory();
-            room.setRoomStory(storyScript);
-        }
+        // if (room.getRoomType() == RoomConstant.ROOM_TYPE_BOOK)
+        // {
+        //       StoryInterface storyScript = new RaceStory();
+        //     room.setRoomStory(storyScript);
+        // }
     }
 
     private string roomType;
@@ -190,6 +191,7 @@ public class RoomContraller : MonoBehaviour
         {
             roomType = this.upRoomType.Dequeue();
         } else if (xyz[2] == RoomConstant.ROOM_Z_X) {
+            //Debug.Log("this.downRoomType.Count: " + xyz[0] + "," + xyz[1] + "," + xyz[2]);
             roomType = this.hiddenRoomType.Dequeue();
         }
         string url = getPrefabUrlByRoomType(roomType);

@@ -74,6 +74,7 @@ public class BlackSignBadScript : StoryScript
                 battleController.fighte(chara, target);
             } else
             {
+               
                 battleController.showBattleUI(target, chara , false);
             }
             if (target.isDead())

@@ -72,7 +72,7 @@ abstract public class AbsStrory : MonoBehaviour,StoryInterface
         return null;
     }
 
-    public virtual void initStroy(Character chara, RoundController roundController)
+    public virtual void initStroy(Character chara, RoundController roundController, TaskMananger taskMananger)
     {
         
     }

@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class EventController : MonoBehaviour
 {
-    
-    private bool leaveExecuted;
 
-    private bool sanCheckExecuted;
+    private bool leaveExecuted = true;
 
-    private bool fallRoomExecuted;
+    private bool sanCheckExecuted = true;
+
+    private bool fallRoomExecuted = true;
 
     public MessageUI messageUI;
 
+   
     public RollDiceUIManager uiManager;
 
     private EventInterface eventI;
@@ -32,6 +33,8 @@ public class EventController : MonoBehaviour
 
     private RoomContraller roomContraller;
     private CameraCtrl camCtrl;
+
+    private string selectedOptionCode;
 
     public void excuteLeaveRoomEvent (DoorInterface door, RoomInterface ri, Character chara)
 	{
@@ -106,6 +109,7 @@ public class EventController : MonoBehaviour
 	public bool excuteEnterRoomEvent (RoomInterface ri, Character chara)
 	{
         eventI = ri.getRoomEvent(EventConstant.ENTER_EVENT);
+       // Debug.LogError(this.eventI);
         if (eventI != null) {
             if(eventI.getSubEventType() == EventConstant.SANCHECK_EVENT)
             {
@@ -203,10 +207,23 @@ public class EventController : MonoBehaviour
         return true;
     }
 
-    public void showMessageUi (string[] message, Dictionary<string,string> selectItem)
-	{
-        messageUI.showMessges(message);
+    public void showMessageUi(string message)
+    {        
+     messageUI.showMessges(new string[] { message });     
+    }
 
+    public void showMessageUi (string[] message, Dictionary<string, string[]> options)
+	{
+        if (options == null || options.Count == 0) {
+            messageUI.showMessges(message);
+
+        } else {
+           
+            string[] StringOptions = new string[] { options[EventConstant.OPTION_CODE_1][0], options[EventConstant.OPTION_CODE_2][0], options[EventConstant.OPTION_CODE_3][0] };
+
+            messageUI.showMessges(message[0], StringOptions);
+           
+        }
     }
 
     void Start()
@@ -307,32 +324,50 @@ public class EventController : MonoBehaviour
 
         if (!this.fallRoomExecuted)
         {
+            // Debug.LogError(eventI);
             if (phase == 1 && messageUI.getResult().getDone())
             {
                 Debug.Log("phase =1 and " + messageUI.getResult().getDone());
-                phase = 2;
 
+                if (eventI.getSelectItem() == null || eventI.getSelectItem().Count == 0) {
+                    phase = 3;
+                } else {
+                    phase = 2;
+                    this.selectedOptionCode = messageUI.getResult().getResult();
+                    showMessageUi(eventI.getSelectItem()[this.selectedOptionCode][1]);
+                }
+
+            } else if (phase == 2 &&  messageUI.getResult().getDone())
+            {
+                phase = 3;
             }
 
-            if (phase == 2 && !uiManager.getResult().getDone() && messageUI.isClosed())
+            else if (phase == 3 && !uiManager.getResult().getDone() && messageUI.isClosed())
             {
                 Debug.Log("wait mesui end");
-                RollDiceParam param = new RollDiceParam(chara.getAbilityInfo()[1] + chara.getDiceNumberBuffer());
+                int rollNum;
+                if (this.selectedOptionCode == EventConstant.OPTION_CODE_1) {
+                    rollNum = chara.getAbilityInfo()[3];
+                } else {
+                    rollNum = chara.getAbilityInfo()[1];
+                }
+                RollDiceParam param = new RollDiceParam(rollNum + chara.getDiceNumberBuffer());
                 rollVaue = uiManager.showRollDiceImmediately(param);
-                phase = 3;
+                phase = 4;
 
 
             }
-
-            if (phase == 3 && !uiManager.isClosedPlane())
+                else if (phase == 4 && !uiManager.isClosedPlane())
             {
-                result = eventI.excute(chara, messageUI.getResult().getResult(), rollVaue);
+               // Debug.LogError(eventI);
+               // Debug.LogError(messageUI.getResult());
+                result = eventI.excute(chara, this.selectedOptionCode, rollVaue);
                 Debug.Log("event result is " + result);
                 showMessageUi(eventI.getEventEndInfo(result.getResultCode()), null);
-                phase = 4;
+                phase = 5;
             }
 
-            else if (phase == 4 && messageUI.getResult().getDone())
+            else if (phase == 5 && messageUI.getResult().getDone())
             {
                 if (result.getResultCode() == EventConstant.FALL_DOWN__EVENT_GOOD)
                 {
@@ -347,18 +382,20 @@ public class EventController : MonoBehaviour
                     chara.setCurrentRoom(ri.getXYZ());
                     this.roomContraller.setCharaInMiniMap(ri.getXYZ(), chara, true);
                     camCtrl.setTargetPos(ri.getXYZ(), RoomConstant.ROOM_Y_DOWN, true);
-
+                    fallRoomExecuted = true;
                 }
                 else
                 {
                     RollDiceParam param = new RollDiceParam(this.eventI.getBadDiceNum());
-                    rollVaue = uiManager.showRollDiceImmediately(param);
+                    rollVaue = uiManager.showRollDiceImmediately(param)+1;
                     chara.getAbilityInfo()[0] = chara.getAbilityInfo()[0] - rollVaue;
+                    chara.getMaxAbilityInfo()[3] = chara.getMaxAbilityInfo()[3] + rollVaue;
+                    chara.getAbilityInfo()[3] = chara.getAbilityInfo()[3] + rollVaue;
                     messageUI.getResult().setDone(false);
-                    showMessageUi(new string[] { "你的力量下降：" + rollVaue + "点。" }, null);
-                    phase = 5;
+                    showMessageUi(new string[] { "你的力量下降：" + rollVaue + "点,神志上升：" + rollVaue + "点" }, null);
+                    phase = 6;
                 }
-            }else if(phase == 5 && messageUI.getResult().getDone())
+            }else if(phase == 6 && messageUI.getResult().getDone())
             {
                 roomContraller.findRoomByXYZ(chara.getCurrentRoom()).removeChara(chara);
                 this.roomContraller.setCharaInMiniMap(chara.getCurrentRoom(), chara, false);

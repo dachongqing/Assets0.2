@@ -13,10 +13,15 @@ public class SystemController : MonoBehaviour {
     private StoryController storyController;
     private ThingController thingController;
     private EventController eventController;
+    private TaskMananger taskMananger;
+
     private string filename;
     private string filename1;
     private string filename2;
     private string filename3;
+    private string filename4;
+    private string filename5;
+
     private Dictionary<string, int[]> stringMap = new Dictionary<string, int[]>();
     private Dictionary<string, int[]> getStringMap(Dictionary<int[], int[]> map)
 
@@ -39,6 +44,8 @@ public class SystemController : MonoBehaviour {
         filename1 = dirpath + "/SaveData1.sav";
         filename2 = dirpath + "/SaveData2.sav";
         filename3 = dirpath + "/SaveData3.sav";
+        filename4 = dirpath + "/SaveData4.sav";
+        filename5 = dirpath + "/SaveData5.sav";
 
         List<Character> charas = roundController.getAllCharaFromMap();
         SaveData data = new SaveData();
@@ -69,7 +76,14 @@ public class SystemController : MonoBehaviour {
         {
             data.EffectedList.Add(ei);
         }
-        
+        foreach (TaskInterface ti in this.taskMananger.getRegisitedTasks())
+        {
+            saveRegisitedTask(data, ti);
+        }
+        if (taskMananger.getStoryTask() != null) {
+            saveRegisitedTask(data, taskMananger.getStoryTask());
+        }
+        data.HistoryTasks = taskMananger.getHistoryTask();
         IOHelper.SetData(filename, data);
         data.CharaNames.Clear();
         //保存地图数据
@@ -81,7 +95,45 @@ public class SystemController : MonoBehaviour {
         stringMap.Clear();  
         IOHelper.SetData(filename3, getStringMap(initMapObject.getMapDownInfo()));
         stringMap.Clear();
-       
+        IOHelper.SetData(filename4, getStringMap(initMapObject.getMapHiddenInfo()));
+        stringMap.Clear();        
+    }
+
+    private void saveRegisitedTask(SaveData savaData, TaskInterface ti) {
+             
+            TaskInfo taskInfo = new TaskInfo();
+            taskInfo.TaskCode = ti.getTaskCode();
+            taskInfo.TaskDesc = ti.getTaskDes();
+            taskInfo.TaskDistrubtor = ti.getTaskDistributor();
+            taskInfo.TaskId = ti.getTaskId();
+            taskInfo.TaskName = ti.getTaskName();
+            taskInfo.TaskOwner = ti.getTaskOwner();
+            taskInfo.TaskStatus = ti.getTaskStatus();
+            taskInfo.TaskType = ti.getTaskType();
+            List<TaskItemInfo> items = new List<TaskItemInfo>();
+            foreach (TaskItemInterface tii in ti.getTaskItems()) {
+                TaskItemInfo taskItemInfo = new TaskItemInfo();
+                taskItemInfo.ItemDesc = tii.getItemDesc();
+                taskItemInfo.ItemCode = tii.getItemCode();
+                items.Add(taskItemInfo);
+            }
+            taskInfo.TaskItems = items;
+            taskInfo.AwardAttr = ti.getTaskAwards().getTaskAwardAttrInfo();
+            
+            List<ItemInfo> awardsItems = new List<ItemInfo>();
+            if (ti.getTaskAwards().getTaskAwardItemInfo() != null && ti.getTaskAwards().getTaskAwardItemInfo().Count >0) {
+                foreach (Item it in ti.getTaskAwards().getTaskAwardItemInfo()) {
+                    ItemInfo ii = new ItemInfo();
+                    ii.Code = it.getCode();
+                    ii.Desc = it.getDesc();
+                    ii.Durability = it.getDurability();
+                    ii.Name = it.getName();
+                    ii.Type = it.getType();
+                    awardsItems.Add(ii);
+                }
+            }
+            taskInfo.Items = awardsItems;
+            savaData.Tasks.Add(taskInfo);        
     }
 
     private void saveCharInfo(SaveData savaData, Character chara)
@@ -117,6 +169,8 @@ public class SystemController : MonoBehaviour {
             }
             foreach(RoomInterface ri in npc.getTargetRoomList())
             {
+
+                //Debug.Log("ri : "+ npc.getName());
                 p.TargetRoomlist.Add(ri.getRoomType());
             }
         }
@@ -171,6 +225,7 @@ public class SystemController : MonoBehaviour {
         storyController = FindObjectOfType<StoryController>();
         thingController = FindObjectOfType<ThingController>();
         eventController = FindObjectOfType<EventController>();
+        taskMananger = FindObjectOfType<TaskMananger>();
     }
 	
 	// Update is called once per frame

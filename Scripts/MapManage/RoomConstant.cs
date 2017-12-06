@@ -46,5 +46,6 @@ public  class  RoomConstant
     public const string ROOM_TYPE_HOSPITAIL_DRAG = "H_dragRoom"; //医院药品室
     public const string ROOM_TYPE_HOSPITAIL_REST = "H_restRoom"; //医院休息室
     public const string ROOM_TYPE_HOSPITAIL_HIDDEN = "H_hiddenRoom"; //医院隐藏室
+    public const string ROOM_TYPE_HOSPITAIL_COMMON = "H_commonRoom"; //医院普通病房
 
 }
