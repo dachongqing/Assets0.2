@@ -23,6 +23,8 @@ public class YangMan : CommonUser
 
     private int status = 0;
 
+    public GameObject miniOpertionYangMan;
+
     public new bool isPlayer()
     {
         return false;
@@ -43,7 +45,53 @@ public class YangMan : CommonUser
         return "detail/9";
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+    public override void doMiniOperation()
+    {
+        if (this.task.getTaskStatus() == TaskConstant.STATUS_INIT)
+        {
+            string[] beginContent = new string[] {"朋友，我这里有一根烟，你想要吗？",
+                    "这烟劲可大了，吸一口爽几天。。。。",
+                    "看见旁边的老人了吗？他就是吸成这样的"};
+            duiHuaUImanager.showDuiHua(this.getLiHuiURL(), beginContent, 0);
+            showConfirm = true;
+        }
+        else if (this.task.getTaskStatus() == TaskConstant.STATUS_BEGIN)
+        {
+
+            if (this.taskMananger.checkTaskDone(this.task))
+            {
+                string[] beginContent = new string[] {"嗯，不错！， 。。嗯。。好的了",
+                        "我其实是个小偷， 帮你的东西拿来。。。"
+                        };
+                duiHuaUImanager.showDuiHua(this.getLiHuiURL(), beginContent, 0);
+                this.task.getTaskAwards().executeAwards();
+                this.task.setTaskStatus(TaskConstant.STATUS_END);
+                this.taskMananger.removeTask(this.task);
+                this.taskMananger.UpdateHistoryTask(this.task);
+            }
+            else
+            {
+                string[] beginContent = new string[] {"朋友。。这烟要钱的。。。。。。",
+                        "咳咳咳。。。。"
+                        };
+                duiHuaUImanager.showDuiHua(this.getLiHuiURL(), beginContent, 0);
+            }
+        }
+        else if (this.task.getTaskStatus() == TaskConstant.STATUS_END)
+        {
+            string[] beginContent = new string[] {"你还想要？ ",
+                    "没有了 没有了，，，",
+                    "看看地上还有没有烟屁股吧。。"};
+            duiHuaUImanager.showDuiHua(this.getLiHuiURL(), beginContent, 0);
+        }
+        else if (this.task.getTaskStatus() == TaskConstant.STATUS_INDALID)
+        {
+            string[] beginContent = new string[] { "滚开。" };
+            duiHuaUImanager.showDuiHua(this.getLiHuiURL(), beginContent, 0);
+        }
+    }
+
+   /** void OnCollisionEnter2D(Collision2D coll)
     {
         Debug.Log(coll.gameObject.name);
         if (coll.gameObject.name == "Player")
@@ -95,7 +143,7 @@ public class YangMan : CommonUser
         }
     }
 
-
+    **/
 
     private void initTask()
     {
@@ -113,6 +161,21 @@ public class YangMan : CommonUser
         this.task = new FindSometingTask(TaskConstant.TASK_CODE_02, TaskConstant.TASK_TYPE_01, award, null, taskDesc, npcCode, null, taskItems,
             taskName, TaskConstant.STATUS_INIT);
     }
+
+    public override void showCharaInfoMenuItem()
+    {
+
+        miniOpertionYangMan.SetActive(true);
+
+    }
+
+    public override void offCharaInfoMenuItem()
+    {
+
+        miniOpertionYangMan.SetActive(false);
+
+    }
+
 
     // Use this for initialization
     void Start()

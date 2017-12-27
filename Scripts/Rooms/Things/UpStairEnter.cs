@@ -15,12 +15,15 @@ public class UpStairEnter : CommonThing
 
     private CameraCtrl camCtrl;
 
-    void OnCollisionEnter2D(Collision2D coll)
+    public GameObject minOperationUpStairEn;
+
+   /** void OnCollisionEnter2D(Collision2D coll)
     {
         Debug.Log(coll.gameObject.name);
         doClick();
 
     }
+        **/
 
     /**
     void OnMouseDown()
@@ -36,6 +39,27 @@ public class UpStairEnter : CommonThing
 
 
     }**/
+
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
+
+
+    public override void showCharaInfoMenuItem()
+    {
+
+        minOperationUpStairEn.SetActive(true);
+
+    }
+
+    public override void offCharaInfoMenuItem()
+    {
+
+        minOperationUpStairEn.SetActive(false);
+
+    }
 
     public override void doClick()
     {

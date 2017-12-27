@@ -17,7 +17,7 @@ public class Ben : CommonUser
     private bool waitPlan;
     public GameObject servant;
     private BlackSignStory bss;
-
+    public GameObject miniOpertionBen;
     private bool scriptEnd;
 
     public new bool isPlayer()
@@ -162,11 +162,23 @@ public class Ben : CommonUser
         }
     }
 
-    public override void showCharaInfoMenu()
+    public override void showCharaInfoMenuItem()
     {
 
-        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+        miniOpertionBen.SetActive(true);
 
+    }
+
+    public override void offCharaInfoMenuItem()
+    {
+
+        miniOpertionBen.SetActive(false);
+
+    }
+
+    public override void doMiniOperation()
+    {
+        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
     }
     /**
     void OnMouseDown()

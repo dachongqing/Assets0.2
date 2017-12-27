@@ -15,7 +15,7 @@ public class Nolan :  CommonUser
     private GuangBoController guangBoController;
     private APathManager aPathManager = new APathManager();
     private bool waitPlan;
-    
+    public GameObject miniOpertionMartin;
     private bool scriptEnd;
 
     public new bool isPlayer()
@@ -187,14 +187,24 @@ public class Nolan :  CommonUser
 
 
 
+    public override void doMiniOperation()
+    {
+        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+    }
 
 
 
-
-    public override void showCharaInfoMenu()
+    public override void showCharaInfoMenuItem()
     {
 
-        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+        miniOpertionMartin.SetActive(true);
+
+    }
+
+    public override void offCharaInfoMenuItem()
+    {
+
+        miniOpertionMartin.SetActive(false);
 
     }
 

@@ -13,6 +13,10 @@ abstract public class CommonThing : MonoBehaviour ,Thing{
 
     private string[] clickMessage;
 
+    private GameObject playerGameObject;
+
+    private bool leavlFlag = false;
+
     private void saveEmptyThing(int[] roomXYZ, string code)
     {
         FindObjectOfType<ThingController>().emptyThing(roomXYZ,code);
@@ -87,7 +91,73 @@ abstract public class CommonThing : MonoBehaviour ,Thing{
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void FixedUpdate () {
+        if (leavlFlag)
+        {
+            float dis = Vector3.Distance(this.transform.position, this.playerGameObject.transform.position);
+           // Debug.Log("we are dis is " + dis);
+            if (dis > 1)
+            {
+                offCharaInfoMenuItem();
+                if (getOperationItem() != null)
+                {
+                        getOperationItem().SetActive(false);
+                }
+                leavlFlag = false;
+            }
+        }
+    }
+
+    public virtual void doMiniOperation()
+    {
+
+    }
+
+    public virtual void showCharaInfoMenuItem()
+    {
+
+    }
+
+    public virtual void offCharaInfoMenuItem()
+    {
+
+    }
+
+    public virtual GameObject getOperationItem()
+    {
+        return null;
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+        if (coll.gameObject.name == "Player")
+        {
+            showCharaInfoMenuItem();
+            if (getOperationItem() != null) {
+                getOperationItem().SetActive(true);
+            }
+            leavlFlag = false;
+            
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+        if (coll.gameObject.name == "Player")
+        {
+            //offCharaInfoMenuItem();
+            //  if (getOperationItem() != null)
+            //{
+            //     getOperationItem().SetActive(false);
+            // }
+            this.playerGameObject = coll.gameObject;
+            leavlFlag = true;
+        }
+
+    }
+
+
+
 }

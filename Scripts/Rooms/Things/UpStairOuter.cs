@@ -9,17 +9,38 @@ public class UpStairOuter : CommonThing
 
     private RoomContraller roomContraller;
     private RoundController roundController;
-
+    public GameObject minOperationUpStairOut;
     private CameraCtrl camCtrl;
 
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
+
+
+    public override void showCharaInfoMenuItem()
+    {
+
+        minOperationUpStairOut.SetActive(true);
+
+    }
+
+    public override void offCharaInfoMenuItem()
+    {
+
+        minOperationUpStairOut.SetActive(false);
+
+    }
+
+
+    /**
     void OnCollisionEnter2D(Collision2D coll)
     {
         Debug.Log(coll.gameObject.name);
         doClick();
 
     }
-
-    /**
     void OnMouseDown()
 
     {

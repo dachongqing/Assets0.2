@@ -20,6 +20,19 @@ public class SafeCabinet : CommonThing
 
     private RollDiceUIManager uiManager;
 
+    public GameObject minOperationKeysSafeCabinet;
+
+
+    public override GameObject getOperationItem()
+    {
+        return minOperationKeysSafeCabinet;
+    }
+
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
     public override void doClick()
     {
         Debug.Log("click a barrel");
@@ -66,7 +79,7 @@ public class SafeCabinet : CommonThing
         }
     }
 
-    void OnMouseDown()
+   /** void OnMouseDown()
     {
         if (!SystemUtil.IsTouchedUI())
         {
@@ -74,7 +87,7 @@ public class SafeCabinet : CommonThing
             doClick();
 
         }
-    }
+    }**/
 
     private void openEvent(int rollValue)
     {

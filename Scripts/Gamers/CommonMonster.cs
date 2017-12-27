@@ -423,4 +423,9 @@ public class CommonMonster : MonoBehaviour,Monsters {
         this.transform.position = new Vector3(RoomConstant.ROOM_X_X + (room.getXYZ()[0] * roomH - distance), xyz[1] * roomV + distance, 0);
 
     }
+
+    public virtual void doMiniOperation()
+    {
+
+    }
 }

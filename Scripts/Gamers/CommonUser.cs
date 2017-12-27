@@ -454,7 +454,12 @@ abstract public class CommonUser : MonoBehaviour , NPC
         locked = false;
     }
 
-    public virtual void showCharaInfoMenu() {
+    public virtual void showCharaInfoMenuItem() {
+
+    }
+
+    public virtual void offCharaInfoMenuItem()
+    {
 
     }
 
@@ -556,13 +561,48 @@ abstract public class CommonUser : MonoBehaviour , NPC
 
     }
 
+    public virtual void doMiniOperation()
+    {
+        
+    }
+
     void OnCollisionEnter2D(Collision2D coll)
     {
         Debug.Log(coll.gameObject.name);
         if (coll.gameObject.name == "Player")
         {
-            showCharaInfoMenu();
+            showCharaInfoMenuItem();
+            leavlFlag = false;
         }
     }
+
+    private GameObject playerGameObject;
+
+    private bool leavlFlag = false;
+
+    void OnCollisionExit2D(Collision2D coll)
+    {
+        Debug.Log(coll.gameObject.name);
+        if (coll.gameObject.name == "Player")
+        {
+           // offCharaInfoMenuItem();
+            this.playerGameObject = coll.gameObject;
+            leavlFlag = true;
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (leavlFlag) {
+            float dis = Vector3.Distance(this.transform.position, this.playerGameObject.transform.position);
+           // Debug.Log("we are dis is " + dis);
+            if (dis > 1) {
+                offCharaInfoMenuItem();
+                leavlFlag = false;
+            }
+        }
+    }
+
 
 }

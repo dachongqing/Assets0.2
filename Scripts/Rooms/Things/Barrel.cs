@@ -21,6 +21,30 @@ public class Barrel :CommonThing
 
     private RollDiceUIManager uiManager;
 
+    public GameObject minOperationBarrel;
+
+
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
+
+
+    public override void showCharaInfoMenuItem()
+    {
+
+        minOperationBarrel.SetActive(true);
+
+    }
+
+    public override void offCharaInfoMenuItem()
+    {
+
+        minOperationBarrel.SetActive(false);
+
+    }
+
     public override void doClick() {
         Debug.Log("click a barrel");
         if (this.getIsEmpty())
@@ -58,12 +82,7 @@ public class Barrel :CommonThing
         }
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        Debug.Log(coll.gameObject.name);
-       // charaInfoManager.showCharaInfoMenu(this, getClickMessage());
-        doClick();
-    }
+   
 
     /**
 

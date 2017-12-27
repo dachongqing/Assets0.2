@@ -19,6 +19,19 @@ public class DragTable :CommonThing
 
     private RollDiceUIManager uiManager;
 
+    public GameObject minOperationDragTable;
+
+
+    public override GameObject getOperationItem()
+    {
+        return minOperationDragTable;
+    }
+
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
     public override void doClick()
     {
         Debug.Log("click a barrel");
@@ -52,7 +65,7 @@ public class DragTable :CommonThing
         }
     }
 
-    void OnMouseDown()
+    /**void OnMouseDown()
     {
         if (!SystemUtil.IsTouchedUI())
         {
@@ -60,7 +73,7 @@ public class DragTable :CommonThing
             doClick();
 
         }
-    }
+    }**/
 
     public Item getItem(Character chara)
     {

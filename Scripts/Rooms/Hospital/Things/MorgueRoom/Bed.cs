@@ -5,6 +5,21 @@ using UnityEngine;
 
 public class Bed : CommonThing
 {
+
+    public GameObject minOperationBed;
+
+
+    public override GameObject getOperationItem()
+    {
+        return minOperationBed;
+    }
+
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
+
     public override void doClick()
     {
         

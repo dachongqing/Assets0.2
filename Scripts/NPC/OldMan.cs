@@ -22,6 +22,8 @@ public class OldMan : CommonUser {
 
     private int status = 0;
 
+    public GameObject miniOpertionOldMan;
+
     public new bool isPlayer()
     {
         return false;
@@ -42,7 +44,66 @@ public class OldMan : CommonUser {
         return "detail/9";
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+    public override void showCharaInfoMenuItem()
+    {
+
+        miniOpertionOldMan.SetActive(true);
+
+    }
+
+    public override void offCharaInfoMenuItem()
+    {
+
+        miniOpertionOldMan.SetActive(false);
+
+    }
+
+    public override void doMiniOperation() {
+        if (this.task.getTaskStatus() == TaskConstant.STATUS_INIT)
+        {
+            string[] beginContent = new string[] {"年轻人，我这里有一个宝贝，你想要吗？",
+                    "这个宝贝的来历可大了，听我慢慢道来。。。。",
+                    "咳咳咳，人老了，肺不行了，我需要补肺丸，年轻人，你能帮忙我买瓶补肺丸吗？"};
+            duiHuaUImanager.showDuiHua(this.getLiHuiURL(), beginContent, 0);
+            showConfirm = true;
+        }
+        else if (this.task.getTaskStatus() == TaskConstant.STATUS_BEGIN)
+        {
+
+            if (this.taskMananger.checkTaskDone(this.task))
+            {
+                string[] beginContent = new string[] {"好人啊！， 。。嗯。。好的了",
+                        "我其实是个牧师， 擅长祈祷，来， 我先给祈祷一下。。。"
+                        };
+                duiHuaUImanager.showDuiHua(this.getLiHuiURL(), beginContent, 0);
+                this.task.getTaskAwards().executeAwards();
+                this.task.setTaskStatus(TaskConstant.STATUS_END);
+                this.taskMananger.removeTask(this.task);
+                this.taskMananger.UpdateHistoryTask(this.task);
+            }
+            else
+            {
+                string[] beginContent = new string[] {"年轻人。。这个宝贝是这样来的。。。。",
+                        "咳咳咳。。。。",
+                        "咳咳咳。。。。血。。血都出来了。。。医生！"};
+                duiHuaUImanager.showDuiHua(this.getLiHuiURL(), beginContent, 0);
+            }
+        }
+        else if (this.task.getTaskStatus() == TaskConstant.STATUS_END)
+        {
+            string[] beginContent = new string[] {"好多了。。我说道那里了？ ",
+                    "哎。。这记忆力不行了啊，，，",
+                    "你是谁？。。赶紧离我远点。。我有传染病！"};
+            duiHuaUImanager.showDuiHua(this.getLiHuiURL(), beginContent, 0);
+        }
+        else if (this.task.getTaskStatus() == TaskConstant.STATUS_INDALID)
+        {
+            string[] beginContent = new string[] { "安静！。。安静！。。老人家要多休息。" };
+            duiHuaUImanager.showDuiHua(this.getLiHuiURL(), beginContent, 0);
+        }
+    }
+
+    /**void OnCollisionEnter2D(Collision2D coll)
     {
         Debug.Log(coll.gameObject.name);
         if (coll.gameObject.name == "Player")
@@ -87,7 +148,7 @@ public class OldMan : CommonUser {
 
         }
     }
-
+    **/
 
 
     private void initTask() {

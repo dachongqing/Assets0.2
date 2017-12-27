@@ -19,7 +19,7 @@ public class Kate : CommonUser
     private bool waitPlan;
     public GameObject servant;
     private BlackSignStory bss;
-
+    public GameObject miniOpertionKate;
     private bool scriptEnd;
 
     public new bool isPlayer()
@@ -369,11 +369,24 @@ public class Kate : CommonUser
 
      } **/
 
-    public override void showCharaInfoMenu()
+    public override void showCharaInfoMenuItem()
     {
-      
-      charaInfoManager.showCharaInfoMenu(this, getClickMessage());
-        
+
+        miniOpertionKate.SetActive(true);
+
+    }
+
+    public override void offCharaInfoMenuItem()
+    {
+
+        miniOpertionKate.SetActive(false);
+
+    }
+
+    public override void doMiniOperation()
+    {
+        Debug.Log("ssssssssssss");
+        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
     }
 
     public new string getDeitalPic()

@@ -20,6 +20,19 @@ public class BookTable : CommonThing
 
     private RollDiceUIManager uiManager;
 
+    public GameObject minOperationBookTable;
+
+
+    public override GameObject getOperationItem()
+    {
+        return minOperationBookTable;
+    }
+
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
     public override void doClick()
     {
         Debug.Log("click a barrel");
@@ -52,7 +65,7 @@ public class BookTable : CommonThing
         }
     }
 
-    void OnMouseDown()
+    /**void OnMouseDown()
     {
         if (!SystemUtil.IsTouchedUI())
         {
@@ -61,7 +74,7 @@ public class BookTable : CommonThing
 
         }
     }
-
+    **/
    
 
     private Item getItem()

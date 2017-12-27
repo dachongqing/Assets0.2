@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-public interface Thing  {
+public interface Thing : BaseGameOject {
 
      void doClick();
 

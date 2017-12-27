@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface DoorInterface
+public interface DoorInterface: BaseGameOject
 {
 
 	//显示门的标志

@@ -20,6 +20,19 @@ public class OperatingTable : CommonThing
 
     private RollDiceUIManager uiManager;
 
+    public GameObject minOperationOperatingTable;
+
+
+    public override GameObject getOperationItem()
+    {
+        return minOperationOperatingTable;
+    }
+
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
     public override void doClick()
     {
         Debug.Log("click a barrel");
@@ -59,7 +72,7 @@ public class OperatingTable : CommonThing
         }
     }
 
-    void OnMouseDown()
+   /** void OnMouseDown()
     {
         if (!SystemUtil.IsTouchedUI())
         {
@@ -67,7 +80,7 @@ public class OperatingTable : CommonThing
             doClick();
 
         }
-    }
+    }**/
 
     private void openEvent(int rollValue)
     {

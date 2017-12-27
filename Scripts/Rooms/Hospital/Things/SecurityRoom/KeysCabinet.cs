@@ -19,6 +19,19 @@ public class KeysCabinet : CommonThing
 
     private RollDiceUIManager uiManager;
 
+    public GameObject minOperationKeysCabinet;
+
+
+    public override GameObject getOperationItem()
+    {
+        return minOperationKeysCabinet;
+    }
+
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
     public override void doClick()
     {
         Debug.Log("click a barrel");
@@ -57,7 +70,7 @@ public class KeysCabinet : CommonThing
         }
     }
 
-    void OnMouseDown()
+    /**void OnMouseDown()
     {
         if (!SystemUtil.IsTouchedUI())
         {
@@ -65,7 +78,7 @@ public class KeysCabinet : CommonThing
             doClick();
 
         }
-    }
+    }**/
 
     private void openEvent(int rollValue)
     {

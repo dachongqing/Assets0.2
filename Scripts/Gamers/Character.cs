@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Character
+public interface Character: BaseGameOject
 {
 
     //当前角色是否死亡

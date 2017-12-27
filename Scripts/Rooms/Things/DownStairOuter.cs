@@ -10,13 +10,29 @@ public class DownStairOuter : CommonThing
 
     private CameraCtrl camCtrl;
 
+    public GameObject minOperationDownStairOut;
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
+    public override GameObject getOperationItem()
+    {
+
+        return minOperationDownStairOut;
+
+    }
+
+
+
+
+    /**
     void OnCollisionEnter2D(Collision2D coll)
     {
         Debug.Log(coll.gameObject.name);
         doClick();
 
     }
-    /**
     void OnMouseDown()
 
     {

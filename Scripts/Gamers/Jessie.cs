@@ -19,6 +19,10 @@ public class Jessie : CommonUser {
 
     private bool scriptEnd;
 
+    public GameObject miniOpertion;
+
+    
+
     public new bool isPlayer()
     {
         return false;
@@ -162,12 +166,26 @@ public class Jessie : CommonUser {
         }
     }
 
-    public override void showCharaInfoMenu()
+    public override void showCharaInfoMenuItem()
     {
 
-        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+        miniOpertion.SetActive(true);
 
     }
+
+    public override void offCharaInfoMenuItem()
+    {
+
+        miniOpertion.SetActive(false);
+
+    }
+
+    public override void doMiniOperation()
+    {
+        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+    }
+
+
     /**
     void OnMouseDown()
     {

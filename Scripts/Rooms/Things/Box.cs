@@ -22,6 +22,19 @@ public class Box : CommonThing
 
 	private RollDiceUIManager uiManager;
 
+    public GameObject minOperationBox;
+
+
+    public override GameObject getOperationItem()
+    {
+        return minOperationBox;
+    }
+
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
     public override void doClick()
     {
         Debug.Log("click a barrel");
@@ -64,13 +77,13 @@ public class Box : CommonThing
     }
 
 
+    /**
     void OnCollisionEnter2D(Collision2D coll)
     {
         Debug.Log(coll.gameObject.name);
         doClick();
 
     }
-    /**
     void OnMouseDown()
 
     {

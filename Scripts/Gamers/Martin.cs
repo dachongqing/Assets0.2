@@ -16,6 +16,7 @@ public class Martin : CommonUser {
     private bool waitPlan;
     public GameObject servant;
     private BlackSignStory bss;
+    public GameObject miniOpertionMartin;
 
     private bool scriptEnd;
 
@@ -162,11 +163,23 @@ public class Martin : CommonUser {
         }
     }
 
-    public override void showCharaInfoMenu()
+    public override void showCharaInfoMenuItem()
     {
 
-        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
+        miniOpertionMartin.SetActive(true);
 
+    }
+
+    public override void offCharaInfoMenuItem()
+    {
+
+        miniOpertionMartin.SetActive(false);
+
+    }
+
+    public override void doMiniOperation()
+    {
+        charaInfoManager.showCharaInfoMenu(this, getClickMessage());
     }
     /**
     void OnMouseDown()

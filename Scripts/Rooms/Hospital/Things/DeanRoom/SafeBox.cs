@@ -19,6 +19,19 @@ public class SafeBox : CommonThing
 
     private RollDiceUIManager uiManager;
 
+    public GameObject minOperationSafeBox;
+
+
+    public override GameObject getOperationItem()
+    {
+        return minOperationSafeBox;
+    }
+
+    public override void doMiniOperation()
+    {
+        doClick();
+    }
+
     public override void doClick()
     {
         Debug.Log("click a barrel");
@@ -54,7 +67,7 @@ public class SafeBox : CommonThing
         }
     }
 
-    void OnMouseDown()
+    /**void OnMouseDown()
     {
         if (!SystemUtil.IsTouchedUI())
         {
@@ -62,7 +75,7 @@ public class SafeBox : CommonThing
             doClick();
 
         }
-    }
+    }**/
 
     private void openEvent(int rollValue)
     {
